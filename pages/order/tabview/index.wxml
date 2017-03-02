@@ -1,0 +1,38 @@
+<import src="../../common/nav.wxml" />
+<import src="../../common/prompt.wxml" />
+<template is="nav" data="{{ navList, activeIndex }}" />
+<view class="stv-container">
+  <view class="tab-bar">
+    <view wx:for="{{tabs}}" wx:key="type" data-index="{{index}}" data-type="{{item.type}}" bindtap="handlerTabTap" class="tab {{activeTab==index?'tab-active':''}}" style="width: {{stv.windowWidth/tabs.length}}px">
+      <text>{{item.name}}</text>
+    </view>
+    <view style="width: {{stv.lineWidth}}px; left: {{stv.offset/tabs.length}}px" class="under-line {{!stv.tStart? 'withAnimate': ''}}"></view>
+  </view>
+  <view class="scroll-view">
+    <view bindtouchstart="handlerStart" catchtouchmove="handlerMove" bindtouchcancel="handlerCancel" bindtouchend="handlerEnd" class="scroll-view-wrapper {{!stv.tStart? 'withAnimate': ''}}" style="left: -{{stv.offset}}px">
+      <view style="width: {{stv.windowWidth}}px;" wx:for="{{tabs}}" wx:key="unique" class="one-scene">
+        <scroll-view style="height:100%" scroll-y>
+          <view class="weui-form-preview" wx:for="{{ paginate.list }}" wx:if="{{ paginate.list.length>0 }}" wx:key="id" wx:for-item="order" bindtap="navigateTo" data-id="{{ item.id }}">
+            <view class="weui-form-preview__hd">
+              <view class="weui-form-preview__item">
+                <view class="weui-form-preview__label">订单总价</view>
+                <view class="weui-form-preview__value_in-hd">¥ {{ order.order_amount }}</view>
+              </view>
+            </view>
+            <view class="weui-form-preview__bd">
+              <view class="weui-form-preview__item" wx:for="{{ order.items }}" wx:key="id" wx:for-item="item">
+                <view class="weui-form-preview__label">{{ item.name }}</view>
+                <view class="weui-form-preview__value">x{{ item.amount }} ¥ {{ item.shop_price * item.amount }}</view>
+              </view>
+            </view>
+            <view class="weui-form-preview__ft">
+              <navigator class="weui-form-preview__btn weui-form-preview__btn_default" hover-class="weui-form-preview__btn_active">联系商家</navigator>
+              <navigator class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active">再来一单</navigator>
+            </view>
+          </view>
+          <template is="prompt" data="{{ prompt }}" />
+        </scroll-view>
+      </view>
+    </view>
+  </view>
+</view>

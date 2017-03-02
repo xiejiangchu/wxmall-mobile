@@ -1,0 +1,88 @@
+/*basic*/
+.text-center{
+  text-align: center
+}
+.text-right{
+  text-align: right
+}
+.text-left{
+  text-align: left
+}
+.textSl{
+  overflow: hidden;
+  white-space:nowrap;
+  text-overflow: ellipsis;
+}
+/*grid*/
+.wa-row{
+  display: flex;
+  padding: 10rpx;
+  width: 100%;
+  box-sizing: border-box
+}
+.wa-col{
+  flex:1;
+  display: block;
+  width:100%;
+  box-sizing: border-box;
+}
+.wa-col-10{
+  flex: 0 0 10%;
+  max-width: 10%;
+  box-sizing: border-box;
+}
+.wa-col-20{
+  flex: 0 0 20%;
+  max-width: 20%;
+  box-sizing: border-box;
+}
+.wa-col-25{
+  flex: 0 0 25%;
+  max-width: 25%;
+  box-sizing: border-box;
+}
+.wa-col-33{
+  flex: 0 0 33%;
+  max-width: 33%;
+  box-sizing: border-box;
+}
+.wa-col-50{
+  flex: 0 0 50%;
+  max-width: 50%;
+  box-sizing: border-box;
+}
+.wa-col-66{
+  flex: 0 0 66%;
+  max-width: 66%;
+  box-sizing: border-box;
+}
+.wa-col-75{
+  flex: 0 0 75%;
+  max-width: 75%;
+  box-sizing: border-box;
+}
+.wa-col-80{
+  flex: 0 0 80%;
+  max-width: 80%;
+  box-sizing: border-box;
+}
+.wa-col-90{
+  flex: 0 0 90%;
+  max-width: 90%;
+  box-sizing: border-box;
+}
+/*grid-view*/
+.wa-grid{
+  width:100%;
+  overflow: hidden;
+}
+.wa-grid-33{
+  float: left;
+  width: 33.3%;
+  box-sizing: border-box;
+}
+.wa-grid-50{
+  float: left;
+  width: 50%;
+  box-sizing: border-box;
+}

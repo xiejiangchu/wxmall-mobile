@@ -1,0 +1,79 @@
+<import src="../../common/nav.wxml" />
+<import src="../../common/prompt.wxml" />
+<template is="nav" data="{{ navList, activeIndex }}" />
+<view class="stv-container">
+  <view class="tab-bar">
+    <view wx:for="{{tabs}}" wx:key="type" data-index="{{index}}" data-type="{{item.type}}" bindtap="handlerTabTap" class="tab {{activeTab==index?'tab-active':''}}" style="width: {{stv.windowWidth/tabs.length}}px">
+      <text>{{item.name}}</text>
+    </view>
+    <view style="width: {{stv.lineWidth}}px; left: {{stv.offset/tabs.length}}px" class="under-line {{!stv.tStart? 'withAnimate': ''}}"></view>
+  </view>
+  <view class="scroll-view">
+    <view bindtouchstart="handlerStart" catchtouchmove="handlerMove" bindtouchcancel="handlerCancel" bindtouchend="handlerEnd" class="scroll-view-wrapper {{!stv.tStart? 'withAnimate': ''}}" style="left: -{{stv.offset}}px">
+      <view style="width: {{stv.windowWidth}}px;" wx:for="{{tabs}}" wx:key="unique" class="one-scene">
+        <scroll-view style="height:100%" scroll-y>
+          <view class="weui-form-preview" wx:for="{{ paginate.list }}" wx:if="{{ paginate.list.length>0 }}" wx:key="id" wx:for-item="order" bindtap="navigateTo" data-id="{{ item.id }}">
+            <view class='stamp-container'>
+              <view class="stamp">
+                <view class="par">
+                  <view class='place'>XXXXXX折扣店</view>
+                  <view class='content'>
+                    <view class="sign">￥</view>
+                    <view class="money">50.00</view>
+                    <view class="name">优惠券</view>
+                  </view>
+                  <view class='note'>订单满100.00元</view>
+                </view>
+                <view class="copy">
+                  <view class='name'>副券</view>
+                  <view class='time'>2015-08-13</view>
+                  <view class='time'>2016-08-13</view>
+                </view>a
+                <view class='i'></view>
+              </view>
+            </view>
+            <view class='stamp-container stamp-container-red'>
+              <view class="stamp">
+                <view class="par">
+                  <view class='place'>XXXXXX折扣店</view>
+                  <view class='content'>
+                    <view class="sign">￥</view>
+                    <view class="money">50.00</view>
+                    <view class="name">优惠券</view>
+                  </view>
+                  <view class='note'>订单满100.00元</view>
+                </view>
+                <view class="copy">
+                  <view class='name'>副券</view>
+                  <view class='time'>2015-08-13</view>
+                  <view class='time'>2016-08-13</view>
+                </view>a
+                <view class='i'></view>
+              </view>
+            </view>
+            <view class='stamp-container stamp-container-gray'>
+              <view class="stamp">
+                <view class="par">
+                  <view class='place'>XXXXXX折扣店</view>
+                  <view class='content'>
+                    <view class="sign">￥</view>
+                    <view class="money">50.00</view>
+                    <view class="name">优惠券</view>
+                  </view>
+                  <view class='note'>订单满100.00元</view>
+                </view>
+                <view class="copy">
+                  <view class='name'>副券</view>
+                  <view class='time'>2015-08-13</view>
+                  <view class='time'>2016-08-13</view>
+                </view>a
+                <view class='i'></view>
+              </view>
+            </view>
+          </view>
+          <template is="prompt" data="{{ prompt }}" />
+        </scroll-view>
+      </view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,4 @@
+/* pages/pages/address/edit/index.wxss */
+.button-sp-area{
+	margin-bottom: 20px;
+}

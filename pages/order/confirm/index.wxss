@@ -1,0 +1,135 @@
+.container {
+  width: 100%;
+  padding-bottom: 50px;
+}
+
+.address .weui-media-box {
+  padding-left: 35px;
+  padding-right: 35px;
+}
+
+.address .addr {
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  width: 20px;
+  height: 20px;
+  -webkit-transform: translate3d(0, -50%, 0);
+  transform: translate3d(0, -50%, 0);
+}
+
+.address .addr .icon {
+  width: 20px;
+  height: 20px;
+}
+
+.address .weui-cell__ft {
+  position: absolute;
+  top: 50%;
+  right: 13px;
+  width: 20px;
+  height: 20px;
+  -webkit-transform: translate3d(0, -50%, 0);
+  transform: translate3d(0, -50%, 0);
+}
+
+.weui-form-preview__hd, .weui-form-preview__bd {
+  padding: 8px;
+}
+
+.image-small {
+  width: 50px;
+  height: 50px;
+}
+
+.order-start {
+  margin-top: 30px;
+}
+
+.weui-cells__title {
+  margin-top: 20rpx;
+}
+
+.check-item-row {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.check-item-row .check-item-col {
+  flex: 1;
+}
+
+.check-item-row .check-item-col-big {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.check-item-row .check-item-col-big .name {
+  flex: 1 1 auto;
+  color: black;
+  font-size: 16px;
+  text-align: left;
+}
+
+.check-item-row .check-item-col-big .unit {
+  color: #ff6347;
+  flex: 0 1 auto;
+  font-size: 8px;
+  text-align: left;
+  padding: 0px 6px;
+  border: 1px solid red;
+  border-radius: 2px/5px;
+}
+
+.check-item-row .check-item-col {
+  flex: 1;
+  font-size: 16px;
+  color: black;
+}
+
+.check-item-row .amount {
+  color: #999;
+}
+
+.check-money-row {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  border-top: 1px solid #999;
+}
+
+.check-money-row .check-money-col {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 16px;
+  color: black;
+}
+
+.check-money-row .check-money-col .label {
+  color: #999;
+  font-size: 12px;
+}
+
+.check-money-row .check-money-col .number {
+  color: #ff6347;
+  font-size: 12px;
+}
+
+.check-commit {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  padding: 8px;
+  text-align: center;
+}

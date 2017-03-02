@@ -1,0 +1,58 @@
+.swiper_box {
+  width: 100%;
+  height: 320px;
+}
+
+.swiper_box .slide-image {
+  width: 100%;
+  height: 100%;
+  display: inline-block;
+  overflow: hidden;
+}
+
+.item-no {
+  background: white;
+  color: darkorange;
+  margin-top: 20rpx;
+  padding: 20rpx;
+}
+
+.btn-container {
+  padding: 20rpx;
+}
+
+.item-summary {
+  background: white;
+  color: black;
+  margin-top: 20rpx;
+  padding: 20rpx;
+}
+
+.name-container {
+  padding: 20rpx;
+}
+
+.item-summary-content {
+  padding: 5rpx 40rpx;
+  padding-bottom: 60rpx;
+}
+
+.btn-wrap {
+  display: inline-block;
+  line-height: 1.5;
+  padding: 10rpx 30rpx;
+  margin: 10rpx;
+  font-size: 30rpx;
+  border: 1rpx solid #ddd;
+  border-radius: 15rpx;
+  white-space: nowrap;
+  background: white;
+}
+
+.active {
+  background: #479de6;
+}
+
+.active text {
+  color: white;
+}

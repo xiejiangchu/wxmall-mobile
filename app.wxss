@@ -1,0 +1,108 @@
+/**
+ * 全局样式表
+ * 使用@import语句可以导入外联样式表，@import后跟需要导入的外联样式表的相对路径，用;表示语句结束
+ * 如果需要增加额外的WXSS样式表, 直接import即可, 但需注意引用顺序
+ */
+@import 'assets/styles/waui.wxss';
+@import 'assets/styles/weui.wxss';
+@import 'assets/styles/prompt.wxss';
+@import 'assets/styles/skyvow.wxss';
+
+/**app.wxss**/
+@import "./style/layout.wxss";
+
+.container {
+  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-sizing: border-box;
+}
+
+page {
+  background-color: #f2f2f2;
+}
+
+.text-unit-container {
+  padding: 0rpx;
+  height: 36rpx;
+}
+
+.text-unit {
+  text-decoration: line-through;
+  font-size: 20rpx;
+  padding: 2rpx 10rpx;
+  border-radius: 15rpx;
+  color: darkgray;
+}
+
+.text-unit-shop {
+  font-size: 20rpx;
+  height: 36rpx;
+  padding: 2rpx 10rpx;
+  border: 1rpx solid #ddd;
+  border-radius: 15rpx;
+  white-space: nowrap;
+}
+
+.weui-media-box {
+  padding: 20rpx;
+  position: relative;
+}
+
+.color-red {
+  color: #dd0000;
+}
+
+.color-gray {
+  color: darkgray;
+}
+
+.color-green {
+  color: limegreen;
+}
+
+.color-primary {
+  color: #479de6;
+}
+.color-yellow {
+  color: #ffffcc;
+}
+
+.bg-white{
+  background: white;
+}
+.bg-red {
+  background: #dd0000;
+}
+
+.bg-gray {
+  background: darkgray;
+}
+
+.bg-green {
+  background: limegreen;
+}
+
+.bg-primary {
+  background: #479de6;
+}
+.bg-yellow {
+  background: #ffffcc;
+}
+.bg-orange{
+  background: #FF6347;
+}
+.center-all{
+  display: flex;
+  flex-direction:column;
+  text-align: center;
+  justify-content: center;
+  align-content: center;
+}
+
+.line-seprate{
+  height: 1rpx;
+  background: #ddd;
+  width: 100%;
+}

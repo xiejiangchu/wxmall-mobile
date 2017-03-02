@@ -1,0 +1,51 @@
+<import src="../common/nav.wxml" />
+<import src="../common/list-index.wxml" />
+<view class="weui-search-bar">
+  <view class="weui-search-bar__form">
+    <view class="weui-search-bar__box">
+      <icon class="weui-icon-search_in-box" type="search" size="14"></icon>
+      <input type="text" class="weui-search-bar__input" placeholder="搜索" />
+    </view>
+    <label class="weui-search-bar__label" bindtap="search">
+      <icon class="weui-icon-search" type="search" size="14"></icon>
+      <view class="weui-search-bar__text">搜索</view>
+    </label>
+  </view>
+</view>
+<view class="container">
+  <swiper class="swiper_box" indicator-dots="{{indicatorDots}}" vertical="{{vertical}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" bindchange="swiperchange">
+    <block wx:for="{{banners}}" wx:key='id'>
+      <swiper-item>
+        <image src="{{host}}{{item.url}}" class="slide-image" />
+      </swiper-item>
+    </block>
+  </swiper>
+</view>
+<view class="container" style='margin-top:20px;'>
+  <view class="filter-flex">
+    <view class="filter-tab">
+      <text bindtap="setFilterPanel" data-findex="1" class="{{showfilterindex==1?'active':''}}">商家分类</text>
+      <text bindtap="setFilterPanel" data-findex="2" class="{{showfilterindex==2?'active':''}}">所在地区</text>
+    </view>
+    <view class="filter-content" wx:if="{{showfilter}}">
+      <view class="filter-panel" wx:if="{{showfilterindex==1}}">
+        <view class="filter-panel-left">
+          <view wx:for="{{filterdata.cate}}" wx:key="{{item.id}}" bindtap="setCateIndex" data-cateindex="{{index}}" data-cateid="{{item.id}}" class="{{cateindex==index?'active':''}}">{{item.title}}</view>
+        </view>
+        <view class="filter-panel-right">
+          <view wx:for="{{filterdata.cate[cateindex].cate_two}}" wx:key="{{item.id}}" bindtap="setSubcateIndex" data-subcateindex="{{index}}" data-subcateid="{{item.id}}" class="{{subcateindex==index?'active':''}}">{{item.title}}</view>
+        </view>
+      </view>
+      <view class="filter-panel" wx:if="{{showfilterindex==2}}">
+        <view class="filter-panel-left">
+          <view wx:for="{{filterdata.area}}" wx:key="{{item.id}}" bindtap="setAreaIndex" data-areaindex="{{index}}" data-areaid="{{item.id}}" class="{{areaindex==index?'active':''}}">{{item.name}}</view>
+        </view>
+        <view class="filter-panel-right">
+          <view wx:for="{{filterdata.area[areaindex].zone}}" wx:key="{{item.id}}" bindtap="setSubareaIndex" data-subareaindex="{{index}}" data-subareaid="{{item.id}}" class="{{subareaindex==index?'active':''}}">{{item.name}}</view>
+        </view>
+      </view>
+    </view>
+    <view class="filter-shadow" wx:if="{{showfilter}}" bindtap="hideFilter"></view>
+  </view>
+  <template is="list-index" data="{{ paginate, prompt }}" />
+</view>

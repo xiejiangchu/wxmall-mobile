@@ -1,0 +1,72 @@
+{
+  "pages": [
+    "pages/bonus/tabview/index",
+    "pages/user/index",
+    "pages/cart/index",
+    "pages/index/index",
+    "pages/classify/index",
+    "pages/my/index",
+    "pages/details/index",
+    "pages/brand/index",
+    "pages/list/index",
+    "pages/start/index",
+    "pages/my/order/index",
+    "pages/address/list/index",
+    "pages/address/add/index",
+    "pages/address/edit/index",
+    "pages/address/confirm/index",
+    "pages/order/list/index",
+    "pages/order/confirm/index",
+    "pages/order/detail/index",
+    "pages/order/tabview/index",
+    "pages/bonus/tabview/index",
+    "pages/goods/list/index",
+    "pages/goods/detail/index",
+    "pages/help/list/index",
+    "pages/help/detail/index",
+    "pages/search/index",
+    "pages/about/index",
+    "pages/login/index"
+  ],
+  "window": {
+    "navigationBarBackgroundColor": "#479de6",
+    "navigationBarTextStyle": "white",
+    "navigationBarTitleText": "月都商城",
+    "backgroundColor": "#f8f8f8",
+    "backgroundTextStyle": "dark",
+    "enablePullDownRefresh": "true"
+  },
+  "tabBar": {
+    "color": "#999999",
+    "selectedColor": "#479de6",
+    "borderStyle": "black",
+    "backgroundColor": "#fefefe",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "iconPath": "assets/images/iconfont-home.png",
+        "selectedIconPath": "assets/images/iconfont-home-active.png",
+        "text": "主页"
+      },
+      {
+        "pagePath": "pages/classify/index",
+        "iconPath": "assets/images/iconfont-list.png",
+        "selectedIconPath": "assets/images/iconfont-list-active.png",
+        "text": "分类"
+      },
+      {
+        "pagePath": "pages/cart/index",
+        "iconPath": "assets/images/iconfont-cart.png",
+        "selectedIconPath": "assets/images/iconfont-cart-active.png",
+        "text": "购物车"
+      },
+      {
+        "pagePath": "pages/user/index",
+        "iconPath": "assets/images/iconfont-user.png",
+        "selectedIconPath": "assets/images/iconfont-user-active.png",
+        "text": "我的"
+      }
+    ]
+  },
+  "debug": false
+}

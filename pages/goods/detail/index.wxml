@@ -1,0 +1,37 @@
+<view class="container" style="margin-bottom:80px;">
+  <swiper class="swiper_box" indicator-dots="{{ indicatorDots }}" vertical="{{ vertical }}" autoplay="{{ autoplay }}" interval="{{ interval }}" duration="{{ duration }}">
+    <block wx:for="{{ item.imageList }}" wx:key="id">
+      <swiper-item>
+        <image src="{{ item.url }}" class="slide-image" data-index="{{ index }}" bindtap="previewImage" />
+      </swiper-item>
+    </block>
+  </swiper>
+  <view class="line-seprate"></view>
+  <view class='item-no'>{{ item.no }}</view>
+  <view class="line-seprate"></view>
+  <view class="wa-row bg-white name-container">
+    <view class="wa-grid-50 center-all">
+      <view class='text-left color-gray'>名称：</view>
+      {{ item.name }}
+    </view>
+    <view class="wa-grid-50 center-all">
+      <view class='text-left color-gray'>产地：</view>{{ item.place }}</view>
+  </view>
+  <view class="line-seprate"></view>
+  <view class="bg-white btn-container">
+    <view class='text-left color-gray'>规格：</view>
+    <view class="btn-wrap {{tid == itemSpec.id ? 'active' : ''}}" wx:for="{{ item.itemSpecList }}" wx:for-item="itemSpec" wx:key="id" bindtap="switchType" data-tid="{{itemSpec.id}}">
+      <text class="color-gray">{{ itemSpec.market_price+'元/'+itemSpec.unit }}</text>
+      <text class='color-red'>{{ itemSpec.shop_price+'元/'+itemSpec.unit }} </text>
+      <text class='color-primary'>销量:{{itemSpec.sale_num}}</text>
+    </view>
+  </view>
+  <view class='item-summary'>
+    <view class='text-left color-gray'>介绍：</view>
+    <view class='item-summary-content'>{{ item.summary }}</view>
+  </view>
+  <view class="btn-plus" bindtap="addCart">
+    <image class="icon" src="/assets/images/iconfont-plus-circle.png" />
+    <text>加入购物车</text>
+  </view>
+</view>
