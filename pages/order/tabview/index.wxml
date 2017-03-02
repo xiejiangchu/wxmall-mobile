@@ -12,7 +12,7 @@
     <view bindtouchstart="handlerStart" catchtouchmove="handlerMove" bindtouchcancel="handlerCancel" bindtouchend="handlerEnd" class="scroll-view-wrapper {{!stv.tStart? 'withAnimate': ''}}" style="left: -{{stv.offset}}px">
       <view style="width: {{stv.windowWidth}}px;" wx:for="{{tabs}}" wx:key="unique" class="one-scene">
         <scroll-view style="height:100%" scroll-y>
-          <view class="weui-form-preview" wx:for="{{ paginate.list }}" wx:if="{{ paginate.list.length>0 }}" wx:key="id" wx:for-item="order" bindtap="navigateTo" data-id="{{ item.id }}">
+          <view class="weui-form-preview" wx:for="{{ paginate.list }}" wx:if="{{ paginate.list.length>0 }}" wx:key="id" wx:for-item="order" bindtap="navigateTo" data-id="{{ order.id }}">
             <view class="weui-form-preview__hd">
               <view class="weui-form-preview__item">
                 <view class="weui-form-preview__label">订单总价</view>

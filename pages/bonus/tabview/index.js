@@ -26,8 +26,8 @@ Page({
     prompt: {
       hidden: !0,
       icon: '/assets/images/iconfont-order-default.png',
-      title: '您还没有相关的订单',
-      text: '可以去看看有哪些想买的',
+      title: '空空如也',
+      text: '暂时没有优惠券',
     },
   },
   onLoad: function (options) {
@@ -57,7 +57,7 @@ Page({
   getList() {
     let that = this;
     wx.request({
-      url: App.globalData.host + 'order/list',
+      url: App.globalData.host + 'bonus/list',
       method: 'GET',
       data: that.data.params,
       header: {

@@ -1,37 +1,35 @@
-const App = getApp()
+const App = getApp();
+var wemark = require('../../../assets/wemark/wemark');
+var md = '# hello, world\n\nI love you, wemark!';
 
 Page({
     data: {
         helps: {
             item: {}
-        }
+        },
+        wemark: {}
     },
     onLoad(option) {
-        this.helps = App.HttpResource('/help/:id', {id: '@id'})
         this.setData({
             id: option.id
         })
     },
     onShow() {
-        this.getDetail(this.data.id)
+        // this.getDetail(this.data.id)
     },
     onReady() {
         const item = this.data.helps.item
         const title = item && item.title
-        
-        App.WxService.setNavigationBarTitle({
-            title: title, 
+
+        // wx.setNavigationBarTitle({
+        //     title: title,
+        // });
+        wemark.parse(md, this, {
+            imageWidth: wx.getSystemInfoSync().windowWidth - 40,
+            name: 'wemark'
         })
     },
     getDetail(id) {
-        this.helps.getAsync({id: id})
-        .then(data => {
-        	console.log(data)
-        	if (data.meta.code == 0) {
-        		this.setData({
-                    'helps.item': data.data
-                })
-        	}
-        })
+
     },
 })
