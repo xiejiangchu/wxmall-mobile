@@ -2,6 +2,7 @@ var app = getApp()
 Page({
     data: {
         host: app.globalData.host,
+        img_host: app.globalData.img_host,
         navTopItems: [],
         navLeftItems: [],
         navRightItems: [],

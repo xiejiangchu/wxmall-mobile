@@ -1,61 +1,141 @@
 .userinfo {
-	display: flex;
-	flex-direction: column;
-	padding: 50rpx 0;
-	align-items: center;
-	background: #479de6;
+  display: flex;
+  flex-direction: column;
+  padding: 50rpx 0;
+  padding-bottom: 0;
+  align-items: center;
+  background: #479de6;
 }
 
 .userinfo-avatar {
-	width: 128rpx;
-	height: 128rpx;
-	margin: 20rpx;
-	border-radius: 50%;
+  width: 128rpx;
+  height: 128rpx;
+  margin: 20rpx;
+  border-radius: 50%;
 }
 
 .userinfo-nickname {
-	color: #fff;
+  color: #fff;
+}
+
+.point-info {
+  background: #479de6;
+  display: flex;
+  flex-direction: row;
+  padding: 10px 20px;
+  justify-content: space-between;
+}
+
+.point-info .point-info-item {
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.point-info .point-info-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.point-info .point-info-item .money {
+  color: white;
+  line-height: 30rpx;
+  height: 30rpx;
+  font-size: 30rpx;
+}
+
+.point-info .point-info-item .money-label {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+}
+
+.point-info .point-info-item .money-label image {
+  height: 25rpx;
+  width: 25rpx;
+  margin: 0 4rpx;
+}
+
+.point-info .point-info-item .money-label text {
+  line-height: 25rpx;
+  height: 25rpx;
+  font-size: 25rpx;
 }
 
 .badge {
-	width: 15px;
-	height: 15px;
-	line-height: 15px;
-	background: #ff0000;
-	color: #fff;
-	border-radius: 50%;
-	text-align: center;
-	font-size: 8px;
+  width: 15px;
+  height: 15px;
+  line-height: 15px;
+  background: #f00;
+  color: #fff;
+  border-radius: 50%;
+  text-align: center;
+  font-size: 8px;
 }
 
 .logout {
-	position: relative;
-	margin-top: 1.17647059em;
-	line-height: 1.41176471;
-	font-size: 17px;
-	padding: 10px 15px;
-	background: #fff;
-	text-align: center;
+  position: relative;
+  margin-top: 1.17647059em;
+  line-height: 1.41176471;
+  font-size: 17px;
+  padding: 10px 15px;
+  background: #fff;
+  text-align: center;
 }
 
 .logout:before {
-	content: " ";
-	position: absolute;
-	left: 0;
-	top: 0;
-	right: 0;
-	height: 1px;
-	border-top: 1rpx solid #D9D9D9;
-	color: #D9D9D9;
+  content: " ";
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  height: 1px;
+  border-top: 1rpx solid #d9d9d9;
+  color: #d9d9d9;
 }
 
 .logout:after {
-	content: " ";
-	position: absolute;
-	left: 0;
-	bottom: 0;
-	right: 0;
-	height: 1px;
-	border-bottom: 1rpx solid #D9D9D9;
-	color: #D9D9D9;
+  content: " ";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  height: 1px;
+  border-bottom: 1rpx solid #d9d9d9;
+  color: #d9d9d9;
+}
+
+.order {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.order view {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: white;
+  padding: 8px;
+}
+
+.order view image {
+  margin-bottom: 2px;
+  vertical-align: middle;
+  width: 50rpx;
+  height: 50rpx;
+}
+
+.order view text {
+  padding-top: 20rpx;
+  font-size: 30rpx;
 }

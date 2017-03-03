@@ -18,7 +18,7 @@ Page({
 				path: '/pages/address/list/index'
 			},
 			{
-				icon:'/assets/images/iconfont-bonus.png',
+				icon: '/assets/images/iconfont-bonus.png',
 				text: '优惠券',
 				path: '/pages/bonus/tabview/index'
 			},
@@ -61,7 +61,13 @@ Page({
 	navigateTo(e) {
 		const index = e.currentTarget.dataset.index
 		const path = e.currentTarget.dataset.path
-
+		const tab = e.currentTarget.dataset.tab;
+		if (index == 10) {
+			wx.navigateTo({
+				'url': '/pages/order/tabview/index?activeTab=' + tab
+			});
+			return;
+		}
 		switch (index) {
 			case 3:
 				wx.makePhoneCall({
@@ -73,9 +79,8 @@ Page({
 		}
 	},
 	bindtap(e) {
-		const index = e.currentTarget.dataset.index
-		const path = e.currentTarget.dataset.path
-
+		const index = e.currentTarget.dataset.index;
+		const path = e.currentTarget.dataset.path;
 		switch (index) {
 			case 0:
 				wx.showModal({

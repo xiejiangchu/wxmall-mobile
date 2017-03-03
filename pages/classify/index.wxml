@@ -16,7 +16,7 @@
           <navigator bindtap="navigateTo" data-id="{{ item.id }}">
             <view>
               <block wx:if="{{item.thumb}}">
-                <image src="{{host+'images/'+item.thumb}}"></image>
+                <image src="{{img_host+item.thumb}}"></image>
               </block>
               <block wx:else>
                 <image src="http://temp.im/50x30"></image>

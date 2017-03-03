@@ -1,6 +1,5 @@
 {
   "pages": [
-    "pages/help/detail/index",
     "pages/user/index",
     "pages/cart/index",
     "pages/index/index",

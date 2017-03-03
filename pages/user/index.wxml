@@ -1,7 +1,47 @@
 <view class="container">
-  <view bindtap="bindViewTap" class="userinfo">
-    <image class="userinfo-avatar" src="{{ userInfo.avatarUrl }}" background-size="cover"></image>
-    <text class="userinfo-nickname">{{ userInfo.nickName }}</text>
+  <view>
+    <view bindtap="bindViewTap" class="userinfo">
+      <image class="userinfo-avatar" src="{{ userInfo.avatarUrl }}" background-size="cover"></image>
+      <text class="userinfo-nickname">{{ userInfo.nickName }}</text>
+    </view>
+    <view class='point-info'>
+      <view class='point-info-item'>
+        <view class='money'>
+          0
+        </view>
+        <view class='money-label'>
+          <image src="/assets/images/iconfont_money.png"></image>
+          <text>我的零钱</text>
+        </view>
+      </view>
+      <view class='point-info-item'>
+       <view class='money'>
+          0
+        </view>
+        <view class='money-label'>
+          <image src="/assets/images/iconfont_point.png"></image>
+          <text>我的积分</text>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class='order'>
+    <view bindtap="navigateTo" data-index="10" data-tab="{{ 0 }}">
+      <image src="/assets/images/iconfont_pay.png"></image>
+      <text>待支付</text>
+    </view>
+    <view bindtap="navigateTo" data-index="10" data-tab="{{ 1 }}">
+      <image src="/assets/images/iconfont_sending.png"></image>
+      <text>待发货</text>
+    </view>
+    <view bindtap="navigateTo" data-index="10" data-tab="{{ 2 }}">
+      <image src="/assets/images/iconfont_receive.png"></image>
+      <text>待收货</text>
+    </view>
+    <view bindtap="navigateTo" data-index="10" data-tab="{{ 3 }}">
+      <image src="/assets/images/iconfont_finish.png"></image>
+      <text>已完成</text>
+    </view>
   </view>
   <view class="info_list">
     <view class="weui-cells">

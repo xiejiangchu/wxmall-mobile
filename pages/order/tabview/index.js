@@ -46,10 +46,19 @@ Page({
       this.data.stv.lineWidth = this.windowWidth / this.data.tabs.length;
       this.data.stv.windowWidth = res.windowWidth;
       this.setData({ stv: this.data.stv })
+      if (options && options.activeTab) {
+        const type = tabs[options.activeTab].type
+        this.setData({
+          activeTab: options.activeTab,
+          'params.type': type
+        });
+        this._updateSelectedPage(options.activeTab, type);
+        return;
+      }
       this.tabsCount = tabs.length;
     } catch (e) {
     }
-    this.onPullDownRefresh(0);
+    this.onPullDownRefresh();
   },
   initData() {
     let type = (this.data.params && this.data.params.type) || '10';
