@@ -25,7 +25,7 @@
 .stv-container .tab-bar {
   position: relative;
   display: flex;
-  font-size: 30rpx;
+  font-size: 16px;
   background: white;
   color: #666;
 }

@@ -2,6 +2,7 @@ const App = getApp()
 
 Page({
 	data: {
+		img_host: App.globalData.img_host,
 		logged: !1
 	},
 	onLoad() { },
@@ -13,7 +14,8 @@ Page({
 		token && setTimeout(this.goIndex, 1500)
 	},
 	login() {
-		this.signIn(this.goIndex)
+		// this.signIn(this.goIndex)
+		this.goIndex();
 	},
 	goIndex() {
 		wx.switchTab({
@@ -28,47 +30,11 @@ Page({
 		})
 	},
 	wechatDecryptData() {
-		let code
 
-		wx.login()
-			.then(data => {
-				console.log('wechatDecryptData', data.code)
-				code = data.code
-				return wx.getUserInfo()
-			})
-			.then(data => {
-				return App.HttpService.wechatDecryptData({
-					encryptedData: data.encryptedData,
-					iv: data.iv,
-					rawData: data.rawData,
-					signature: data.signature,
-					code: code,
-				})
-			})
-			.then(data => {
-				console.log(data)
-			})
 	},
 	wechatSignIn(cb) {
-		if (wx.getStorageSync('token')) return
-		wx.login()
-			.then(data => {
-				console.log('wechatSignIn', data.code)
-				return App.HttpService.wechatSignIn({
-					code: data.code
-				})
-			})
-			.then(data => {
-				console.log('wechatSignIn', data)
-				if (data.meta.code == 0) {
-					wx.setStorageSync('token', data.data.token)
-					cb()
-				} else if (data.meta.code == 40029) {
-					App.showModal()
-				} else {
-					App.wechatSignUp(cb)
-				}
-			})
+		if (wx.getStorageSync('token'))
+			return
 	},
 	wechatSignUp(cb) {
 		wx.login({

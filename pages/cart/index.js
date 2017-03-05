@@ -6,7 +6,7 @@ Page({
         img_host: App.globalData.img_host,
         carts: {
             items: [],
-            total:0
+            total: 0
         },
         prompt: {
             hidden: !0,
@@ -48,15 +48,19 @@ Page({
                 'Accept': 'application/json'
             },
             success: function (res) {
-                let total=0;
-                res.data.data.forEach(n =>  total += n.amount * n.itemSpec.shop_price);
+                let total = 0;
+                res.data.data.forEach(function (item, index) {
+                    item.total = item.amount * item.itemSpec.shop_price;
+                    item.total = item.total.toFixed(2);
+                    total += item.amount * item.itemSpec.shop_price
+                });
                 that.setData({
                     'carts.items': res.data.data,
                     'prompt.hidden': res.data.data.length == 0 ? false : true,
-                    'carts.total':total
+                    'carts.total': total.toFixed(2)
                 });
-                
-                
+
+
             }
         });
     },

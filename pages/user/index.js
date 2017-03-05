@@ -6,6 +6,7 @@ Page({
 		img_host: App.globalData.img_host,
 		userInfo: {},
 		'hidden': true,
+		orderCount:{},
 		items: [
 			{
 				icon: '/assets/images/iconfont-order.png',
@@ -57,6 +58,21 @@ Page({
 		});
 	},
 	onShow() {
+		var that=this;
+		wx.request({
+            url: App.globalData.host + 'order/orderCount',
+            method: 'GET',
+            data: {
+            },
+            header: {
+                'Accept': 'application/json'
+            },
+            success: function (res) {
+                that.setData({
+                    orderCount: res.data.data
+                })
+            }
+        });
 	},
 	navigateTo(e) {
 		const index = e.currentTarget.dataset.index

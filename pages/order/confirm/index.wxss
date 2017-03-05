@@ -82,7 +82,7 @@
   text-align: left;
   padding: 0px 6px;
   border: 1px solid red;
-  border-radius: 2px/5px;
+  border-radius: 5px;
 }
 
 .check-item-row .check-item-col {
@@ -100,7 +100,7 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  border-top: 1px solid #999;
+  border-top: 1px dashed #999;
 }
 
 .check-money-row .check-money-col {
@@ -115,12 +115,11 @@
 }
 
 .check-money-row .check-money-col .label {
-  color: #999;
+  color: black;
   font-size: 12px;
 }
 
 .check-money-row .check-money-col .number {
-  color: #ff6347;
   font-size: 12px;
 }
 
@@ -130,6 +129,10 @@
   right: 0;
   bottom: 0;
   width: 100%;
-  padding: 8px;
-  text-align: center;
+  height: 48px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 16px;
 }

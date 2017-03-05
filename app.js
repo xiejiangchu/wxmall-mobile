@@ -39,13 +39,35 @@ App({
     console.log('App Hide')
   },
   globalData: {
-    host: 'http://10.8.203.182:8090/',
+    // host: 'http://10.8.203.182:8090/',
+    host: 'http://192.168.10.2:8090/',
     img_host: 'http://wxmall.image.alimmdn.com/',
     userInfo: null,
     wxcode: null,
     encryptedData: null,
     iv: null,
 
+  },
+  dateFormat: function (date, format) {
+    var fmt = "yyyy/MM/dd HH:mm";
+    if (format) {
+      fmt = format;
+    }
+    var param = new Date(date);
+    var o = {
+      "M+": param.getMonth() + 1, //月份
+      "d+": param.getDate(), //日
+      "h+": param.getHours() % 12 == 0 ? 12 : param.getHours() % 12, //小时
+      "H+": param.getHours(), //小时
+      "m+": param.getMinutes(), //分
+      "s+": param.getSeconds(), //秒
+      "q+": Math.floor((param.getMonth() + 3) / 3), //季度
+      "S": param.getMilliseconds() //毫秒
+    };
+    if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (param.getFullYear() + "").substr(4 - RegExp.$1.length));
+    for (var k in o)
+      if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+    return fmt;
   },
   Tools: new Tools,
   WxValidate: function (rules, messages) {

@@ -7,7 +7,11 @@ Page({
         address: {
         },
         address_id: -1,
-        message: ''
+        message: '',
+        date: App.dateFormat(new Date(), 'yyyy/MM/dd'),
+        time: "09:00",
+        accounts: ["微信支付", "货到付款"],
+        accountIndex: 0,
     },
     onLoad(option) {
         console.log(option);
@@ -42,7 +46,7 @@ Page({
         })
     },
     bindKeyInput(e) {
-        console.log( e.detail);
+        console.log(e.detail);
         const message = e.detail.value;
         this.setData({
             message: message
@@ -128,10 +132,11 @@ Page({
             }
         });
     },
-    clear() {
-        App.HttpService.clearCartByUser()
-            .then(data => {
-                console.log(data)
-            })
-    },
+    bindAccountChange: function (e) {
+        console.log('picker account 发生选择改变，携带值为', e.detail.value);
+
+        this.setData({
+            accountIndex: e.detail.value
+        })
+    }
 })

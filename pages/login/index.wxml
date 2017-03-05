@@ -1,7 +1,7 @@
 <view class="login-container">
 	<view class="login" wx:if="{{ !logged }}">
 		<view class="app-info">
-			<image class="app-logo" src="http://placekitten.com/64/64" />
+			<image class="app-logo" src="{{img_host+'logo.png'}}" />
 			<text class="app-name">月都商城</text>
 		</view>
 		<view class="alert">

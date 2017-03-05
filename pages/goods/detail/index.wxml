@@ -30,6 +30,10 @@
     <view class='text-left color-gray'>介绍：</view>
     <view class='item-summary-content'>{{ item.summary }}</view>
   </view>
+  <view class='item-description'>
+    <view class='text-left color-gray'>详情：</view>
+    <view class='item-summary-content'>{{ item.description }}</view>
+  </view>
   <view class="btn-plus" bindtap="addCart">
     <image class="icon" src="/assets/images/iconfont-plus-circle.png" />
     <text>加入购物车</text>

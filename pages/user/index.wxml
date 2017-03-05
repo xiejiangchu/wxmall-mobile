@@ -29,14 +29,17 @@
     <view bindtap="navigateTo" data-index="10" data-tab="{{ 0 }}">
       <image src="/assets/images/iconfont_pay.png"></image>
       <text>待支付</text>
+      <view class="dot">{{orderCount.order_pay}}</view>
     </view>
     <view bindtap="navigateTo" data-index="10" data-tab="{{ 1 }}">
       <image src="/assets/images/iconfont_sending.png"></image>
       <text>待发货</text>
+      <view class="dot">{{orderCount.order_sending}}</view>
     </view>
     <view bindtap="navigateTo" data-index="10" data-tab="{{ 2 }}">
       <image src="/assets/images/iconfont_receive.png"></image>
       <text>待收货</text>
+      <view class="dot">{{orderCount.order_receive}}</view>
     </view>
     <view bindtap="navigateTo" data-index="10" data-tab="{{ 3 }}">
       <image src="/assets/images/iconfont_finish.png"></image>

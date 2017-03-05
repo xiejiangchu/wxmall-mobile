@@ -24,7 +24,7 @@
 <view class="container" style='margin-top:20px;'>
   <view class="filter-flex">
     <view class="filter-tab">
-      <text bindtap="setFilterPanel" data-findex="1" class="{{showfilterindex==1?'active':''}}">商家分类</text>
+      <text bindtap="setFilterPanel" data-findex="1" class="{{showfilterindex==1?'active':''}}">　商品排序</text>
       <text bindtap="setFilterPanel" data-findex="2" class="{{showfilterindex==2?'active':''}}">所在地区</text>
     </view>
     <view class="filter-content" wx:if="{{showfilter}}">

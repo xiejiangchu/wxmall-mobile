@@ -1,15 +1,13 @@
 {
   "pages": [
-    "pages/user/index",
+    "pages/bonus/tabview/index",
     "pages/cart/index",
+    "pages/user/index",
     "pages/index/index",
     "pages/classify/index",
-    "pages/my/index",
-    "pages/details/index",
     "pages/brand/index",
     "pages/list/index",
     "pages/start/index",
-    "pages/my/order/index",
     "pages/address/list/index",
     "pages/address/add/index",
     "pages/address/edit/index",
