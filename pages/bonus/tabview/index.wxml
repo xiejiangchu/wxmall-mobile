@@ -12,7 +12,8 @@
     <view bindtouchstart="handlerStart" catchtouchmove="handlerMove" bindtouchcancel="handlerCancel" bindtouchend="handlerEnd" class="scroll-view-wrapper {{!stv.tStart? 'withAnimate': ''}}" style="left: -{{stv.offset}}px">
       <view style="width: {{stv.windowWidth}}px;" wx:for="{{tabs}}" wx:key="unique" class="one-scene">
         <scroll-view style="height:100%" scroll-y>
-          <view class="stamp-container {{item.money < 50? 'stamp-container-green': item.money < 100? 'stamp-container-orange':'stamp-container-red'}}" wx:for="{{ paginate.list }}" wx:if="{{ paginate.list.length>0 }}" wx:key="id">
+          <view class="stamp-container {{activeTab > 0 ? 'stamp-container-gray' : (item.money < 50? 'stamp-container-green': (item.money < 100? 'stamp-container-orange':'stamp-container-red'))}}" wx:for="{{ paginate.list }}" wx:if="{{ paginate.list.length>0 }}"
+          wx:key="id">
             <view class="stamp">
               <view class="par">
                 <view class='place'>{{item.description}}</view>
@@ -28,8 +29,8 @@
               </view>
               <view class="copy">
                 <view class='name'>副券</view>
-                <view class='time'>2015-08-13</view>
-                <view class='time'>2016-08-13</view>
+                <view class='time'>{{item.start_at}}</view>
+                <view class='time'>{{item.end_at}}</view>
               </view>
               <view class='i'>优惠券</view>
             </view>

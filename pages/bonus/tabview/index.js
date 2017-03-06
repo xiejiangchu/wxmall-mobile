@@ -64,6 +64,10 @@ Page({
         'Accept': 'application/json'
       },
       success: function (res) {
+        res.data.data.list.forEach(function (item, index) {
+          item.start_at = App.dateFormat(item.start_at, 'yyyy-MM-dd');
+          item.end_at = App.dateFormat(item.end_at, 'yyyy-MM-dd');
+        });
         that.setData({
           paginate: res.data.data,
           'prompt.hidden': res.data.data.size

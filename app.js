@@ -3,6 +3,16 @@ import Tools from 'assets/plugins/Tools'
 import WxValidate from 'assets/plugins/WxValidate'
 
 App({
+  globalData: {
+    host: 'http://10.8.203.182:8090/',
+    // host: 'http://192.168.10.2:8090/',
+    img_host: 'http://wxmall.image.alimmdn.com/',
+    userInfo: null,
+    wxcode: null,
+    encryptedData: null,
+    iv: null,
+
+  },
   onLaunch: function () {
     console.log('App Launch')
     //调用API从本地缓存中获取数据
@@ -38,16 +48,7 @@ App({
   onHide: function () {
     console.log('App Hide')
   },
-  globalData: {
-    // host: 'http://10.8.203.182:8090/',
-    host: 'http://192.168.10.2:8090/',
-    img_host: 'http://wxmall.image.alimmdn.com/',
-    userInfo: null,
-    wxcode: null,
-    encryptedData: null,
-    iv: null,
 
-  },
   dateFormat: function (date, format) {
     var fmt = "yyyy/MM/dd HH:mm";
     if (format) {
