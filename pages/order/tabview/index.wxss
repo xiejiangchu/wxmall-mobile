@@ -90,8 +90,9 @@
 }
 
 .order-content {
-  border-top: 1px solid #999;
-  padding: 8px;
+  border-top: 1px solid rgba(0,0,0,0.15);
+  border-bottom: 1px solid rgba(0,0,0,0.15);
+  padding: 16px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -118,7 +119,7 @@
 
 .order-bottom-item {
   flex: 1;
-  border-top: 1px solid #999;
+  padding: 8px;
   border-bottom: 1px solid #999;
   text-align: center;
 }
