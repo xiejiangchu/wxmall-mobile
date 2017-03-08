@@ -182,5 +182,13 @@ Page({
   handlerTabTap(e) {
     console.log(e.currentTarget.dataset.type);
     this._updateSelectedPage(e.currentTarget.dataset.index, e.currentTarget.dataset.type);
+  },
+  checkDetail(e){
+    wx.navigateTo({
+            url: '/pages/order/detail/index?id=' + e.currentTarget.dataset.id
+        });
+  },
+  pay(e){
+  
   }
 })

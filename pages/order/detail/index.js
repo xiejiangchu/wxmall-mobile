@@ -2,12 +2,12 @@ const App = getApp()
 
 Page({
     data: {
+        id: -1,
         order: {
-            item: {},
+            order: {},
         },
     },
     onLoad(option) {
-        this.order = App.HttpResource('/order/:id', {id: '@id'})
         this.setData({
             id: option.id
         })
@@ -16,13 +16,22 @@ Page({
         this.getOrderDetail(this.data.id)
     },
     getOrderDetail(id) {
-        // App.HttpService.getOrderDetail(id)
-        this.order.getAsync({id: id})
-        .then(data => {
-            console.log(data)
-            if (data.meta.code == 0) {
-                this.setData({
-                    'order.item': data.data
+        if (!id || id <= 0)
+            return;
+        console.log(id);
+        let that = this;
+        wx.request({
+            url: App.globalData.host + 'order/' + id,
+            method: 'GET',
+            data: {},
+            header: {
+                'Accept': 'application/json'
+            },
+            success: function (res) {
+                let order = res.data.data;
+                order.created_at = App.dateFormat(order.created_at, 'yyyy-MM-dd HH:mm:ss')
+                that.setData({
+                    order: order
                 })
             }
         })

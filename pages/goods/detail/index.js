@@ -46,9 +46,9 @@ Page({
             },
             success: function (res) {
                 wx.showToast({
-                title: '加入成功',
-                duration: 1000
-            });
+                    title: '加入成功',
+                    duration: 1000
+                });
             }
         });
     },
@@ -77,4 +77,18 @@ Page({
             }
         });
     },
+    open: function () {
+        let itemList = [];
+        this.data.item.itemSpecList.forEach(function (item, index) {
+            itemList.push(item.shop_price + '元/' + item.unit)
+        });
+        wx.showActionSheet({
+            itemList: itemList,
+            success: function (res) {
+                if (!res.cancel) {
+                    console.log(res.tapIndex)
+                }
+            }
+        });
+    }
 })

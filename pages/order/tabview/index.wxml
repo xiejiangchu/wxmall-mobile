@@ -25,8 +25,8 @@
               </view>
             </view>
             <view class="order-bottom">
-              <navigator class="order-bottom-item" hover-class="weui-form-preview__btn_active">查看详情</navigator>
-              <navigator class="order-bottom-item"hover-class="weui-form-preview__btn_active">再来一单</navigator>
+              <navigator bindtap="pay" data-id="{{order.id}}" class="order-bottom-item" hover-class="weui-form-preview__btn_active">立即支付</navigator>
+              <navigator bindtap="checkDetail" data-id="{{order.id}}" class="order-bottom-item"hover-class="weui-form-preview__btn_active">订单详情</navigator>
             </view>
           </view>
           <template is="prompt" data="{{ prompt }}" />

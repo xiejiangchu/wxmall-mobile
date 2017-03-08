@@ -16,7 +16,8 @@
   <swiper class="swiper_box" indicator-dots="{{indicatorDots}}" vertical="{{vertical}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" bindchange="swiperchange">
     <block wx:for="{{banners}}" wx:key='id'>
       <swiper-item>
-        <image src="{{host}}{{item.url}}" class="slide-image" />
+        <image src="{{img_host}}{{item.url}}" class="slide-image" />
+        <text>{{item.tips}}</text>
       </swiper-item>
     </block>
   </swiper>

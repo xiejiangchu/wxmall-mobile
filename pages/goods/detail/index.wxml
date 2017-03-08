@@ -34,7 +34,7 @@
     <view class='text-left color-gray'>详情：</view>
     <view class='item-summary-content'>{{ item.description }}</view>
   </view>
-  <view class="btn-plus" bindtap="addCart">
+  <view class="btn-plus" bindtap="open">
     <image class="icon" src="/assets/images/iconfont-plus-circle.png" />
     <text>加入购物车</text>
   </view>

@@ -127,6 +127,9 @@ Page({
             aid: this.data.address_id,
             bid: 0,
             pid: 0,
+            date: this.data.date,
+            time: this.data.time,
+            accounts: this.data.accounts[this.data.accountIndex],
             message: this.data.message
         }
         wx.request({

@@ -112,14 +112,5 @@ Page({
 			duration: 1500, 
 		})
 		.then(() => App.WxService.navigateBack())
-	},
-	chooseLocation() {
-		App.WxService.chooseLocation()
-	    .then(data => {
-	        console.log(data)
-	        this.setData({
-	        	'form.address': data.address
-	        })
-	    })
-	},
+	}
 })
