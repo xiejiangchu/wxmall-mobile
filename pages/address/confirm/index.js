@@ -6,7 +6,6 @@ Page({
         address: {}
     },
     onLoad(option) {
-        console.log(option)
         this.setData({
             ret: option.ret
         })

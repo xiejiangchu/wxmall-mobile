@@ -8,7 +8,7 @@ Page({
         },
         address_id: -1,
         message: '',
-        date: App.dateFormat(new Date(), 'yyyy/MM/dd'),
+        date: App.dateFormat(new Date(), 'yyyy-MM-dd'),
         time: "09:00",
         accounts: ["微信支付", "货到付款"],
         accountIndex: 0,
@@ -16,7 +16,8 @@ Page({
     onLoad(option) {
         console.log(option);
         this.setData({
-            address_id: option.id
+            address_id: option.aid,
+            bonus_id: option.bid
         })
 
         const carts = {
@@ -43,6 +44,16 @@ Page({
     redirectTo(e) {
         wx.redirectTo({
             url: '/pages/address/confirm/index?ret=' + this.data.address_id
+        })
+    },
+    bindDateChange: function (e) {
+        this.setData({
+            date: e.detail.value
+        })
+    },
+    bindTimeChange: function (e) {
+        this.setData({
+            time: e.detail.value
         })
     },
     bindKeyInput(e) {
@@ -104,6 +115,11 @@ Page({
                 })
             }
         });
+    },
+    selectBonus() {
+        wx.redirectTo({
+            url: '/pages/bonus/select/index'
+        })
     },
     addOrder() {
         const params = {

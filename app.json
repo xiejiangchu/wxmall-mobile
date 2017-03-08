@@ -16,6 +16,7 @@
     "pages/order/detail/index",
     "pages/order/tabview/index",
     "pages/bonus/tabview/index",
+    "pages/bonus/select/index",
     "pages/goods/list/index",
     "pages/goods/detail/index",
     "pages/help/list/index",

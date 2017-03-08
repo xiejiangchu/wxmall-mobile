@@ -46,6 +46,14 @@
       </view>
     </view>
   </view>
+  <view class="weui-cells__title">红包</view>
+  <view class="weui-cells weui-cells_after-title">
+    <view class="weui-cell weui-cell_select">
+      <view class="weui-cell__bd">
+        <view class="weui-select" bindtap="selectBonus">有3个红包可用</view>
+      </view>
+    </view>
+  </view>
   <view class="weui-cells__title">留言信息</view>
   <view class="weui-cells weui-cells_after-title">
     <view class="weui-cell">

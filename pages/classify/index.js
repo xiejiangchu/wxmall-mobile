@@ -54,11 +54,19 @@ Page({
     //事件处理函数
     switchLevel2: function (e) {
         var that = this;
-        let id = e.target.dataset.id,
-            index = parseInt(e.target.dataset.index);
-        this.setData({
-            'params.cid2': id
-        });
+        if (e) {
+            let id = e.target.dataset.id,
+                index = parseInt(e.target.dataset.index);
+            this.setData({
+                'params.cid2': id
+            });
+        } else {
+            let id = this.data.navLeftItems[0].id;
+            this.setData({
+                'params.cid2': id
+            });
+        }
+
 
         wx.request({
             url: app.globalData.host + 'item/getByCategory',
@@ -98,8 +106,12 @@ Page({
             },
             success: function (res) {
                 that.setData({
-                    navLeftItems: res.data.data
-                })
+                    navLeftItems: res.data.data,
+                    navRightItems: []
+                });
+                if (res.data.data.length > 0) {
+                    that.switchLevel2();
+                }
             }
         });
     }

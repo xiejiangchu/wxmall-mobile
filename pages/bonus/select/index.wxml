@@ -1,0 +1,33 @@
+<import src="../../common/prompt-bonus.wxml" />
+<view class="container">
+  <radio-group class="radio-group" bindchange="radioChange" wx:if="{{ paginate.list.length>0 }}">
+    <view class='select-item' wx:for="{{ paginate.list }}" wx:key="id">
+      <label class="radio">
+        <radio value="{{ item.id }}" checked="{{ item.checked }}" />
+      </label>
+      <view class="stamp-container {{(item.money < 50? 'stamp-container-green': (item.money < 100? 'stamp-container-orange':'stamp-container-red'))}}">
+        <view class="stamp">
+          <view class="par">
+            <view class='place'>{{item.description}}</view>
+            <view class='content'>
+              <view class="sign">￥</view>
+              <view class="money">{{item.money}}</view>
+            </view>
+            <view class='note'>
+              订单满{{item.min_amount}}元
+              <text wx:if="{{item.cid1}}">cid1</text>
+              <text wx:if="{{item.cid2}}">cid2</text>
+            </view>
+          </view>
+          <view class="copy">
+            <view class='name'>副券</view>
+            <view class='time'>{{item.start_at}}</view>
+            <view class='time'>{{item.end_at}}</view>
+          </view>
+          <view class='i'>优惠券</view>
+        </view>
+      </view>
+    </view>
+  </radio-group>
+  <template is="prompt-bonus" data="{{ prompt }}" />
+</view>
