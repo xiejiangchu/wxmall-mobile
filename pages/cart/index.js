@@ -54,30 +54,41 @@ Page({
                     item.total = item.total.toFixed(2);
                     total += item.amount * item.itemSpec.shop_price
                 });
+                wx.setStorageSync('orderData.items', res.data.data);
                 that.setData({
                     'carts.items': res.data.data,
                     'prompt.hidden': res.data.data.length == 0 ? false : true,
                     'carts.total': total.toFixed(2)
                 });
-
-
+                wx.stopPullDownRefresh();
             }
         });
     },
     onPullDownRefresh() {
         this.getCarts();
     },
-    navigateTo(e) {
+    checkDetail(e) {
         wx.navigateTo({
-            url: '/pages/goods/detail/index/id=' + e.currentTarget.dataset.id
+            url: '/pages/goods/detail/index?id=' + e.currentTarget.dataset.id
         })
     },
     confirmOrder(e) {
-        console.log(e)
-        wx.setStorageSync('confirmOrder', this.data.carts.items)
-        wx.navigateTo({
-            url: '/pages/order/confirm/index'
-        })
+        wx.request({
+            url: App.globalData.host + 'order/check',
+            method: 'POST',
+            data: {},
+            header: {
+                'Accept': 'application/json'
+            },
+            success: function (res) {
+                wx.setStorageSync('orderData.items', res.data.data.items);
+                wx.setStorageSync('orderData.address', res.data.data.address);
+                wx.setStorageSync('orderData.orderCheckDto', res.data.data);
+                wx.navigateTo({
+                    url: '/pages/order/confirm/index'
+                })
+            }
+        });
     },
     del(e) {
         let that = this;
@@ -163,7 +174,6 @@ Page({
     },
     putCartByUser(id, params) {
         let that = this;
-
         wx.request({
             url: App.globalData.host + 'cart/update',
             method: 'PUT',

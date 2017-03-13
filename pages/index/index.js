@@ -83,6 +83,7 @@ Page({
         })
     },
     onPullDownRefresh() {
+        wx.showNavigationBarLoading() //在标题栏中显示加载
         this.getList();
     },
     onReachBottom() {
@@ -103,6 +104,7 @@ Page({
                 'Accept': 'application/json'
             },
             success: function (res) {
+                wx.stopPullDownRefresh() //停止下拉刷新
                 var paginat_n = res.data.data;
                 paginat_n.list = that.data.paginate.list.concat(paginat_n.list);
                 that.setData({

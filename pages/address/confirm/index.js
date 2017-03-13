@@ -16,15 +16,17 @@ Page({
     initData() {
         this.setData({
             params: {
-                'uid': 2,
                 pageNum: 1,
                 pageSize: 10,
             }
         })
     },
     radioChange(e) {
+        let idx = e.detail.value;
+        let address = this.data.paginate.list[idx];
+        wx.setStorageSync('orderData.address', address)
         wx.redirectTo({
-            url: '/pages/order/confirm/index?id=' + e.detail.value
+            url: '/pages/order/confirm/index'
         })
     },
     getAddressList() {

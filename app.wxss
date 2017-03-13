@@ -107,3 +107,9 @@ page {
   background: #ddd;
   width: 100%;
 }
+
+.line-seprate-v{
+  width: 1rpx;
+  background: #ddd;
+  height: 100%;
+}

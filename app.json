@@ -1,10 +1,10 @@
 {
   "pages": [
+    "pages/order/tabview/index",
+    "pages/index/index",
     "pages/cart/index",
     "pages/user/index",
-    "pages/index/index",
     "pages/classify/index",
-    "pages/brand/index",
     "pages/list/index",
     "pages/start/index",
     "pages/address/list/index",

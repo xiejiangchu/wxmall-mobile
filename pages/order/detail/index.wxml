@@ -1,7 +1,20 @@
+<view class="address">
+  <view class="weui-panel">
+    <view class="weui-panel__bd">
+      <view class="weui-media-box weui-media-box_text">
+        <view class="weui-media-box__title">{{ order.receiver }} {{ order.gender == 0 ? '女士' : '先生' }} {{ order.mobile }}</view>
+        <view class="weui-media-box__desc">{{ order.city }}{{ order.district }}{{ order.road }}{{ order.address }}</view>
+        <view class="addr">
+          <image class="icon" src="/assets/images/iconfont-addr-default.png" />
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
 <view class="weui-form-preview">
   <view class="order-top">
     <view class="order-top-left">{{ order.created_at }}</view>
-    <view class="order-top-right">¥ {{ order.order_amount }}</view>
+    <view class="order-top-right">{{ order.statusName }}</view>
   </view>
   <view class="order-content">
     <view class="order-content-item" wx:for="{{ order.orderItems }}" wx:key="id" wx:for-item="item">
@@ -10,36 +23,29 @@
       <view>¥ {{ item.total }}</view>
     </view>
   </view>
-  <view class="weui-form-preview__ft">
-    <navigator class="weui-form-preview__btn weui-form-preview__btn_default" hover-class="weui-form-preview__btn_active">支付订单</navigator>
-    <navigator class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active">再来一单</navigator>
-  </view>
-</view>
-<view class="weui-panel weui-panel_access">
-  <view class="weui-panel__hd">配送信息</view>
-  <view class="weui-panel__bd">
-    <view class="weui-media-box weui-media-box_text">
-      <view class="weui-media-box__desc">配送时间：{{order.send_date}} {{order.time_start}}</view>
-    </view>
-    <view class="weui-media-box weui-media-box_text">
-      <view class="weui-media-box__desc">收货地址：{{ order.receiver }} {{ order.mobile }} {{ order.city }}{{ order.district }}{{ order.road }}{{ order.address }}</view>
-    </view>
-    <view class="weui-media-box weui-media-box_text">
-      <view class="weui-media-box__desc">配送方式：商家配送</view>
-    </view>
-  </view>
+   <view class="order-bottom">
+             <view class="order-bottom-item" wx:if="{{ order.status==10||order.status==20 }}" bindtap="cancel" data-oid='{{order.id}}' hover-class="weui-form-preview__btn_active">取消订单</view>
+              <view class="order-bottom-item" wx:if="{{ order.status==10 }}" bindtap="pay" data-oid='{{order.id}}' hover-class="weui-form-preview__btn_active">支付订单</view>
+              <view class="order-bottom-item" bindtap="checkDetail" data-oid='{{order.id}}' hover-class="weui-form-preview__btn_active">查看详情</view>
+              <view class="order-bottom-item" bindtap="orderMore" data-oid='{{order.id}}' hover-class="weui-form-preview__btn_active">再来一单</view>
+            </view>
 </view>
 <view class="weui-panel weui-panel_access">
   <view class="weui-panel__hd">订单信息</view>
   <view class="weui-panel__bd">
     <view class="weui-media-box weui-media-box_text">
       <view class="weui-media-box__desc">订单号：{{ order.no }}</view>
-    </view>
-    <view class="weui-media-box weui-media-box_text">
       <view class="weui-media-box__desc">支付方式：{{ order.payment }}</view>
-    </view>
-    <view class="weui-media-box weui-media-box_text">
       <view class="weui-media-box__desc">下单时间：{{ order.created_at }}</view>
+    </view>
+  </view>
+</view>
+<view class="weui-panel weui-panel_access">
+  <view class="weui-panel__hd">配送信息</view>
+  <view class="weui-panel__bd">
+    <view class="weui-media-box weui-media-box_text">
+      <view class="weui-media-box__desc">配送时间：{{order.send_date}} {{order.time_start}} - {{order.time_end}}</view>
+      <view class="weui-media-box__desc">配送方式：商家配送</view>
     </view>
   </view>
 </view>

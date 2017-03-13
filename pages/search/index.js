@@ -20,9 +20,9 @@ Page({
     search() {
         if (!this.data.inputVal)
             return
-        var that = this;
-        var pageNum = 1;
-        var pageSize = 10;
+        let that = this;
+        let pageNum = 1;
+        let pageSize = 10;
         if (this.paginate) {
             pageNum = this.paginate.nextPage;
         }
@@ -38,7 +38,7 @@ Page({
                 'Accept': 'application/json'
             },
             success: function (res) {
-                var paginat_n = res.data.data;
+                let paginat_n = res.data.data;
                 if (!paginat_n.isFirstPage) {
                     paginat_n.list = paginat_n.list.concat(that.data.paginate.list);
                 } else {
@@ -54,12 +54,45 @@ Page({
     },
     onPullDownRefresh() {
         this.data.pageNum = 1;
-        this.getList();
+        this.getMore(1);
     },
     onReachBottom() {
-        if (!this.data.paginate.hasNextPage)
-            return
-        this.getList();
+        if (!this.data.paginate.hasNextPage) {
+            return;
+        }
+        this.getMore(this.data.paginate.hasNextPage);
+    },
+    getMore(page) {
+        let that = this;
+        let pageNum = page;
+        let pageSize = 10;
+        wx.request({
+            url: App.globalData.host + 'item/search',
+            method: 'GET',
+            data: {
+                keyword: this.data.inputVal,
+                pageNum: pageNum,
+                pageSize: pageSize,
+            },
+            header: {
+                'Accept': 'application/json'
+            },
+            success: function (res) {
+
+                let paginat_n = res.data.data;
+                if (!paginat_n.isFirstPage) {
+                    paginat_n.list = paginat_n.list.concat(that.data.paginate.list);
+                } else {
+                    paginat_n = res.data.data;
+                }
+                that.setData({
+                    paginate: paginat_n,
+                    list: res.data.data.list,
+                    'prompt.hidden': res.data.data.list.length
+                });
+                wx.stopPullDownRefresh();
+            }
+        });
     },
     navigateTo(e) {
         wx.navigateTo({

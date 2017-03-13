@@ -136,3 +136,16 @@
   color: white;
   font-size: 16px;
 }
+.time-select{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.time-select picker {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}

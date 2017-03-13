@@ -4,44 +4,52 @@ Page({
     data: {
         hidden: !0,
         carts: {},
-        address: {
-        },
-        address_id: -1,
+        address: null,
         message: '',
-        date: App.dateFormat(new Date(), 'yyyy-MM-dd'),
-        time: "09:00",
-        accounts: ["微信支付", "货到付款"],
-        accountIndex: 0,
+        date: App.dateFormat(new Date(), 'yyyy/MM/dd'),
+        date_start: App.dateFormat(new Date(), 'yyyy/MM/dd'),
+        date_end: null,
+        time_start: "09:00",
+        time_end: "11:00",
+        payments: ["微信支付", "货到付款"],
+        pids: [1, 2],
+        paymentIndex: 0,
+        bonusCount: 0,
+        bonus: {
+            id: -1
+        }
     },
     onLoad(option) {
-        console.log(option);
+        let now = new Date();
+        let day_end = now.setDate(now.getDate() + 7);
         this.setData({
-            address_id: option.aid,
-            bonus_id: option.bid
-        })
+            bonus: wx.getStorageSync('orderData.bonus'),
+            address: wx.getStorageSync('orderData.address'),
+            date_start: App.dateFormat(wx.getStorageSync('orderData.orderCheckDto').date_start, 'yyyy/MM/dd'),
+            date_end: App.dateFormat(wx.getStorageSync('orderData.orderCheckDto').date_end, 'yyyy/MM/dd'),
+            time_start: wx.getStorageSync('orderData.orderCheckDto').time_start,
+            time_end: wx.getStorageSync('orderData.orderCheckDto').time_end,
+            bonusCount: wx.getStorageSync('orderData.orderCheckDto').bonusCount
+        });
 
-        const carts = {
-            items: wx.getStorageSync('confirmOrder'),
-            totalAmount: 0,
+        let carts = {
+            items: wx.getStorageSync('orderData.items'),
+            totalAmount: wx.getStorageSync('orderData.orderCheckDto').totalAmount,
+            bonus: 0,
+            point: 0,
+            total: wx.getStorageSync('orderData.orderCheckDto').totalAmount
         }
-
-        carts.items.forEach(n => carts.totalAmount += n.amount * n.itemSpec.shop_price)
-
+        if (this.data.bonus) {
+            carts.bonus = this.data.bonus.money;
+            carts.total = (carts.total - carts.bonus).toFixed(2);
+        }
         this.setData({
             carts: carts
         })
-
-        console.log(this.data.carts)
     },
     onShow() {
-        const address_id = this.data.address_id
-        if (address_id) {
-            this.getAddressDetail(address_id);
-        } else {
-            this.getDefalutAddress();
-        }
     },
-    redirectTo(e) {
+    selectAddress(e) {
         wx.redirectTo({
             url: '/pages/address/confirm/index?ret=' + this.data.address_id
         })
@@ -51,34 +59,21 @@ Page({
             date: e.detail.value
         })
     },
-    bindTimeChange: function (e) {
+    bindTimeChangeStart: function (e) {
         this.setData({
-            time: e.detail.value
+            time_start: e.detail.value
+        })
+    },
+    bindTimeChangeEnd: function (e) {
+        this.setData({
+            time_end: e.detail.value
         })
     },
     bindKeyInput(e) {
-        console.log(e.detail);
         const message = e.detail.value;
         this.setData({
             message: message
         })
-    },
-    getDefalutAddress() {
-        let that = this;
-        wx.request({
-            url: App.globalData.host + 'address/getDefaultByUid',
-            method: 'GET',
-            data: {},
-            header: {
-                'Accept': 'application/json'
-            },
-            success: function (res) {
-                that.setData({
-                    address_id: res.data.data.id,
-                    address: res.data.data
-                })
-            }
-        });
     },
     showModal() {
         wx.showModal({
@@ -99,37 +94,19 @@ Page({
             }
         });
     },
-    getAddressDetail(id) {
-        let that = this;
-        wx.request({
-            url: App.globalData.host + 'address/' + id,
-            method: 'GET',
-            data: {},
-            header: {
-                'Accept': 'application/json'
-            },
-            success: function (res) {
-                that.setData({
-                    address_id: res.data.data.id,
-                    address: res.data.data
-                })
-            }
-        });
-    },
     selectBonus() {
         wx.redirectTo({
-            url: '/pages/bonus/select/index'
+            url: '/pages/bonus/select/index?min=' + this.data.carts.totalAmount
         })
     },
     addOrder() {
         const params = {
-            uid: 2,
-            aid: this.data.address_id,
-            bid: 0,
-            pid: 0,
-            date: this.data.date,
-            time: this.data.time,
-            accounts: this.data.accounts[this.data.accountIndex],
+            aid: this.data.address.id,
+            bid: this.data.bonus ? this.data.bonus.id : -1,
+            pid: this.data.pids[this.data.paymentIndex],
+            date: this.data.date + ' 00:00:00',
+            time_start: this.data.date + ' ' + this.data.time_start + ':00',
+            time_end: this.data.date + ' ' + this.data.time_end + ':00',
             message: this.data.message
         }
         wx.request({
@@ -152,10 +129,8 @@ Page({
         });
     },
     bindAccountChange: function (e) {
-        console.log('picker account 发生选择改变，携带值为', e.detail.value);
-
         this.setData({
-            accountIndex: e.detail.value
+            paymentIndex: e.detail.value
         })
     }
 })

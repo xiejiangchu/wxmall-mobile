@@ -6,6 +6,7 @@ Page({
       pageNum: 1,
       pageSize: 10,
     },
+    min: 0,
     prompt: {
       hidden: !0,
       icon: '/assets/images/iconfont-order-default.png',
@@ -14,11 +15,13 @@ Page({
     },
   },
   onLoad: function (options) {
+    this.setData({
+      min: options.min
+    })
     this.onPullDownRefresh(0);
   },
   initData() {
     let type = (this.data.params && this.data.params.type) || '10';
-
     this.setData({
       params: {
         pageNum: 1,
@@ -59,8 +62,11 @@ Page({
     this.getList();
   },
   radioChange(e) {
+    let idx = e.detail.value;
+    let bonus = this.data.paginate.list[idx];
+    wx.setStorageSync('orderData.bonus', bonus)
     wx.redirectTo({
-      url: '/pages/order/confirm/index?bid=' + e.detail.value
+      url: '/pages/order/confirm/index'
     })
   }
 })

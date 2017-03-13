@@ -8,7 +8,15 @@ Page({
         interval: 3000,
         duration: 1000,
         id: 24113,
-        item: {}
+        item: {},
+        spec: {
+            tid: -1,
+            index: 0,
+            amount: 0
+        },
+        cart: {
+            items: {}
+        }
     },
     swiperchange(e) {
         // console.log(e.detail.current)
@@ -19,18 +27,32 @@ Page({
         })
     },
     onShow() {
-        this.getDetail(this.data.id)
+        this.setData({
+            'cart.items': wx.getStorageSync('orderData.items')
+        });
+        this.getDetail(this.data.id);
     },
-    addCart(e) {
-        if (!this.data.tid) {
-            wx.showToast({
-                title: '请选择规格',
-                duration: 1000
+    initNumber() {
+        let that = this;
+        that.setData({
+            'spec.amount': 0
+        });
+        if (this.data.cart.items && this.data.cart.items.length > 0) {
+            this.data.cart.items.forEach(function (item, index) {
+                if (item.gid == that.data.id && item.spec == that.data.spec.tid) {
+                    that.setData({
+                        'spec.amount': item.amount
+                    });
+                }
             });
+        }
+    },
+    inputTyping(e) {
+        let amount = e.detail.value;
+        if (!amount || amount <= 0) {
             return;
         }
-
-        var that = this;
+        let that = this;
         wx.request({
             url: App.globalData.host + 'cart/update',
             method: 'PUT',
@@ -41,14 +63,80 @@ Page({
             data: {
                 uid: 2,
                 gid: that.data.id,
-                spec: that.data.tid,
-                amount: 10
+                spec: that.data.spec.tid,
+                amount: amount
             },
             success: function (res) {
-                wx.showToast({
-                    title: '加入成功',
-                    duration: 1000
+                that.setData({
+                    'cart.items': res.data.data
                 });
+                wx.setStorageSync('orderData.items', );
+                that.initNumber();
+            }
+        });
+    },
+    addCart(e) {
+        if (!this.data.spec.tid) {
+            wx.showToast({
+                title: '请选择规格',
+                duration: 1000
+            });
+            return;
+        }
+        let amount = this.data.spec.amount + 1;
+        let that = this;
+        wx.request({
+            url: App.globalData.host + 'cart/update',
+            method: 'PUT',
+            header: {
+                'content-type': 'application/x-www-form-urlencoded',
+                'Accept': 'application/json'
+            },
+            data: {
+                uid: 2,
+                gid: that.data.id,
+                spec: that.data.spec.tid,
+                amount: amount
+            },
+            success: function (res) {
+                that.setData({
+                    'cart.items': res.data.data
+                });
+                wx.setStorageSync('orderData.items', );
+                that.initNumber();
+            }
+        });
+    },
+    subCart(e) {
+        if (!this.data.spec.tid) {
+            wx.showToast({
+                title: '请选择规格',
+                duration: 1000
+            });
+            return;
+        }
+        let amount = this.data.spec.amount >= 1 ? this.data.spec.amount - 1 : 0;
+
+        let that = this;
+        wx.request({
+            url: App.globalData.host + 'cart/update',
+            method: 'PUT',
+            header: {
+                'content-type': 'application/x-www-form-urlencoded',
+                'Accept': 'application/json'
+            },
+            data: {
+                uid: 2,
+                gid: that.data.id,
+                spec: that.data.spec.tid,
+                amount: amount
+            },
+            success: function (res) {
+                that.setData({
+                    'cart.items': res.data.data
+                });
+                wx.setStorageSync('orderData.items', res.data.data);
+                that.initNumber();
             }
         });
     },
@@ -56,10 +144,13 @@ Page({
 
     },
     switchType(e) {
-        const tid = e.currentTarget.dataset.tid;
+        let tid = e.currentTarget.dataset.tid;
+        let index = e.currentTarget.dataset.index;
         this.setData({
-            tid: tid
+            'spec.tid': tid,
+            'spec.index': index
         });
+        this.initNumber();
     },
     getDetail(id) {
         var that = this;
@@ -72,22 +163,10 @@ Page({
             },
             success: function (res) {
                 that.setData({
-                    item: res.data.data
-                })
-            }
-        });
-    },
-    open: function () {
-        let itemList = [];
-        this.data.item.itemSpecList.forEach(function (item, index) {
-            itemList.push(item.shop_price + '元/' + item.unit)
-        });
-        wx.showActionSheet({
-            itemList: itemList,
-            success: function (res) {
-                if (!res.cancel) {
-                    console.log(res.tapIndex)
-                }
+                    item: res.data.data,
+                    'spec.tid': res.data.data.itemSpecList[0].id
+                });
+                that.initNumber();
             }
         });
     }

@@ -72,3 +72,43 @@
   background: #479de6;
   color: white;
 }
+
+.operation-container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  font-size: 16px;
+  width: 100%;
+  padding: 4px;
+  border-top: 1px solid #999;
+  text-align: center;
+  background-color: #fff;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.operation-container .operation-container-item {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #479de6;
+}
+.operation-container-item:nth-child(2){
+  border-left: none;
+  border-right: none;
+}
+
+.operation-container-item image {
+  max-height: 36px;
+  max-width: 36px;
+}
+
+.operation-container-item input {
+  width: 80px;
+  height: 36px;
+  text-align: center;
+}

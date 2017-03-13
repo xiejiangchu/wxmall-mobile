@@ -20,7 +20,7 @@
   <view class="line-seprate"></view>
   <view class="bg-white btn-container">
     <view class='text-left color-gray'>规格：</view>
-    <view class="btn-wrap {{tid == itemSpec.id ? 'active' : ''}}" wx:for="{{ item.itemSpecList }}" wx:for-item="itemSpec" wx:key="id" bindtap="switchType" data-tid="{{itemSpec.id}}">
+    <view class="btn-wrap {{spec.tid == itemSpec.id ? 'active' : ''}}" wx:for="{{ item.itemSpecList }}" wx:for-item="itemSpec" wx:for-index="index" wx:key="id" bindtap="switchType" data-tid="{{itemSpec.id}}" data-index="{{index}}">
       <text class="color-gray">{{ itemSpec.market_price+'元/'+itemSpec.unit }}</text>
       <text class='color-red'>{{ itemSpec.shop_price+'元/'+itemSpec.unit }} </text>
       <text class='color-primary'>销量:{{itemSpec.sale_num}}</text>
@@ -34,8 +34,15 @@
     <view class='text-left color-gray'>详情：</view>
     <view class='item-summary-content'>{{ item.description }}</view>
   </view>
-  <view class="btn-plus" bindtap="open">
-    <image class="icon" src="/assets/images/iconfont-plus-circle.png" />
-    <text>加入购物车</text>
+  <view class="operation-container">
+    <view class='operation-container-item' bindtap="subCart" >
+      <image src="/assets/images/iconfont_sub.png"></image>
+    </view>
+    <view class='operation-container-item'>
+      <input type="number" value="{{spec.amount}}" bindinput="inputTyping" auto-focus/>
+    </view>
+    <view class='operation-container-item' bindtap="addCart">
+      <image src="/assets/images/iconfont_add.png"></image>
+    </view>
   </view>
 </view>

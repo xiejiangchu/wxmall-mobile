@@ -16,7 +16,7 @@ Page({
       },
       {
         name: '已完成',
-        type: '40',
+        type: '0',
       },
     ],
     stv: {
@@ -89,7 +89,7 @@ Page({
           'prompt.hidden': res.data.data.size
         })
       }
-    })
+    });
   },
   onPullDownRefresh() {
     console.info('onPullDownRefresh')
@@ -183,12 +183,86 @@ Page({
     console.log(e.currentTarget.dataset.type);
     this._updateSelectedPage(e.currentTarget.dataset.index, e.currentTarget.dataset.type);
   },
-  checkDetail(e){
+  checkDetail(e) {
     wx.navigateTo({
-            url: '/pages/order/detail/index?id=' + e.currentTarget.dataset.id
-        });
+      url: '/pages/order/detail/index?id=' + e.currentTarget.dataset.oid
+    });
   },
-  pay(e){
-  
+  orderMore(e) {
+    let that = this;
+    wx.request({
+      url: App.globalData.host + 'order/orderMore',
+      method: 'GET',
+      data: {
+        oid: e.currentTarget.dataset.oid
+      },
+      header: {
+        'Accept': 'application/json'
+      },
+      success: function (res) {
+        wx.showToast({
+          title: '加入成功',
+          duration: 1000
+        });
+      }
+    });
+  },
+  pay(e) {
+    let that = this;
+    wx.request({
+      url: App.globalData.host + 'order/pay',
+      method: 'GET',
+      data: {
+        oid: e.currentTarget.dataset.oid
+      },
+      header: {
+        'Accept': 'application/json'
+      },
+      success: function (res) {
+        if (res.data.code == 0) {
+          wx.showToast({
+            title: '取消成功',
+            duration: 1000
+          });
+        }
+      }
+    });
+  },
+  cancel(e) {
+    let that = this;
+    wx.showModal({
+      title: '友情提示',
+      showCancel: true,
+      cancelText: '取消',
+      content: '确定要取消该订单嘛？',
+      success: function () {
+        wx.request({
+          url: App.globalData.host + 'order/cancel',
+          method: 'PUT',
+          data: {
+            oid: e.currentTarget.dataset.oid
+          },
+          header: {
+            'content-type': 'application/x-www-form-urlencoded',
+            'Accept': 'application/json'
+          },
+          success: function (res) {
+            if (res.data.code == 0) {
+              wx.showToast({
+                title: '取消成功',
+                duration: 1000
+              });
+            }
+          }
+        });
+      },
+      fail: function () {
+
+      },
+      complete: function () {
+
+      }
+    });
+
   }
 })

@@ -47,7 +47,8 @@ Page({
                 that.setData({
                     'params.pageNum': res.data.data.pageNum,
                     navRightItems: res.data.data.list
-                })
+                });
+                wx.stopPullDownRefresh()
             }
         });
     },
@@ -82,6 +83,9 @@ Page({
                 })
             }
         });
+    },
+    onPullDownRefresh() {
+        this.initData();
     },
     navigateTo(e) {
         wx.navigateTo(

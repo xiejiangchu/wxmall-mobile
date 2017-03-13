@@ -1,16 +1,16 @@
 <view class="address-list">
   <view class="scroll-list">
     <radio-group class="radio-group" bindchange="radioChange">
-      <view class="weui-panel" wx:if="{{ !!paginate.list.length }}">
+      <view class="weui-panel" wx:if="{{ !!paginate.list.length }}"  >
         <view class="weui-panel__bd">
-          <view class="weui-media-box weui-media-box_text padding-small" wx:for="{{ paginate.list }}" wx:key="">
+          <view class="weui-media-box weui-media-box_text padding-small" wx:for="{{ paginate.list }}" wx:key="id" wx:for-index="idx">
             <view class="weui-media-box__title weui-media-box__title_in-text margin-small-bottom">{{ item.receiver }} {{ item.gender == 0 ? '女士' : '先生' }} {{ item.tel }}</view>
             <view class="weui-media-box__desc margin-small">{{ item.address }}</view>
             <view class="weui-media-box__info margin-small-top">
               <view class="weui-media-box__info__meta text-orangered" wx:if="{{ item.is_def }}">默认地址</view>
             </view>
             <label class="radio">
-              <radio value="{{ item.id }}" checked="{{ item.checked }}" />
+              <radio value="{{ idx }}" checked="{{ item.checked }}" />
             </label>
           </view>
         </view>
