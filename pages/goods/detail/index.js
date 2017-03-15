@@ -21,6 +21,9 @@ Page({
     swiperchange(e) {
         // console.log(e.detail.current)
     },
+    onPullDownRefresh() {
+        this.getDetail(this.data.id);
+    },
     onLoad(option) {
         this.setData({
             id: option.id
@@ -83,7 +86,13 @@ Page({
             });
             return;
         }
-        let amount = this.data.spec.amount + 1;
+        let amount = this.data.spec.amount + this.data.item.itemSpecList[this.data.spec.index].unit_sell;
+        if (amount > this.data.item.itemSpecList[this.data.spec.index].max) {
+            amount = this.data.item.itemSpecList[this.data.spec.index].max;
+        }
+        if (amount < this.data.item.itemSpecList[this.data.spec.index].min) {
+            amount = this.data.item.itemSpecList[this.data.spec.index].min;
+        }
         let that = this;
         wx.request({
             url: App.globalData.host + 'cart/update',
@@ -115,8 +124,13 @@ Page({
             });
             return;
         }
-        let amount = this.data.spec.amount >= 1 ? this.data.spec.amount - 1 : 0;
-
+        let amount = this.data.spec.amount - this.data.item.itemSpecList[this.data.spec.index].unit_sell;
+        if (amount > this.data.item.itemSpecList[this.data.spec.index].max) {
+            amount = this.data.item.itemSpecList[this.data.spec.index].max;
+        }
+        if (amount < this.data.item.itemSpecList[this.data.spec.index].min) {
+            amount = this.data.item.itemSpecList[this.data.spec.index].min;
+        }
         let that = this;
         wx.request({
             url: App.globalData.host + 'cart/update',
@@ -162,9 +176,11 @@ Page({
                 'Accept': 'application/json'
             },
             success: function (res) {
+                wx.stopPullDownRefresh() //停止下拉刷新
                 that.setData({
                     item: res.data.data,
-                    'spec.tid': res.data.data.itemSpecList[0].id
+                    'spec.tid': res.data.data.itemSpecList[0].id,
+                    'spec.index': 0
                 });
                 that.initNumber();
             }

@@ -21,8 +21,8 @@
   <view class="bg-white btn-container">
     <view class='text-left color-gray'>规格：</view>
     <view class="btn-wrap {{spec.tid == itemSpec.id ? 'active' : ''}}" wx:for="{{ item.itemSpecList }}" wx:for-item="itemSpec" wx:for-index="index" wx:key="id" bindtap="switchType" data-tid="{{itemSpec.id}}" data-index="{{index}}">
-      <text class="color-gray">{{ itemSpec.market_price+'元/'+itemSpec.unit }}</text>
-      <text class='color-red'>{{ itemSpec.shop_price+'元/'+itemSpec.unit }} </text>
+      <text class="color-gray" style="text-decoration:line-through;">{{ itemSpec.market_price+'元/'+itemSpec.unit }}</text>
+      <text class='color-red'>    {{ itemSpec.shop_price+'元/'+itemSpec.unit }}  </text>
       <text class='color-primary'>销量:{{itemSpec.sale_num}}</text>
     </view>
   </view>

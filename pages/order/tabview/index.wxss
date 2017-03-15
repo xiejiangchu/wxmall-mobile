@@ -73,6 +73,11 @@
   padding-top: 200rpx;
 }
 
+.order-container{
+  background: white;
+  margin-top: 16px;
+}
+
 .order-top {
   display: flex;
   flex-direction: row;
@@ -90,14 +95,15 @@
 }
 
 .order-content {
-  border-top: 1px solid rgba(0, 0, 0, 0.10);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.10);
+  border-top: 1px solid rgba(71,157,230, 0.40);
+  border-bottom: 1px solid rgba(71,157,230, 0.40);
   padding: 16px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   font-size: 14px;
 }
+
 
 .order-content-item {
   display: flex;
@@ -125,17 +131,17 @@
   flex-direction: row;
   justify-content: flex-end;
   align-items: center;
+  border-bottom: 1px solid rgba(71,157,230, 0.40);
 }
 
 .order-bottom-item {
   flex: 1;
   padding: 4px;
   font-size: 14px;
-  border-bottom: 1px solid #999;
-  border-left: 1px solid rgba(0, 0, 0, 0.10);
+  border-left: 1px solid rgba(71,157,230, 0.40);
   text-align: center;
 }
 
 .order-bottom:last-child {
-  border-right: 1px solid rgba(0, 0, 0, 0.10);
+  border-right: 1px solid rgba(71,157,230, 0.40);
 }
