@@ -73,6 +73,7 @@ Page({
         })
     },
     confirmOrder(e) {
+         wx.removeStorageSync('orderData.bonus'),
         wx.request({
             url: App.globalData.host + 'order/check',
             method: 'POST',

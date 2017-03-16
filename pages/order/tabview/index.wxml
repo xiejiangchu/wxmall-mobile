@@ -20,7 +20,7 @@
             <view class="order-content">
               <view class="order-content-item">
                 <view class="order-content-item-left">{{ order.orderItems[0].name }}</view>
-                <view class="order-content-item-right">{{ order.orderItems.length }}种商品，共¥{{ order.order_amount }}</view>
+                <view class="order-content-item-right">{{ order.orderItems.length }}种商品，共¥{{ order.order_money }}</view>
               </view>
             </view>
             <view class="order-bottom">

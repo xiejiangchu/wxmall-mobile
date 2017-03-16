@@ -1,11 +1,16 @@
-.select-item{
+.bonus-container {
+  height: 100%;
+}
+
+.select-item {
   position: relative;
 }
-.select-item .radio{
+
+.select-item .radio {
   position: absolute;
   left: 10%;
   top: 50%;
-  transform: translate(-50%,-50%);
+  transform: translate(-50%, -50%);
   z-index: 10;
 }
 

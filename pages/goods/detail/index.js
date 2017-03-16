@@ -86,7 +86,7 @@ Page({
             });
             return;
         }
-        let amount = this.data.spec.amount + this.data.item.itemSpecList[this.data.spec.index].unit_sell;
+        let amount = this.data.spec.amount + 1;
         if (amount > this.data.item.itemSpecList[this.data.spec.index].max) {
             amount = this.data.item.itemSpecList[this.data.spec.index].max;
         }
@@ -124,7 +124,7 @@ Page({
             });
             return;
         }
-        let amount = this.data.spec.amount - this.data.item.itemSpecList[this.data.spec.index].unit_sell;
+        let amount = this.data.spec.amount - 1;
         if (amount > this.data.item.itemSpecList[this.data.spec.index].max) {
             amount = this.data.item.itemSpecList[this.data.spec.index].max;
         }
