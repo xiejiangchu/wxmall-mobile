@@ -39,7 +39,7 @@
       <image src="/assets/images/iconfont_sub.png"></image>
     </view>
     <view class='operation-container-item'>
-      <input type="number" value="{{spec.amount}}" bindinput="inputTyping" auto-focus/>
+      <input type="number" value="{{spec.amount}}" bindinput="inputTyping"/>
     </view>
     <view class='operation-container-item' bindtap="addCart">
       <image src="/assets/images/iconfont_add.png"></image>

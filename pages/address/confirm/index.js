@@ -16,6 +16,7 @@ Page({
     initData() {
         this.setData({
             params: {
+                sessionId: App.globalData.sessionId,
                 pageNum: 1,
                 pageSize: 10,
             }
@@ -40,6 +41,7 @@ Page({
             method: 'GET',
             data: params,
             header: {
+                SESSIONID: App.globalData.sessionId,
                 'Accept': 'application/json'
             },
             success: function (res) {

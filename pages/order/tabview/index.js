@@ -49,6 +49,7 @@ Page({
       if (options && options.activeTab) {
         const type = tabs[options.activeTab].type
         this.setData({
+          sessionId: App.globalData.sessionId,
           activeTab: options.activeTab,
           'params.type': type
         });
@@ -65,6 +66,7 @@ Page({
 
     this.setData({
       params: {
+        sessionId: App.globalData.sessionId,
         pageNum: 1,
         pageSize: 10,
         type: type,
@@ -78,6 +80,7 @@ Page({
       method: 'GET',
       data: that.data.params,
       header: {
+        SESSIONID: App.globalData.sessionId,
         'Accept': 'application/json'
       },
       success: function (res) {
@@ -194,9 +197,11 @@ Page({
       url: App.globalData.host + 'order/orderMore',
       method: 'GET',
       data: {
+        sessionId: App.globalData.sessionId,
         oid: e.currentTarget.dataset.oid
       },
       header: {
+        SESSIONID: App.globalData.sessionId,
         'Accept': 'application/json'
       },
       success: function (res) {
@@ -240,9 +245,11 @@ Page({
           url: App.globalData.host + 'order/cancel',
           method: 'PUT',
           data: {
+            sessionId: App.globalData.sessionId,
             oid: e.currentTarget.dataset.oid
           },
           header: {
+            SESSIONID: App.globalData.sessionId,
             'content-type': 'application/x-www-form-urlencoded',
             'Accept': 'application/json'
           },

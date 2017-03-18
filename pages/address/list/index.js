@@ -48,11 +48,12 @@ Page({
             url: App.globalData.host + '/address/getByUid',
             method: 'GET',
             data: {
-                'uid': 2,
+                sessionId: App.globalData.sessionId,
                 'pageNum': 1,
                 'pageSize': 10
             },
             header: {
+                sessionId: App.globalData.sessionId,
                 'Accept': 'application/json'
             },
             success: function (res) {

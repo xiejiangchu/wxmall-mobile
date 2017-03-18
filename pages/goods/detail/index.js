@@ -60,11 +60,12 @@ Page({
             url: App.globalData.host + 'cart/update',
             method: 'PUT',
             header: {
+                SESSIONID: App.globalData.sessionId,
                 'content-type': 'application/x-www-form-urlencoded',
                 'Accept': 'application/json'
             },
             data: {
-                uid: 2,
+               SESSIONID: App.globalData.sessionId,
                 gid: that.data.id,
                 spec: that.data.spec.tid,
                 amount: amount
@@ -98,11 +99,12 @@ Page({
             url: App.globalData.host + 'cart/update',
             method: 'PUT',
             header: {
+                SESSIONID: App.globalData.sessionId,
                 'content-type': 'application/x-www-form-urlencoded',
                 'Accept': 'application/json'
             },
             data: {
-                uid: 2,
+                SESSIONID: App.globalData.sessionId,
                 gid: that.data.id,
                 spec: that.data.spec.tid,
                 amount: amount
@@ -136,11 +138,12 @@ Page({
             url: App.globalData.host + 'cart/update',
             method: 'PUT',
             header: {
+                SESSIONID: App.globalData.sessionId,
                 'content-type': 'application/x-www-form-urlencoded',
                 'Accept': 'application/json'
             },
             data: {
-                uid: 2,
+                SESSIONID: App.globalData.sessionId,
                 gid: that.data.id,
                 spec: that.data.spec.tid,
                 amount: amount

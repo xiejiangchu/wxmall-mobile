@@ -30,11 +30,11 @@
         <view class="weui-label">配送时间</view>
       </view>
       <view class="weui-cell__bd time-select">
-        <picker mode="time" value="{{time_start}}" start="07:00" end="11:00" bindchange="bindTimeChangeStart">
+        <picker mode="time" value="{{time_start}}" start="{{time_start}}" end="{{time_end}}" bindchange="bindTimeChangeStart">
           <view class="weui-input">{{time_start}}</view>
         </picker>
         <text>到</text>
-        <picker mode="time" value="{{time_end}}" start="07:00" end="11:00" bindchange="bindTimeChangeEnd">
+        <picker mode="time" value="{{time_end}}" start="{{time_start}}" end="{{time_end}}" bindchange="bindTimeChangeEnd">
           <view class="weui-input">{{time_end}}</view>
         </picker>
       </view>

@@ -65,6 +65,53 @@ Page({
                     'prompt.hidden': res.data.data.list.length
                 })
             }
+        });
+        let sessionId = wx.getStorageSync('sessionId');
+        if (sessionId) {
+            wx.request({
+                url: App.globalData.host + 'user/login',
+                method: 'GET',
+                data: {
+                    sessionId: sessionId
+                },
+                header: {
+                    'Accept': 'application/json'
+                },
+                success: function (res) {
+                    if (res.data.code == 0) {
+                        App.globalData.sessionId = res.data.data.sessionId;
+                        App.globalData.uid = res.data.data.uid;
+                    } else {
+                        App.getUserInfo(function (userInfo) {
+                            that.get3rdSession();
+                        });
+                    }
+                }
+            })
+        } else {
+            App.getUserInfo(function (userInfo) {
+                that.get3rdSession();
+            });
+        }
+    },
+    get3rdSession: function () {
+        let that = this
+        wx.request({
+            url: App.globalData.host + 'user/get3rdSession',
+            method: 'GET',
+            data: {
+                code: App.globalData.wxcode,
+                encryptedData: App.globalData.encryptedData,
+                iv: App.globalData.iv
+            },
+            header: {
+                'Accept': 'application/json'
+            },
+            success: function (res) {
+                App.globalData.sessionId = res.data.data.sessionId;
+                App.globalData.uid = res.data.data.uid;
+                wx.setStorageSync('sessionId', sessionId);
+            }
         })
     },
     onShow() {

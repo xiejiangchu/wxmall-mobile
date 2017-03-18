@@ -1,4 +1,4 @@
-const App = getApp()
+const App = getApp();
 
 Page({
 	data: {
@@ -6,7 +6,7 @@ Page({
 		img_host: App.globalData.img_host,
 		userInfo: {},
 		'hidden': true,
-		orderCount:{},
+		orderCount: {},
 		items: [
 			{
 				icon: '/assets/images/iconfont-order.png',
@@ -48,31 +48,31 @@ Page({
 		]
 	},
 	onLoad() {
-		var that = this;
-		//调用应用实例的方法获取全局数据
-		App.getUserInfo(function (userInfo) {
-			//更新数据
+		let that = this;
+		App.getUserInfo(function (globalData) {
 			that.setData({
-				userInfo: userInfo
-			})
+				userInfo: globalData.userInfo
+			});
 		});
 	},
 	onShow() {
-		var that=this;
+		var that = this;
 		wx.request({
-            url: App.globalData.host + 'order/orderCount',
-            method: 'GET',
-            data: {
-            },
-            header: {
-                'Accept': 'application/json'
-            },
-            success: function (res) {
-                that.setData({
-                    orderCount: res.data.data
-                })
-            }
-        });
+			url: App.globalData.host + 'order/orderCount',
+			method: 'GET',
+			data: {
+				sessionId: App.globalData.sessionId
+			},
+			header: {
+				SESSIONID: App.globalData.sessionId,
+				'Accept': 'application/json'
+			},
+			success: function (res) {
+				that.setData({
+					orderCount: res.data.data
+				})
+			}
+		});
 	},
 	navigateTo(e) {
 		const index = e.currentTarget.dataset.index

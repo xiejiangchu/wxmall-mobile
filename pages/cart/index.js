@@ -41,10 +41,13 @@ Page({
     getCarts() {
         var that = this;
         wx.request({
-            url: App.globalData.host + 'cart/item/2',
+            url: App.globalData.host + 'cart/item/',
             method: 'GET',
-            data: {},
+            data: {
+                sessionId: App.globalData.sessionId
+            },
             header: {
+                SESSIONID: App.globalData.sessionId,
                 'Accept': 'application/json'
             },
             success: function (res) {
@@ -73,23 +76,25 @@ Page({
         })
     },
     confirmOrder(e) {
-         wx.removeStorageSync('orderData.bonus'),
-        wx.request({
-            url: App.globalData.host + 'order/check',
-            method: 'POST',
-            data: {},
-            header: {
-                'Accept': 'application/json'
-            },
-            success: function (res) {
-                wx.setStorageSync('orderData.items', res.data.data.items);
-                wx.setStorageSync('orderData.address', res.data.data.address);
-                wx.setStorageSync('orderData.orderCheckDto', res.data.data);
-                wx.navigateTo({
-                    url: '/pages/order/confirm/index'
-                })
-            }
-        });
+        wx.removeStorageSync('orderData.bonus'),
+            wx.request({
+                url: App.globalData.host + 'order/check',
+                method: 'POST',
+                data: {
+                },
+                header: {
+                    SESSIONID: App.globalData.sessionId,
+                    'Accept': 'application/json'
+                },
+                success: function (res) {
+                    wx.setStorageSync('orderData.items', res.data.data.items);
+                    wx.setStorageSync('orderData.address', res.data.data.address);
+                    wx.setStorageSync('orderData.orderCheckDto', res.data.data);
+                    wx.navigateTo({
+                        url: '/pages/order/confirm/index'
+                    })
+                }
+            });
     },
     del(e) {
         let that = this;
@@ -105,12 +110,13 @@ Page({
                     url: App.globalData.host + 'cart/update',
                     method: 'PUT',
                     data: {
-                        uid: 2,
+                        sessionId: App.globalData.sessionId,
                         gid: id,
                         spec: spec,
                         amount: 0
                     },
                     header: {
+                        SESSIONID: App.globalData.sessionId,
                         'content-type': 'application/x-www-form-urlencoded',
                         'Accept': 'application/json'
                     },
@@ -139,9 +145,10 @@ Page({
                     url: App.globalData.host + 'cart/clear',
                     method: 'PUT',
                     data: {
-                        uid: 2
+                        sessionId: App.globalData.sessionId
                     },
                     header: {
+                        SESSIONID: App.globalData.sessionId,
                         'content-type': 'application/x-www-form-urlencoded',
                         'Accept': 'application/json'
                     },
@@ -179,12 +186,13 @@ Page({
             url: App.globalData.host + 'cart/update',
             method: 'PUT',
             data: {
-                uid: 2,
+                sessionId: App.globalData.sessionId,
                 gid: id,
                 spec: params.spec,
                 amount: params.amount
             },
             header: {
+                SESSIONID: App.globalData.sessionId,
                 'content-type': 'application/x-www-form-urlencoded',
                 'Accept': 'application/json'
             },

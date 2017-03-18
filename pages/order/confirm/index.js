@@ -101,6 +101,7 @@ Page({
     },
     addOrder() {
         const params = {
+            sessionId: App.globalData.sessionId,
             aid: this.data.address.id,
             bid: this.data.bonus ? this.data.bonus.id : -1,
             pid: this.data.pids[this.data.paymentIndex],
@@ -114,17 +115,25 @@ Page({
             method: 'POST',
             data: params,
             header: {
+                SESSIONID: App.globalData.sessionId,
                 'content-type': 'application/x-www-form-urlencoded',
                 'Accept': 'application/json'
             },
             success: function (res) {
-                wx.showToast({
-                    title: '提交成功',
-                    duration: 1000
-                });
-                wx.navigateBack({
-                    delta: 1
-                });
+                if (res.data.code == 0) {
+                    wx.showToast({
+                        title: '提交成功',
+                        duration: 1000
+                    });
+                    wx.navigateBack({
+                        delta: 1
+                    });
+                } else {
+                    wx.showToast({
+                        title: res.data.msg,
+                        duration: 1000
+                    });
+                }
             }
         });
     },

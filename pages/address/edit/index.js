@@ -64,7 +64,9 @@ Page({
 		wx.request({
 			url: App.globalData.host + 'address/' + id,
 			method: 'GET',
-			data: {},
+			data: {
+				sessionId: App.globalData.sessionId
+			},
 			header: {
 				'Accept': 'application/json'
 			},
@@ -97,8 +99,8 @@ Page({
 	},
 	submitForm(e) {
 		let that = this;
-		const params = e.detail.value
-		const id = this.data.id
+		const params = e.detail.value;
+		params.id = this.data.id;
 		if (!this.WxValidate.checkForm(e)) {
 			const error = this.WxValidate.errorList[0]
 			wx.showModal({
@@ -110,18 +112,28 @@ Page({
 		}
 		params.is_def = params.is_def ? 1 : 0;
 		wx.request({
-			url: App.globalData.host + 'address/' + id,
-			method: 'PUT',
+			url: App.globalData.host + 'address/edit',
+			method: 'POST',
 			data: params,
 			header: {
-				'content-type': 'application/x-www-form-urlencoded',
+				SESSIONID: App.globalData.sessionId,
 				'Accept': 'application/json'
 			},
 			success: function (res) {
-				wx.showToast({
-					title: '修改成功',
-					duration: 1000
-				});
+				if (res.data.code == 0) {
+					wx.showToast({
+						title: '修改成功',
+						duration: 1000
+					});
+					wx.navigateBack({
+						delta: 1
+					});
+				} else {
+					wx.showToast({
+						title: res.data.msg,
+						duration: 1000
+					});
+				}
 			}
 		});
 
@@ -132,19 +144,29 @@ Page({
 			url: App.globalData.host + 'address/' + that.data.id,
 			method: 'DELETE',
 			data: {
+				sessionId: App.globalData.sessionId
 			},
 			header: {
+				SESSIONID: App.globalData.sessionId,
 				'content-type': 'application/x-www-form-urlencoded',
 				'Accept': 'application/json'
 			},
 			success: function (res) {
-				wx.showToast({
-					title: '修改成功',
-					duration: 1000
-				});
-				wx.navigateBack({
-					delta: 1
-				});
+
+				if (res.data.code == 0) {
+					wx.showToast({
+						title: '删除成功',
+						duration: 1000
+					});
+					wx.navigateBack({
+						delta: 1
+					});
+				} else {
+					wx.showToast({
+						title: res.data.msg,
+						duration: 1000
+					});
+				}
 			}
 		});
 	},

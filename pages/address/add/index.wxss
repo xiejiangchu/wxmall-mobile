@@ -1,1 +1,4 @@
 /* pages/pages/address/add/index.wxss */
+.weui-btn{
+    background: "#479de6";
+}
