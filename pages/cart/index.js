@@ -21,6 +21,12 @@ Page({
             ],
         },
     },
+     onShareAppMessage: function () {
+        return {
+            title: '月都商城',
+            path: '/page/cart/index'
+        }
+    },
     bindtap: function (e) {
         const index = e.currentTarget.dataset.index
         switch (index) {

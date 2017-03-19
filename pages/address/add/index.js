@@ -86,32 +86,22 @@ Page({
 				'Accept': 'application/json'
 			},
 			success: function (res) {
-				wx.showToast({
-					title: '增加成功',
-					duration: 1000
-				});
-				that.setData({
-					form: {
-						receiver: res.data.data.receiver,
-						gender: res.data.data.gender,
-						mobile: res.data.data.mobile,
-						city: res.data.data.city,
-						district: res.data.data.district,
-						road: res.data.data.road,
-						address: res.data.data.address,
-						is_def: res.data.data.is_def
-					}
-				})
+				if (res.data.code == 0) {
+					wx.showToast({
+						title: '增加成功',
+						duration: 1000
+					});
+					wx.navigateBack({
+						delta: 1
+					});
+				} else {
+					wx.showToast({
+						title: res.data.msg,
+						duration: 1000
+					});
+				}
 			}
 		});
 
-	},
-	showToast(message) {
-		App.WxService.showToast({
-			title: message,
-			icon: 'success',
-			duration: 1500,
-		})
-			.then(() => App.WxService.navigateBack())
 	}
 })

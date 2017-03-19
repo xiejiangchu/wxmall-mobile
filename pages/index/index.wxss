@@ -31,7 +31,9 @@ swiper-item image {
     overflow: hidden;
 }
 
-
+.text-unit-market{
+	text-decoration:line-through;
+}
 
 .choice_box {
     padding: 0 10rpx;

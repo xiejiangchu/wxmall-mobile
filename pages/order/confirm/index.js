@@ -75,29 +75,13 @@ Page({
             message: message
         })
     },
-    showModal() {
-        wx.showModal({
-            title: '友情提示',
-            showCancel: true,
-            cancelText: '取消',
-            content: '没有收货地址，请设置',
-            success: function () {
-                wx.redirectTo({ url: '/pages/address/add/index' })
-            },
-            fail: function () {
-                wx.navigateBack({
-                    delta: 1
-                })
-            },
-            complete: function () {
-
-            }
-        });
-    },
     selectBonus() {
-        wx.redirectTo({
-            url: '/pages/bonus/select/index?min=' + this.data.carts.totalAmount
-        })
+        if (this.data.bonusCount > 0) {
+            wx.redirectTo({
+                url: '/pages/bonus/select/index?min=' + this.data.carts.totalAmount
+            })
+        }
+
     },
     addOrder() {
         const params = {

@@ -63,7 +63,6 @@ Page({
   },
   initData() {
     let type = (this.data.params && this.data.params.type) || '10';
-
     this.setData({
       params: {
         sessionId: App.globalData.sessionId,
@@ -84,24 +83,27 @@ Page({
         'Accept': 'application/json'
       },
       success: function (res) {
+        wx.stopPullDownRefresh() //停止下拉刷新
         res.data.data.list.forEach(function (item, index) {
           item.created_at = App.dateFormat(item.created_at, 'yyyy-MM-dd');
         });
         that.setData({
           paginate: res.data.data,
           'prompt.hidden': res.data.data.size
-        })
+        });
+      },
+      fail: function () {
+        wx.stopPullDownRefresh() //停止下拉刷新
       }
     });
   },
   onPullDownRefresh() {
-    console.info('onPullDownRefresh')
     this.initData();
     this.getList();
   },
   onReachBottom() {
-    console.info('onReachBottom')
     if (!this.data.paginate || !this.data.paginate.hasNextPage) return
+    this.data.params.pageNum = this.data.paginate.nextPage;
     this.getList();
   },
   handlerStart(e) {
@@ -143,7 +145,7 @@ Page({
             this.setData({ activeTab: ++activeTab })
           }
         } else {
-          if (activeTab > 0) {
+          if (activeTab > 5) {
             this.setData({ activeTab: --activeTab })
           }
         }
@@ -183,7 +185,6 @@ Page({
     this.getList();
   },
   handlerTabTap(e) {
-    console.log(e.currentTarget.dataset.type);
     this._updateSelectedPage(e.currentTarget.dataset.index, e.currentTarget.dataset.type);
   },
   checkDetail(e) {
@@ -216,22 +217,32 @@ Page({
     let that = this;
     wx.request({
       url: App.globalData.host + 'order/pay',
-      method: 'GET',
+      method: 'POST',
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
       data: {
+        sessionId: App.globalData.sessionId,
         oid: e.currentTarget.dataset.oid
       },
-      header: {
-        'Accept': 'application/json'
-      },
       success: function (res) {
-        if (res.data.code == 0) {
-          wx.showToast({
-            title: '取消成功',
-            duration: 1000
-          });
-        }
+        that.requestPayment(res.data);
       }
     });
+  },
+  //申请支付
+  requestPayment: function (obj) {
+    wx.requestPayment({
+      'timeStamp': obj.timeStamp,
+      'nonceStr': obj.nonceStr,
+      'package': obj.package,
+      'signType': obj.signType,
+      'paySign': obj.paySign,
+      'success': function (res) {
+      },
+      'fail': function (res) {
+      }
+    })
   },
   cancel(e) {
     let that = this;

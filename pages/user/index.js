@@ -47,6 +47,32 @@ Page({
 			},
 		]
 	},
+	onShareAppMessage: function () {
+		return {
+			title: '月都商城',
+			path: '/page/user/index'
+		}
+	},
+	onPullDownRefresh() {
+		var that = this;
+		wx.request({
+			url: App.globalData.host + 'order/orderCount',
+			method: 'GET',
+			data: {
+				sessionId: App.globalData.sessionId
+			},
+			header: {
+				SESSIONID: App.globalData.sessionId,
+				'Accept': 'application/json'
+			},
+			success: function (res) {
+				wx.stopPullDownRefresh() //停止下拉刷新
+				that.setData({
+					orderCount: res.data.data
+				})
+			}
+		});
+	},
 	onLoad() {
 		let that = this;
 		App.getUserInfo(function (globalData) {
@@ -68,6 +94,7 @@ Page({
 				'Accept': 'application/json'
 			},
 			success: function (res) {
+				wx.stopPullDownRefresh() //停止下拉刷新
 				that.setData({
 					orderCount: res.data.data
 				})

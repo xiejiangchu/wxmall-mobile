@@ -15,8 +15,8 @@
             </view>
             <view class="text-unit-container " wx:for="{{ item.itemSpecList }}" wx:for-item="itemSpec" wx:key="id">
               <text class='text-unit-shop'>
-                <text class="text-unit-market">{{ itemSpec.market_price+'元/'+itemSpec.unit }}</text>
-                <text class='color-red'>{{ itemSpec.shop_price+'元/'+itemSpec.unit }}  </text>
+                <text class="text-unit-market">{{ itemSpec.market_price }}/{{itemSpec.unit_sell}}{{itemSpec.unit}}</text>
+                <text class='color-red'>{{ itemSpec.shop_price }}/{{itemSpec.unit_sell}}{{itemSpec.unit}}</text>
                 <text class='color-primary'>销量:{{itemSpec.sale_num}}</text>
               </text>
             </view>

@@ -6,7 +6,7 @@ App({
   globalData: {
     // host: 'http://119.23.17.74:8090/',
     // host: 'http://192.168.10.2:8090/',
-    host: 'http://127.0.0.1:8090/',
+    host: 'http://192.168.10.2:8090/',
     // host: 'https://shop.vrspring.com/',
     img_host: 'http://wxmall.image.alimmdn.com/',
     userInfo: null,
@@ -15,16 +15,64 @@ App({
     iv: null
   },
   onLaunch: function () {
-    console.log('App Launch')
     //调用API从本地缓存中获取数据
     var logs = wx.getStorageSync('logs') || []
     logs.unshift(Date.now())
-    wx.setStorageSync('logs', logs)
+    wx.setStorageSync('logs', logs);
+
+    let that = this;
+    let sessionId = wx.getStorageSync('sessionId');
+    if (sessionId) {
+      wx.request({
+        url: that.globalData.host + 'user/login',
+        method: 'GET',
+        data: {
+          sessionId: sessionId
+        },
+        header: {
+          'Accept': 'application/json'
+        },
+        success: function (res) {
+          if (res.data.code == 0) {
+            that.globalData.sessionId = res.data.data.sessionId;
+            that.globalData.uid = res.data.data.uid;
+          } else {
+            that.getUserInfo(function (userInfo) {
+              that.get3rdSession();
+            });
+          }
+        }
+      })
+    } else {
+      that.getUserInfo(function (userInfo) {
+        that.get3rdSession();
+      });
+    }
+  },
+  get3rdSession: function () {
+    let that = this
+    wx.request({
+      url: that.globalData.host + 'user/get3rdSession',
+      method: 'GET',
+      data: {
+        code: that.globalData.wxcode,
+        encryptedData: that.globalData.encryptedData,
+        iv: that.globalData.iv
+      },
+      header: {
+        'Accept': 'application/json'
+      },
+      success: function (res) {
+        that.globalData.sessionId = res.data.data.sessionId;
+        that.globalData.uid = res.data.data.uid;
+        wx.setStorageSync('sessionId', res.data.data.sessionId);
+      }
+    })
   },
   getUserInfo: function (cb) {
     var that = this
     if (this.globalData.userInfo) {
-      typeof cb == "function" && cb(this.globalData.userInfo)
+      typeof cb == "function" && cb(this.globalData)
     } else {
       //调用登录接口
       wx.login({
@@ -35,7 +83,7 @@ App({
               //获取用户敏感数据密文和偏移向量
               that.globalData.encryptedData = res.encryptedData;
               that.globalData.iv = res.iv;
-              that.globalData.userInfo = res.userInfo
+              that.globalData.userInfo = res.userInfo;
               typeof cb == "function" && cb(that.globalData)
             }
           })
@@ -44,10 +92,9 @@ App({
     }
   },
   onShow: function () {
-    console.log('App Show')
+
   },
   onHide: function () {
-    console.log('App Hide')
   },
 
   dateFormat: function (date, format) {

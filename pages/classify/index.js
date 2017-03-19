@@ -14,6 +14,12 @@ Page({
             pageSize: 10
         }
     },
+     onShareAppMessage: function () {
+        return {
+            title: '月都商城',
+            path: '/page/classify/index'
+        }
+    },
     onLoad: function () {
         var that = this;
         wx.request({
