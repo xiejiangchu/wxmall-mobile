@@ -23,10 +23,10 @@ Page({
         cateid: null,  //一级分类id
         subcateindex: 0, //二级分类索引
         subcateid: null, //二级分类id
-        areaindex: 0,  //一级城市索引
-        areaid: null,  //一级城市id
-        subareaindex: 0,  //二级城市索引
-        subareaid: null, //二级城市id
+        sellindex: 0,  //一级城市索引
+        sellid: null,  //一级城市id
+        subsellindex: 0,  //二级城市索引
+        subsellid: null, //二级城市id
     },
     swiperchange(e) {
         // console.log(e.detail.current)
@@ -34,7 +34,7 @@ Page({
     onLoad() {
         this.fetchFilterData();
         //banner
-        var that = this;
+        let that = this;
         wx.request({
             url: App.globalData.host + 'banner/list',
             method: 'GET',
@@ -66,7 +66,6 @@ Page({
                 })
             }
         });
-
     },
     onShow() {
 
@@ -138,61 +137,82 @@ Page({
                 "cate": [
                     {
                         "id": 0,
-                        "title": "全部"
+                        "title": "推荐排序"
                     },
                     {
                         "id": 1,
-                        "title": "按名称顺序"
-                    },
-                    {
-                        "id": 1,
-                        "title": "按名称倒序"
-                    },
-                    {
-                        "id": 1,
-                        "title": "价格由低到高"
+                        "title": "按商品名称",
+                        "cate_two": [
+                            {
+                                "id": 11,
+                                "title": "字典正序",
+                            },
+                            {
+                                "id": 10,
+                                "title": "字典反序",
+                            }
+                        ]
                     },
                     {
                         "id": 2,
-                        "title": "价格由高到低"
-                    }
-                ],
-                "area": [
-                    {
-                        "id": 0,
-                        "name": "全城"
+                        "title": "按上架时间",
+                        "cate_two": [
+                            {
+                                "id": 21,
+                                "title": "由新到旧",
+                            },
+                            {
+                                "id": 20,
+                                "title": "由旧到新",
+                            }
+                        ]
                     },
                     {
-                        "id": 12,
-                        "name": "黄浦区",
-                        "zone": [
+                        "id": 3,
+                        "title": "按商品类别",
+                        "cate_two": [
                             {
-                                "id": 0,
-                                "name": "全部"
+                                "id": 21,
+                                "title": "由低到高",
                             },
                             {
-                                "id": 38,
-                                "name": "董家渡"
+                                "id": 20,
+                                "title": "由高到低",
+                            }
+                        ]
+                    }
+
+                ],
+                "sell": [
+                    {
+                        "id": 7,
+                        "name": "不限"
+                    },
+                    {
+                        "id": 8,
+                        "title": "按价格",
+                        "cate_two": [
+                            {
+                                "id": 21,
+                                "title": "由高到低",
                             },
                             {
-                                "id": 39,
-                                "name": "外滩"
+                                "id": 20,
+                                "title": "由低到高",
+                            }
+                        ]
+                    },
+                    {
+                        "id": 9,
+                        "name": "销量",
+                        "cate_two": [
+                            {
+                                "id": 91,
+                                "name": "由高到低"
                             },
                             {
-                                "id": 40,
-                                "name": "城隍庙"
-                            },
-                            {
-                                "id": 41,
-                                "name": "老西门"
-                            },
-                            {
-                                "id": 42,
-                                "name": "南京东路"
-                            },
-                            {
-                                "id": 43,
-                                "name": "人民广场"
+                                "id": 90,
+                                "name": "由低到高"
                             }
                         ]
                     }
@@ -223,34 +243,34 @@ Page({
             cateindex: dataset.cateindex,
             cateid: dataset.cateid,
             subcateindex: d.cateindex == dataset.cateindex ? d.subcateindex : 0
-        })
-        console.log('商家分类：一级id__' + this.data.cateid + ',二级id__' + this.data.subcateid);
+        });
     },
     setSubcateIndex: function (e) { //分类二级索引
         const dataset = e.currentTarget.dataset;
         this.setData({
             subcateindex: dataset.subcateindex,
             subcateid: dataset.subcateid,
-        })
+        });
+        this.hideFilter();
         console.log('商家分类：一级id__' + this.data.cateid + ',二级id__' + this.data.subcateid);
     },
-    setAreaIndex: function (e) { //地区一级索引
+    setSellIndex: function (e) { //地区一级索引
         const d = this.data;
         const dataset = e.currentTarget.dataset;
         this.setData({
-            areaindex: dataset.areaindex,
-            areaid: dataset.areaid,
-            subareaindex: d.areaindex == dataset.areaindex ? d.subareaindex : 0
+            sellindex: dataset.sellindex,
+            sellid: dataset.sellid,
+            subsellindex: d.sellindex == dataset.sellindex ? d.subsellindex : 0
         })
-        console.log('所在地区：一级id__' + this.data.areaid + ',二级id__' + this.data.subareaid);
+        console.log('所在地区：一级id__' + this.data.sellid + ',二级id__' + this.data.subsellid);
     },
-    setSubareaIndex: function (e) { //地区二级索引
+    setSubsellIndex: function (e) { //地区二级索引
         const dataset = e.currentTarget.dataset;
         this.setData({
-            subareaindex: dataset.subareaindex,
-            subareaid: dataset.subareaid,
+            subsellindex: dataset.subsellindex,
+            subsellid: dataset.subsellid,
         })
-        console.log('所在地区：一级id__' + this.data.areaid + ',二级id__' + this.data.subareaid);
+        console.log('所在地区：一级id__' + this.data.sellid + ',二级id__' + this.data.subsellid);
     },
     hideFilter: function () { //关闭筛选面板
         this.setData({

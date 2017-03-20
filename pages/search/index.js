@@ -38,12 +38,8 @@ Page({
                 'Accept': 'application/json'
             },
             success: function (res) {
+                wx.stopPullDownRefresh();
                 let paginat_n = res.data.data;
-                if (!paginat_n.isFirstPage) {
-                    paginat_n.list = paginat_n.list.concat(that.data.paginate.list);
-                } else {
-                    paginat_n = res.data.data;
-                }
                 that.setData({
                     paginate: paginat_n,
                     list: res.data.data.list,
@@ -54,13 +50,13 @@ Page({
     },
     onPullDownRefresh() {
         this.data.pageNum = 1;
-        this.getMore(1);
+        this.search();
     },
     onReachBottom() {
         if (!this.data.paginate.hasNextPage) {
             return;
         }
-        this.getMore(this.data.paginate.hasNextPage);
+        this.getMore(this.data.paginate.nextPage);
     },
     getMore(page) {
         let that = this;
@@ -78,17 +74,16 @@ Page({
                 'Accept': 'application/json'
             },
             success: function (res) {
-
                 let paginat_n = res.data.data;
                 if (!paginat_n.isFirstPage) {
-                    paginat_n.list = paginat_n.list.concat(that.data.paginate.list);
+                    paginat_n.list = that.data.paginate.list.concat(paginat_n.list);
                 } else {
                     paginat_n = res.data.data;
                 }
                 that.setData({
                     paginate: paginat_n,
-                    list: res.data.data.list,
-                    'prompt.hidden': res.data.data.list.length
+                    list: paginat_n.list,
+                    'prompt.hidden': paginat_n.list.length
                 });
                 wx.stopPullDownRefresh();
             }

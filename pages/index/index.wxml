@@ -22,11 +22,11 @@
     </block>
   </swiper>
 </view>
-<view class="container" style='margin-top:20px;'>
+<view class="container">
   <view class="filter-flex">
     <view class="filter-tab">
       <text bindtap="setFilterPanel" data-findex="1" class="{{showfilterindex==1?'active':''}}">　商品排序</text>
-      <text bindtap="setFilterPanel" data-findex="2" class="{{showfilterindex==2?'active':''}}">所在地区</text>
+      <text bindtap="setFilterPanel" data-findex="2" class="{{showfilterindex==2?'active':''}}">规格排序</text>
     </view>
     <view class="filter-content" wx:if="{{showfilter}}">
       <view class="filter-panel" wx:if="{{showfilterindex==1}}">
@@ -39,10 +39,10 @@
       </view>
       <view class="filter-panel" wx:if="{{showfilterindex==2}}">
         <view class="filter-panel-left">
-          <view wx:for="{{filterdata.area}}" wx:key="{{item.id}}" bindtap="setAreaIndex" data-areaindex="{{index}}" data-areaid="{{item.id}}" class="{{areaindex==index?'active':''}}">{{item.name}}</view>
+          <view wx:for="{{filterdata.sell}}" wx:key="{{item.id}}" bindtap="setSellIndex" data-sellindex="{{index}}" data-sellid="{{item.id}}" class="{{sellindex==index?'active':''}}">{{item.name}}</view>
         </view>
         <view class="filter-panel-right">
-          <view wx:for="{{filterdata.area[areaindex].zone}}" wx:key="{{item.id}}" bindtap="setSubareaIndex" data-subareaindex="{{index}}" data-subareaid="{{item.id}}" class="{{subareaindex==index?'active':''}}">{{item.name}}</view>
+          <view wx:for="{{filterdata.sell[sellindex].cate_two}}" wx:key="{{item.id}}" bindtap="setSubsellIndex" data-subsellindex="{{index}}" data-subsellid="{{item.id}}" class="{{subsellindex==index?'active':''}}">{{item.name}}</view>
         </view>
       </view>
     </view>
