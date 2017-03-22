@@ -148,7 +148,7 @@ Page({
                 });
             },
             fail: function () {
-
+                wx.stopPullDownRefresh();
             },
             complete: function () {
 
@@ -191,7 +191,10 @@ Page({
                 });
             },
             fail: function () {
-
+                wx.showToast({
+                    title: '服务器错误',
+                    duration: 1000
+                });
             },
             complete: function () {
 
@@ -242,6 +245,15 @@ Page({
                 });
                 App.OrderMap.set('orderData.items', this.data.carts.items);
                 wx.stopPullDownRefresh();
+            },
+            fail: function () {
+                wx.showToast({
+                    title: '服务器错误',
+                    duration: 1000
+                });
+            },
+            complete: function () {
+
             }
         });
     },

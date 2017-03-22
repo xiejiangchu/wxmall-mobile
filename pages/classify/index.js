@@ -14,7 +14,7 @@ Page({
             pageSize: 10
         }
     },
-     onShareAppMessage: function () {
+    onShareAppMessage: function () {
         return {
             title: '月都商城',
             path: '/page/classify/index'
@@ -37,6 +37,16 @@ Page({
                     'params.cid2': res.data.data[0].cid2List[0].id
                 })
                 that.initData();
+            },
+            fail: function () {
+                wx.stopPullDownRefresh() //停止下拉刷新
+                wx.showToast({
+                    title: '服务器错误',
+                    duration: 1000
+                });
+            },
+            complete: function () {
+
             }
         });
     },
@@ -55,6 +65,16 @@ Page({
                     navRightItems: res.data.data.list
                 });
                 wx.stopPullDownRefresh()
+            },
+            fail: function () {
+                wx.stopPullDownRefresh() //停止下拉刷新
+                wx.showToast({
+                    title: '服务器错误',
+                    duration: 1000
+                });
+            },
+            complete: function () {
+
             }
         });
     },

@@ -94,6 +94,13 @@ Page({
       },
       fail: function () {
         wx.stopPullDownRefresh() //停止下拉刷新
+        wx.showToast({
+          title: '服务器错误',
+          duration: 1000
+        });
+      },
+      complete: function () {
+
       }
     });
   },
@@ -206,10 +213,27 @@ Page({
         'Accept': 'application/json'
       },
       success: function (res) {
+        if (res.data.code == 0) {
+          wx.showToast({
+            title: '加入成功',
+            duration: 1000
+          });
+        } else {
+          wx.showToast({
+            title: res.data.msg,
+            duration: 1000
+          });
+        }
+      },
+      fail: function () {
+        wx.stopPullDownRefresh() //停止下拉刷新
         wx.showToast({
-          title: '加入成功',
+          title: '服务器错误',
           duration: 1000
         });
+      },
+      complete: function () {
+
       }
     });
   },

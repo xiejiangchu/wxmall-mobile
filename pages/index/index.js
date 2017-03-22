@@ -161,6 +161,15 @@ Page({
                     paginate: paginat_n,
                     'prompt.hidden': res.data.data.list.length
                 })
+            },
+            fail: function () {
+                wx.showToast({
+                    title: '服务器错误',
+                    duration: 1000
+                });
+            },
+            complete: function () {
+
             }
         })
     },
@@ -378,6 +387,15 @@ Page({
                         duration: 1000
                     });
                 }
+            },
+            fail: function () {
+                wx.showToast({
+                    title: '服务器错误',
+                    duration: 1000
+                });
+            },
+            complete: function () {
+
             }
         });
     },
@@ -423,6 +441,15 @@ Page({
                         duration: 1000
                     });
                 }
+            },
+            fail: function () {
+                wx.showToast({
+                    title: '服务器错误',
+                    duration: 1000
+                });
+            },
+            complete: function () {
+
             }
         });
     },

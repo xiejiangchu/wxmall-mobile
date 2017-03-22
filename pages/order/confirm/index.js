@@ -20,18 +20,17 @@ Page({
         }
     },
     onLoad(option) {
-        let now = new Date();
-        let day_end = now.setDate(now.getDate() + 7);
         this.setData({
             bonus: App.OrderMap.get('orderData.bonus') | null,
             address: App.OrderMap.get('orderData.address'),
+            date: App.dateFormat(App.OrderMap.get('orderData.orderCheckDto').date_start, 'yyyy/MM/dd'),
             date_start: App.dateFormat(App.OrderMap.get('orderData.orderCheckDto').date_start, 'yyyy/MM/dd'),
             date_end: App.dateFormat(App.OrderMap.get('orderData.orderCheckDto').date_end, 'yyyy/MM/dd'),
             time_start: App.OrderMap.get('orderData.orderCheckDto').time_start,
             time_end: App.OrderMap.get('orderData.orderCheckDto').time_end,
             bonusCount: App.OrderMap.get('orderData.orderCheckDto').bonusCount
         });
-        
+
 
         let carts = {
             items: App.OrderMap.get('orderData.items'),
@@ -119,6 +118,16 @@ Page({
                         duration: 1000
                     });
                 }
+            },
+            fail: function () {
+                wx.stopPullDownRefresh() //停止下拉刷新
+                wx.showToast({
+                    title: '服务器错误',
+                    duration: 1000
+                });
+            },
+            complete: function () {
+
             }
         });
     },

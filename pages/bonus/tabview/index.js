@@ -19,10 +19,7 @@ Page({
     },
     activeTab: 0,
     order: {},
-    params: {
-      pageNum: 1,
-      pageSize: 10,
-    },
+    type: null,
     prompt: {
       hidden: !0,
       icon: '/assets/images/iconfont-order-default.png',
@@ -41,26 +38,52 @@ Page({
       this.tabsCount = tabs.length;
     } catch (e) {
     }
-    this.onPullDownRefresh(0);
-  },
-  initData() {
     let type = (this.data.params && this.data.params.type) || '10';
-
     this.setData({
-      params: {
-        pageNum: 1,
-        pageSize: 10,
-        type: type,
-      }
+      type: type
     })
+    this.getList();
   },
   getList() {
     let that = this;
     wx.request({
       url: App.globalData.host + 'bonus/list',
       method: 'GET',
-      data: that.data.params,
+      data: {
+        type: that.data.type,
+        pageNum: 1,
+        pageSize: 10,
+        sessionId: App.globalData.sessionId
+      },
       header: {
+        SESSIONID: App.globalData.sessionId,
+        'Accept': 'application/json'
+      },
+      success: function (res) {
+        res.data.data.list.forEach(function (item, index) {
+          item.start_at = App.dateFormat(item.start_at, 'yyyy-MM-dd');
+          item.end_at = App.dateFormat(item.end_at, 'yyyy-MM-dd');
+        });
+        that.setData({
+          paginate: res.data.data,
+          'prompt.hidden': res.data.data.size
+        })
+      }
+    })
+  },
+  getListMore(page) {
+    let that = this;
+    wx.request({
+      url: App.globalData.host + 'bonus/list',
+      method: 'GET',
+      data: {
+        type: that.data.type,
+        pageNum: page,
+        pageSize: 10,
+        sessionId: App.globalData.sessionId
+      },
+      header: {
+        SESSIONID: App.globalData.sessionId,
         'Accept': 'application/json'
       },
       success: function (res) {
@@ -76,14 +99,11 @@ Page({
     })
   },
   onPullDownRefresh() {
-    console.info('onPullDownRefresh')
-    this.initData();
     this.getList();
   },
   onReachBottom() {
-    console.info('onReachBottom')
     if (!this.data.paginate || !this.data.paginate.hasNextPage) return
-    this.getList();
+    this.getListMore(this.data.paginate.nextpage);
   },
   handlerStart(e) {
     let {clientX, clientY} = e.touches[0];
