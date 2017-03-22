@@ -276,8 +276,5 @@ Page({
             amount: amount + 1,
             spec: spec
         })
-    },
-    onHide() {
-
     }
 })

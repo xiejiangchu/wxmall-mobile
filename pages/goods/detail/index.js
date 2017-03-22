@@ -7,7 +7,7 @@ Page({
         autoplay: !1,
         interval: 3000,
         duration: 1000,
-        id: 24113,
+        id: 0,
         item: {},
         spec: {
             tid: -1,
@@ -118,6 +118,15 @@ Page({
                 });
                 App.OrderMap.set('orderData.items', res.data.data);
                 that.initNumber();
+            },
+            fail: function () {
+                wx.showToast({
+                    title: '服务器错误',
+                    duration: 1000
+                });
+            },
+            complete: function () {
+
             }
         });
     },
@@ -186,7 +195,23 @@ Page({
                     'spec.index': 0
                 });
                 that.initNumber();
+            },
+            fail: function () {
+                wx.showToast({
+                    title: '服务器错误',
+                    duration: 1000
+                });
+            },
+            complete: function () {
+
             }
         });
+    },
+    onShareAppMessage: function () {
+        return {
+            title: '月都商城',
+            desc: this.data.item.name,
+            path: '/pages/goods/detail/index?id=' + this.data.id
+        }
     }
 })
