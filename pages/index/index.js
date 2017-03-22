@@ -15,6 +15,7 @@ Page({
         prompt: {
             hidden: 0,
         },
+        'cartMap': {},
 
         filterdata: {},  //筛选条件数据
         showfilter: false, //是否显示下拉筛选
@@ -68,7 +69,59 @@ Page({
         });
     },
     onShow() {
-
+        this.setData({
+            'cart.items': wx.getStorageSync('orderData.items')
+        });
+        this.getCart();
+    },
+    onHide() {
+        if (this.data.carts && this.data.carts.items) {
+            wx.setStorageSync('orderData.items', this.data.carts.items);
+        }
+    },
+    getCart() {
+        var that = this;
+        wx.request({
+            url: App.globalData.host + 'cart/item/',
+            method: 'GET',
+            data: {
+                sessionId: App.globalData.sessionId
+            },
+            header: {
+                SESSIONID: App.globalData.sessionId,
+                'Accept': 'application/json'
+            },
+            success: function (res) {
+                let total = 0;
+                res.data.data.forEach(function (item, index) {
+                    item.total = item.amount * item.itemSpec.shop_price;
+                    item.total = item.total.toFixed(2);
+                    total += item.amount * item.itemSpec.shop_price
+                });
+                that.setData({
+                    'carts.items': res.data.data,
+                    'prompt.hidden': res.data.data.length == 0 ? false : true,
+                    'carts.total': total.toFixed(2)
+                });
+                that.initNumber();
+                wx.stopPullDownRefresh();
+            }
+        });
+    },
+    initNumber() {
+        let that = this;
+        that.setData({
+            'spec.amount': 0
+        });
+        let cartMap = {};
+        if (this.data.cart.items && this.data.cart.items.length > 0) {
+            this.data.cart.items.forEach(function (item, index) {
+                cartMap[item.gid + "_" + item.spec] = item.amount;
+            });
+            that.setData({
+                'cartMap': cartMap
+            });
+        }
     },
     navigateTo(e) {
         wx.navigateTo(
@@ -281,7 +334,96 @@ Page({
     onShareAppMessage: function () {
         return {
             title: '月都商城',
-            path: '/page/index/index'
+            desc: '月都商城小程序购物',
+            path: '/pages/index/index'
         }
-    }
+    },
+    addCart(e) {
+        let gid = e.currentTarget.dataset.gid;
+        let spec = e.currentTarget.dataset.spec;
+        let index = e.currentTarget.dataset.index;
+        let amount = 1;
+        if (this.data.cartMap.hasOwnProperty(gid + "_" + spec)) {
+            amount = this.data.cartMap[gid + "_" + spec] + 1;
+        }
+        if (amount > this.data.paginate.list[index].max) {
+            amount = this.data.paginate.list[index].max;
+        }
+        if (amount < this.data.paginate.list[index].min) {
+            amount = this.data.paginate.list[index].min;
+        }
+        let that = this;
+        wx.request({
+            url: App.globalData.host + 'cart/update',
+            method: 'PUT',
+            header: {
+                SESSIONID: App.globalData.sessionId,
+                'content-type': 'application/x-www-form-urlencoded',
+                'Accept': 'application/json'
+            },
+            data: {
+                SESSIONID: App.globalData.sessionId,
+                gid: gid,
+                spec: spec,
+                amount: amount
+            },
+            success: function (res) {
+                if (res.data.code == 0) {
+                    that.setData({
+                        'cart.items': res.data.data
+                    });
+                    that.initNumber();
+                } else {
+                    wx.showToast({
+                        title: res.data.msg,
+                        duration: 1000
+                    });
+                }
+            }
+        });
+    },
+    subCart(e) {
+        let gid = e.currentTarget.dataset.gid;
+        let spec = e.currentTarget.dataset.spec;
+        let index = e.currentTarget.dataset.index;
+        let amount = 0;
+        if (this.data.cartMap.hasOwnProperty(gid + "_" + spec)) {
+            amount = this.data.cartMap[gid + "_" + spec] - 1;
+        }
+        if (amount > this.data.paginate.list[index].max) {
+            amount = this.data.paginate.list[index].max;
+        }
+        if (amount < this.data.paginate.list[index].min) {
+            amount = this.data.paginate.list[index].min;
+        }
+        let that = this;
+        wx.request({
+            url: App.globalData.host + 'cart/update',
+            method: 'PUT',
+            header: {
+                SESSIONID: App.globalData.sessionId,
+                'content-type': 'application/x-www-form-urlencoded',
+                'Accept': 'application/json'
+            },
+            data: {
+                SESSIONID: App.globalData.sessionId,
+                gid: gid,
+                spec: spec,
+                amount: amount
+            },
+            success: function (res) {
+                if (res.data.code == 0) {
+                    that.setData({
+                        'cart.items': res.data.data
+                    });
+                    that.initNumber();
+                } else {
+                    wx.showToast({
+                        title: res.data.msg,
+                        duration: 1000
+                    });
+                }
+            }
+        });
+    },
 })

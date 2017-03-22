@@ -6,9 +6,7 @@
       </swiper-item>
     </block>
   </swiper>
-  <view class="line-seprate"></view>
   <view class='item-no'>{{ item.no }}</view>
-  <view class="line-seprate"></view>
   <view class="wa-row bg-white name-container">
     <view class="wa-grid-50 center-all">
       <view class='text-left color-gray'>名称：</view>
@@ -17,13 +15,18 @@
     <view class="wa-grid-50 center-all">
       <view class='text-left color-gray'>产地：</view>{{ item.place }}</view>
   </view>
-  <view class="line-seprate"></view>
   <view class="bg-white btn-container">
     <view class='text-left color-gray'>规格：</view>
     <view class="btn-wrap {{spec.tid == itemSpec.id ? 'active' : ''}}" wx:for="{{ item.itemSpecList }}" wx:for-item="itemSpec" wx:for-index="index" wx:key="id" bindtap="switchType" data-tid="{{itemSpec.id}}" data-index="{{index}}">
-      <text class="color-gray" style="text-decoration:line-through;">{{ itemSpec.market_price }}/{{itemSpec.unit_sell}}{{itemSpec.unit}}</text>
-      <text class='color-red'>   {{ itemSpec.shop_price }}/{{itemSpec.unit_sell}}{{itemSpec.unit}} </text>
-      <text class='color-primary'>销量:{{itemSpec.sale_num}}</text>
+      <view class="market">
+        <text class="color-gray">{{ itemSpec.market_price }}/{{itemSpec.unit_sell}}{{itemSpec.unit}}</text>
+      </view>
+      <view class="shop">
+        <text class='color-red'> {{ itemSpec.shop_price }}/{{itemSpec.unit_sell}}{{itemSpec.unit}} </text>
+      </view>
+      <view class="sell">
+        <text class='color-primary'>销量:{{itemSpec.sale_num}}</text>
+      </view>
     </view>
   </view>
   <view class='item-summary'>
@@ -35,11 +38,11 @@
     <view class='item-summary-content'>{{ item.description }}</view>
   </view>
   <view class="operation-container">
-    <view class='operation-container-item' bindtap="subCart" >
+    <view class='operation-container-item' bindtap="subCart">
       <image src="/assets/images/iconfont_sub.png"></image>
     </view>
     <view class='operation-container-item'>
-      <input type="number" value="{{spec.amount}}" bindinput="inputTyping"/>
+      <input type="number" value="{{spec.amount}}" bindinput="inputTyping" />
     </view>
     <view class='operation-container-item' bindtap="addCart">
       <image src="/assets/images/iconfont_add.png"></image>

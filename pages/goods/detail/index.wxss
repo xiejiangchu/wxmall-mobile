@@ -30,6 +30,27 @@
 
 .name-container {
   padding: 20rpx;
+  border-top: 1px solid #479de6;
+  border-bottom: 1px solid #479de6;
+}
+
+.market text {
+  text-decoration: line-through;
+  font-size: 12px;
+}
+
+.shop text {
+  font-size: 20px;
+}
+
+.sell text {
+  font-size: 12px;
+}
+
+.line-seprate {
+  height: 1px;
+  background: #479de6;
+  width: 100%;
 }
 
 .item-summary-content {
@@ -97,7 +118,8 @@
   align-items: center;
   border: 1px solid #479de6;
 }
-.operation-container-item:nth-child(2){
+
+.operation-container-item:nth-child(2) {
   border-left: none;
   border-right: none;
 }

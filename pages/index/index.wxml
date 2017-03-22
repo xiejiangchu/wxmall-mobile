@@ -1,5 +1,5 @@
 <import src="../common/nav.wxml" />
-<import src="../common/list-index.wxml" />
+<import src="../common/prompt.wxml" />
 <view class="weui-search-bar">
   <view class="weui-search-bar__form">
     <view class="weui-search-bar__box">
@@ -48,5 +48,41 @@
     </view>
     <view class="filter-shadow" wx:if="{{showfilter}}" bindtap="hideFilter"></view>
   </view>
-  <template is="list-index" data="{{ paginate, prompt }}" />
+  <template is="prompt" data="{{ prompt }}" />
+  <view class="scroll-list">
+    <view class="weui-panel weui-panel_access" hover-class="weui-cell_active" wx:if="{{ !!paginate.list.length }}" wx:for="{{ paginate.list }}" wx:key="id" wx:for-index="index">
+      <view class="weui-panel__bd" bindtap="navigateTo" data-id="{{ item.id }}">
+        <navigator class="weui-media-box weui-media-box_appmsg">
+          <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
+            <image class="weui-media-box__thumb" src="http://wxmall.image.alimmdn.com/{{ item.thumb }}@100w_100h" />
+          </view>
+          <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
+            <view class="weui-media-box__title">{{ item.name }}</view>
+            <view class="weui-media-box__desc">
+              <text class="text-orangered">{{ item.summary }}</text>
+            </view>
+          </view>
+        </navigator>
+      </view>
+      <view class="unit-container">
+        <view class="text-unit-container" wx:for="{{ item.itemSpecList }}" wx:for-item="itemSpec" wx:key="id">
+          <text class='text-unit-shop'>
+            <text class='color-red'>¥ {{ itemSpec.shop_price }}/{{itemSpec.unit_sell}}{{itemSpec.unit}}</text>
+            <text class='color-primary' style='margin-left:8px;'>销量:{{itemSpec.sale_num}}</text>
+          </text>
+          <view class="cart-btn">
+            <view class='cart-btn-item cart-btn-item-border' bindtap="subCart" data-gid="{{ item.id }}" data-spec="{{ itemSpec.id }}" data-index="{{ index }}" wx:if="{{cartMap[item.id+'_'+itemSpec.id]>0}}">
+              <text class="cart-btn-sub"></text>
+            </view>
+            <view class='cart-btn-item' wx:if="{{cartMap[item.id+'_'+itemSpec.id]>0}}">
+              <text class="cart-number">{{cartMap[item.id+"_"+itemSpec.id]}}</text>
+            </view>
+            <view class='cart-btn-item cart-btn-item-border' bindtap="addCart" data-gid="{{ item.id }}" data-spec="{{ itemSpec.id }}" data-index="{{ index }}">
+              <text class="cart-btn-add"></text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
 </view>

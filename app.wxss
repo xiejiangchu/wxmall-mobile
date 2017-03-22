@@ -24,28 +24,6 @@ page {
   background-color: #f2f2f2;
 }
 
-.text-unit-container {
-  padding: 0rpx;
-  height: 36rpx;
-}
-
-.text-unit {
-  text-decoration: line-through;
-  font-size: 20rpx;
-  padding: 2rpx 10rpx;
-  border-radius: 15rpx;
-  color: darkgray;
-}
-
-.text-unit-shop {
-  font-size: 20rpx;
-  height: 36rpx;
-  padding: 2rpx 10rpx;
-  border: 1rpx solid #ddd;
-  border-radius: 15rpx;
-  white-space: nowrap;
-}
-
 .weui-media-box {
   padding: 20rpx;
   position: relative;
@@ -100,16 +78,4 @@ page {
   text-align: center;
   justify-content: center;
   align-content: center;
-}
-
-.line-seprate{
-  height: 1rpx;
-  background: #ddd;
-  width: 100%;
-}
-
-.line-seprate-v{
-  width: 1rpx;
-  background: #ddd;
-  height: 100%;
 }

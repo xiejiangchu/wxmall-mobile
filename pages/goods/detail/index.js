@@ -35,6 +35,9 @@ Page({
         });
         this.getDetail(this.data.id);
     },
+    onHide() {
+        wx.setStorageSync('orderData.items', this.data.carts.items);
+    },
     initNumber() {
         let that = this;
         that.setData({
@@ -65,7 +68,7 @@ Page({
                 'Accept': 'application/json'
             },
             data: {
-               SESSIONID: App.globalData.sessionId,
+                SESSIONID: App.globalData.sessionId,
                 gid: that.data.id,
                 spec: that.data.spec.tid,
                 amount: amount
@@ -74,7 +77,6 @@ Page({
                 that.setData({
                     'cart.items': res.data.data
                 });
-                wx.setStorageSync('orderData.items', );
                 that.initNumber();
             }
         });
@@ -113,7 +115,6 @@ Page({
                 that.setData({
                     'cart.items': res.data.data
                 });
-                wx.setStorageSync('orderData.items', );
                 that.initNumber();
             }
         });
@@ -152,13 +153,9 @@ Page({
                 that.setData({
                     'cart.items': res.data.data
                 });
-                wx.setStorageSync('orderData.items', res.data.data);
                 that.initNumber();
             }
         });
-    },
-    previewImage(e) {
-
     },
     switchType(e) {
         let tid = e.currentTarget.dataset.tid;

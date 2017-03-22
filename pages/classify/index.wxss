@@ -17,13 +17,15 @@ page {
   white-space: nowrap;
   align-content: center;
   justify-content: center;
+  background: white;
+  border-top: 1px solid #479de6;
   border-bottom: 1px solid #479de6;
 }
 
 .scroll-view_H .scroll-view-item_H {
   display: inline-block;
   padding: 8px;
-  color: #999;
+  color: #444;
   background: #ffffff;
 }
 
@@ -60,7 +62,7 @@ page {
   flex: 1;
   width: 75%;
   height: 100%;
-  padding: 10px;
+  padding: 2px;
   background: #fff;
   box-sizing: border-box;
   border-left: 1px solid #479de6;
@@ -69,19 +71,19 @@ page {
 .nav_right .nav_right_items {
   float: left;
   width: 33.33%;
-  height: 80px;
+  height: 120px;
   text-align: center;
 }
 
 .nav_right .nav_right_items image {
-  width: 50px;
-  height: 30px;
+  width: 75px;
+  height: 75px;
 }
 
 .nav_right .nav_right_items text {
   display: block;
-  margin-top: 5px;
-  font-size: 10px;
+  padding: 8px;
+  font-size: 14px;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;

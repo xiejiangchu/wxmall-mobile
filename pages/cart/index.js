@@ -21,7 +21,7 @@ Page({
             ],
         },
     },
-     onShareAppMessage: function () {
+    onShareAppMessage: function () {
         return {
             title: '月都商城',
             path: '/page/cart/index'
@@ -63,7 +63,6 @@ Page({
                     item.total = item.total.toFixed(2);
                     total += item.amount * item.itemSpec.shop_price
                 });
-                wx.setStorageSync('orderData.items', res.data.data);
                 that.setData({
                     'carts.items': res.data.data,
                     'prompt.hidden': res.data.data.length == 0 ? false : true,
@@ -127,7 +126,18 @@ Page({
                         'Accept': 'application/json'
                     },
                     success: function (res) {
-                        that.getCarts();
+                        let total = 0;
+                        res.data.data.forEach(function (item, index) {
+                            item.total = item.amount * item.itemSpec.shop_price;
+                            item.total = item.total.toFixed(2);
+                            total += item.amount * item.itemSpec.shop_price
+                        });
+                        that.setData({
+                            'carts.items': res.data.data,
+                            'prompt.hidden': res.data.data.length == 0 ? false : true,
+                            'carts.total': total.toFixed(2)
+                        });
+                        wx.stopPullDownRefresh();
                     }
                 });
             },
@@ -159,7 +169,18 @@ Page({
                         'Accept': 'application/json'
                     },
                     success: function (res) {
-                        that.getCarts();
+                        let total = 0;
+                        res.data.data.forEach(function (item, index) {
+                            item.total = item.amount * item.itemSpec.shop_price;
+                            item.total = item.total.toFixed(2);
+                            total += item.amount * item.itemSpec.shop_price
+                        });
+                        that.setData({
+                            'carts.items': res.data.data,
+                            'prompt.hidden': res.data.data.length == 0 ? false : true,
+                            'carts.total': total.toFixed(2)
+                        });
+                        wx.stopPullDownRefresh();
                     }
                 });
             },
@@ -180,7 +201,8 @@ Page({
         const spec = e.currentTarget.dataset.spec;
         const id = e.currentTarget.dataset.id;
         const amount = Math.abs(e.detail.value)
-        if (amount < 0 || amount > 100) return
+        if (amount < 0 || amount > 100)
+            return
         this.putCartByUser(id, {
             amount: amount,
             spec: spec
@@ -203,7 +225,18 @@ Page({
                 'Accept': 'application/json'
             },
             success: function (res) {
-                that.getCarts();
+                let total = 0;
+                res.data.data.forEach(function (item, index) {
+                    item.total = item.amount * item.itemSpec.shop_price;
+                    item.total = item.total.toFixed(2);
+                    total += item.amount * item.itemSpec.shop_price
+                });
+                that.setData({
+                    'carts.items': res.data.data,
+                    'prompt.hidden': res.data.data.length == 0 ? false : true,
+                    'carts.total': total.toFixed(2)
+                });
+                wx.stopPullDownRefresh();
             }
         });
     },
@@ -227,4 +260,7 @@ Page({
             spec: spec
         })
     },
+    onHide() {
+        wx.setStorageSync('orderData.items', this.data.carts.items);
+    }
 })
