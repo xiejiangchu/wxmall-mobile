@@ -26,7 +26,7 @@ Page({
 			{
 				icon: '/assets/images/iconfont-kefu.png',
 				text: '联系客服',
-				path: '18521708248',
+				path: '15121030453',
 			},
 			{
 				icon: '/assets/images/iconfont-help.png',

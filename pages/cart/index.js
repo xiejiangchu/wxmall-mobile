@@ -92,12 +92,18 @@ Page({
                     'Accept': 'application/json'
                 },
                 success: function (res) {
-                    wx.setStorageSync('orderData.items', res.data.data.items);
-                    wx.setStorageSync('orderData.address', res.data.data.address);
-                    wx.setStorageSync('orderData.orderCheckDto', res.data.data);
-                    wx.navigateTo({
-                        url: '/pages/order/confirm/index'
-                    })
+                    if (res.data.data.address) {
+                        wx.setStorageSync('orderData.items', res.data.data.items);
+                        wx.setStorageSync('orderData.address', res.data.data.address);
+                        wx.setStorageSync('orderData.orderCheckDto', res.data.data);
+                        wx.navigateTo({
+                            url: '/pages/order/confirm/index'
+                        })
+                    } else {
+                        wx.navigateTo({
+                            url: '/pages/address/add/index'
+                        })
+                    }
                 }
             });
     },
@@ -198,17 +204,15 @@ Page({
         })
     },
     bindKeyInput(e) {
-        const spec = e.currentTarget.dataset.spec;
-        const id = e.currentTarget.dataset.id;
-        const amount = Math.abs(e.detail.value)
-        if (amount < 0 || amount > 100)
-            return
+        let spec = e.currentTarget.dataset.spec;
+        let id = e.currentTarget.dataset.id;
+        let amount = Math.abs(e.detail.value);
         this.putCartByUser(id, {
             amount: amount,
             spec: spec
         })
     },
-    putCartByUser(id, params) {
+    putCartByUser(gid, params) {
         let that = this;
         wx.request({
             url: App.globalData.host + 'cart/update',

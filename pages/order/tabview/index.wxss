@@ -23,11 +23,12 @@
 }
 
 .stv-container .tab-bar {
-  position: relative;
+  position: absolute;
   display: flex;
   font-size: 16px;
   background: white;
   color: #666;
+  z-index: 10;
 }
 
 .stv-container .tab-bar .tab-active {
@@ -73,9 +74,17 @@
   padding-top: 200rpx;
 }
 
-.order-container{
+.order-container {
   background: white;
-  margin-top: 16px;
+  margin-top: 8px;
+}
+
+.scroll-view .order-container:first-child {
+  margin-top: 48px;
+}
+
+.scroll-view .order-container:nth-last-child(2) {
+  margin-bottom: 16px;
 }
 
 .order-top {
@@ -95,15 +104,14 @@
 }
 
 .order-content {
-  border-top: 1px solid rgba(71,157,230, 0.40);
-  border-bottom: 1px solid rgba(71,157,230, 0.40);
+  border-top: 1px solid rgba(71, 157, 230, 0.40);
+  border-bottom: 1px solid rgba(71, 157, 230, 0.40);
   padding: 16px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   font-size: 14px;
 }
-
 
 .order-content-item {
   display: flex;
@@ -131,17 +139,17 @@
   flex-direction: row;
   justify-content: flex-end;
   align-items: center;
-  border-bottom: 1px solid rgba(71,157,230, 0.40);
+  border-bottom: 1px solid rgba(71, 157, 230, 0.40);
 }
 
 .order-bottom-item {
   flex: 1;
   padding: 4px;
   font-size: 14px;
-  border-left: 1px solid rgba(71,157,230, 0.40);
+  border-left: 1px solid rgba(71, 157, 230, 0.40);
   text-align: center;
 }
 
 .order-bottom:last-child {
-  border-right: 1px solid rgba(71,157,230, 0.40);
+  border-right: 1px solid rgba(71, 157, 230, 0.40);
 }
