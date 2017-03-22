@@ -5,9 +5,9 @@ import WxValidate from 'assets/plugins/WxValidate'
 App({
   globalData: {
     // host: 'http://119.23.17.74:8090/',
-    // host: 'http://127.0.0.1:8090/',
+    host: 'http://127.0.0.1:8090/',
     // host: 'http://192.168.10.2:8090/',
-    host: 'https://shop.vrspring.com/',
+    // host: 'https://shop.vrspring.com/',
     img_host: 'http://wxmall.image.alimmdn.com/',
     userInfo: null,
     wxcode: null,
@@ -15,11 +15,6 @@ App({
     iv: null
   },
   onLaunch: function () {
-    //调用API从本地缓存中获取数据
-    var logs = wx.getStorageSync('logs') || []
-    logs.unshift(Date.now())
-    wx.setStorageSync('logs', logs);
-
     let that = this;
     let sessionId = wx.getStorageSync('sessionId');
     if (sessionId) {
@@ -119,6 +114,7 @@ App({
     return fmt;
   },
   Tools: new Tools,
+  OrderMap: new Map(),
   WxValidate: function (rules, messages) {
     return new WxValidate(rules, messages);
   }

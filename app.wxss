@@ -30,7 +30,7 @@ page {
 }
 
 .color-red {
-  color: #dd0000;
+  color: #d00;
 }
 
 .color-gray {
@@ -44,15 +44,17 @@ page {
 .color-primary {
   color: #479de6;
 }
+
 .color-yellow {
-  color: #ffffcc;
+  color: #ffc;
 }
 
-.bg-white{
+.bg-white {
   background: white;
 }
+
 .bg-red {
-  background: #dd0000;
+  background: #d00;
 }
 
 .bg-gray {
@@ -66,16 +68,28 @@ page {
 .bg-primary {
   background: #479de6;
 }
+
 .bg-yellow {
-  background: #ffffcc;
+  background: #ffc;
 }
-.bg-orange{
-  background: #FF6347;
+
+.bg-orange {
+  background: #ff6347;
 }
-.center-all{
+
+.center-all {
   display: flex;
-  flex-direction:column;
+  flex-direction: column;
   text-align: center;
   justify-content: center;
   align-content: center;
+}
+
+.clearfix:before, .container:after {
+  content: "";
+  display: table;
+}
+
+.clearfix:after {
+  clear: both;
 }

@@ -37,7 +37,8 @@
     <view class='text-left color-gray'>详情：</view>
     <view class='item-summary-content'>{{ item.description }}</view>
   </view>
-  <view class="operation-container">
+
+  <!--<view class="operation-container">
     <view class='operation-container-item' bindtap="subCart">
       <image src="/assets/images/iconfont_sub.png"></image>
     </view>
@@ -46,6 +47,17 @@
     </view>
     <view class='operation-container-item' bindtap="addCart">
       <image src="/assets/images/iconfont_add.png"></image>
+    </view>
+  </view>-->
+  <view class="cart-btn">
+    <view class='cart-btn-item cart-btn-item-border' bindtap="subCart" data-gid="{{ item.id }}" data-spec="{{ itemSpec.id }}" data-index="{{ index }}">
+      <text class="cart-btn-sub"></text>
+    </view>
+    <view class='cart-btn-item'>
+      <input class="cart-number" type="number" value="{{spec.amount}}" bindinput="inputTyping" />
+    </view>
+    <view class='cart-btn-item cart-btn-item-border' bindtap="addCart" data-gid="{{ item.id }}" data-spec="{{ itemSpec.id }}" data-index="{{ index }}">
+      <text class="cart-btn-add"></text>
     </view>
   </view>
 </view>

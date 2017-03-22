@@ -70,14 +70,12 @@ Page({
     },
     onShow() {
         this.setData({
-            'cart.items': wx.getStorageSync('orderData.items')
+            'carts.items': App.OrderMap.get('orderData.items')
         });
         this.getCart();
     },
     onHide() {
-        if (this.data.carts && this.data.carts.items) {
-            wx.setStorageSync('orderData.items', this.data.carts.items);
-        }
+
     },
     getCart() {
         var that = this;
@@ -100,27 +98,25 @@ Page({
                         total += item.amount * item.itemSpec.shop_price
                     });
                     that.setData({
-                        'carts.items': res.data.data,
-                        'prompt.hidden': res.data.data.length == 0 ? false : true,
-                        'carts.total': total.toFixed(2)
+                        'carts.items': res.data.data
                     });
+                    App.OrderMap.set('orderData.items', res.data.data);
                     that.initNumber();
                 };
-                wx.stopPullDownRefresh();
             }
         });
     },
     initNumber() {
-        let that = this;
-        that.setData({
-            'spec.amount': 0
-        });
         let cartMap = {};
-        if (this.data.cart.items && this.data.cart.items.length > 0) {
-            this.data.cart.items.forEach(function (item, index) {
+        if (this.data.carts.items && this.data.carts.items.length > 0) {
+            this.data.carts.items.forEach(function (item, index) {
                 cartMap[item.gid + "_" + item.spec] = item.amount;
             });
-            that.setData({
+            this.setData({
+                'cartMap': cartMap
+            });
+        } else {
+            this.setData({
                 'cartMap': cartMap
             });
         }
@@ -372,8 +368,9 @@ Page({
             success: function (res) {
                 if (res.data.code == 0) {
                     that.setData({
-                        'cart.items': res.data.data
+                        'carts.items': res.data.data
                     });
+                    App.OrderMap.set('orderData.items', res.data.data);
                     that.initNumber();
                 } else {
                     wx.showToast({
@@ -416,8 +413,9 @@ Page({
             success: function (res) {
                 if (res.data.code == 0) {
                     that.setData({
-                        'cart.items': res.data.data
+                        'carts.items': res.data.data
                     });
+                    App.OrderMap.set('orderData.items', res.data.data);
                     that.initNumber();
                 } else {
                     wx.showToast({

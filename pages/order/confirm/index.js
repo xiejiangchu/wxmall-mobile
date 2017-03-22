@@ -23,21 +23,22 @@ Page({
         let now = new Date();
         let day_end = now.setDate(now.getDate() + 7);
         this.setData({
-            bonus: wx.getStorageSync('orderData.bonus'),
-            address: wx.getStorageSync('orderData.address'),
-            date_start: App.dateFormat(wx.getStorageSync('orderData.orderCheckDto').date_start, 'yyyy/MM/dd'),
-            date_end: App.dateFormat(wx.getStorageSync('orderData.orderCheckDto').date_end, 'yyyy/MM/dd'),
-            time_start: wx.getStorageSync('orderData.orderCheckDto').time_start,
-            time_end: wx.getStorageSync('orderData.orderCheckDto').time_end,
-            bonusCount: wx.getStorageSync('orderData.orderCheckDto').bonusCount
+            bonus: App.OrderMap.get('orderData.bonus') | null,
+            address: App.OrderMap.get('orderData.address'),
+            date_start: App.dateFormat(App.OrderMap.get('orderData.orderCheckDto').date_start, 'yyyy/MM/dd'),
+            date_end: App.dateFormat(App.OrderMap.get('orderData.orderCheckDto').date_end, 'yyyy/MM/dd'),
+            time_start: App.OrderMap.get('orderData.orderCheckDto').time_start,
+            time_end: App.OrderMap.get('orderData.orderCheckDto').time_end,
+            bonusCount: App.OrderMap.get('orderData.orderCheckDto').bonusCount
         });
+        
 
         let carts = {
-            items: wx.getStorageSync('orderData.items'),
-            totalAmount: wx.getStorageSync('orderData.orderCheckDto').totalAmount,
+            items: App.OrderMap.get('orderData.items'),
+            totalAmount: App.OrderMap.get('orderData.orderCheckDto').totalAmount,
             bonus: 0,
             point: 0,
-            total: wx.getStorageSync('orderData.orderCheckDto').totalAmount
+            total: App.OrderMap.get('orderData.orderCheckDto').totalAmount
         }
         if (this.data.bonus) {
             carts.bonus = this.data.bonus.money;

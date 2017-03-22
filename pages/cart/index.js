@@ -1,4 +1,4 @@
-const App = getApp()
+const App = getApp();
 
 Page({
     data: {
@@ -68,7 +68,6 @@ Page({
                     'prompt.hidden': res.data.data.length == 0 ? false : true,
                     'carts.total': total.toFixed(2)
                 });
-                wx.stopPullDownRefresh();
             }
         });
     },
@@ -93,9 +92,9 @@ Page({
                 },
                 success: function (res) {
                     if (res.data.data.address) {
-                        wx.setStorageSync('orderData.items', res.data.data.items);
-                        wx.setStorageSync('orderData.address', res.data.data.address);
-                        wx.setStorageSync('orderData.orderCheckDto', res.data.data);
+                        App.OrderMap.set('orderData.items', res.data.data.items);
+                        App.OrderMap.set('orderData.address', res.data.data.address);
+                        App.OrderMap.set('orderData.orderCheckDto', res.data.data);
                         wx.navigateTo({
                             url: '/pages/order/confirm/index'
                         })
@@ -143,6 +142,7 @@ Page({
                             'prompt.hidden': res.data.data.length == 0 ? false : true,
                             'carts.total': total.toFixed(2)
                         });
+                        App.OrderMap.set('orderData.items', this.data.carts.items);
                         wx.stopPullDownRefresh();
                     }
                 });
@@ -240,6 +240,7 @@ Page({
                     'prompt.hidden': res.data.data.length == 0 ? false : true,
                     'carts.total': total.toFixed(2)
                 });
+                App.OrderMap.set('orderData.items', this.data.carts.items);
                 wx.stopPullDownRefresh();
             }
         });
@@ -265,6 +266,6 @@ Page({
         })
     },
     onHide() {
-        wx.setStorageSync('orderData.items', this.data.carts.items);
+
     }
 })

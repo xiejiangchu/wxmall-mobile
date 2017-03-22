@@ -31,12 +31,12 @@ Page({
     },
     onShow() {
         this.setData({
-            'cart.items': wx.getStorageSync('orderData.items')
+            'cart.items': App.OrderMap.get('orderData.items')
         });
         this.getDetail(this.data.id);
     },
     onHide() {
-        wx.setStorageSync('orderData.items', this.data.carts.items);
+
     },
     initNumber() {
         let that = this;
@@ -77,6 +77,7 @@ Page({
                 that.setData({
                     'cart.items': res.data.data
                 });
+                App.OrderMap.set('orderData.items', res.data.data);
                 that.initNumber();
             }
         });
@@ -115,6 +116,7 @@ Page({
                 that.setData({
                     'cart.items': res.data.data
                 });
+                App.OrderMap.set('orderData.items', res.data.data);
                 that.initNumber();
             }
         });
@@ -153,6 +155,7 @@ Page({
                 that.setData({
                     'cart.items': res.data.data
                 });
+                App.OrderMap.set('orderData.items', this.data.carts.items);
                 that.initNumber();
             }
         });

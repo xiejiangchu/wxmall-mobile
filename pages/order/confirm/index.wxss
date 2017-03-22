@@ -53,11 +53,14 @@
 .check-item-row {
   display: flex;
   justify-content: flex-start;
-  align-items: center;
+  align-items: flex-start;
 }
 
 .check-item-row .check-item-col {
   flex: 1;
+  font-size: 16px;
+  text-align: right;
+  color: #999;
 }
 
 .check-item-row .check-item-col-big {
@@ -85,12 +88,6 @@
   border-radius: 5px;
 }
 
-.check-item-row .check-item-col {
-  flex: 1;
-  font-size: 16px;
-  color: black;
-}
-
 .check-item-row .amount {
   color: #999;
 }
@@ -116,11 +113,11 @@
 
 .check-money-row .check-money-col .label {
   color: black;
-  font-size: 12px;
+  font-size: 14px;
 }
 
 .check-money-row .check-money-col .number {
-  font-size: 12px;
+  font-size: 14px;
 }
 
 .check-commit {
@@ -136,12 +133,14 @@
   color: white;
   font-size: 16px;
 }
-.time-select{
+
+.time-select {
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
 }
+
 .time-select picker {
   flex: 1;
   display: flex;

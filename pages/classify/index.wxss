@@ -61,7 +61,7 @@ page {
   right: 0;
   flex: 1;
   width: 75%;
-  height: 100%;
+  min-height: 100%;
   padding: 2px;
   background: #fff;
   box-sizing: border-box;
@@ -82,8 +82,7 @@ page {
 
 .nav_right .nav_right_items text {
   display: block;
-  padding: 8px;
-  font-size: 14px;
+  font-size: 10px;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
