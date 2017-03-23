@@ -31,6 +31,11 @@ Page({
     })
   },
   getList() {
+    wx.showToast({
+      title: '加载中...',
+      icon: 'loading',
+      duration: 10000
+    });
     let that = this;
     wx.request({
       url: App.globalData.host + 'bonus/list',
@@ -48,6 +53,12 @@ Page({
           paginate: res.data.data,
           'prompt.hidden': res.data.data.size
         })
+      },
+      fail: function () {
+        wx.stopPullDownRefresh();
+      },
+      complete: function () {
+        wx.hideToast();
       }
     })
   },

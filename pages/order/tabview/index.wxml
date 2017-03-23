@@ -12,7 +12,7 @@
     <view bindtouchstart="handlerStart" catchtouchmove="handlerMove" bindtouchcancel="handlerCancel" bindtouchend="handlerEnd" class="scroll-view-wrapper {{!stv.tStart? 'withAnimate': ''}}" style="left: -{{stv.offset}}px">
       <view style="width: {{stv.windowWidth}}px;" wx:for="{{tabs}}" wx:key="unique" class="one-scene">
         <scroll-view style="height:100%;padding-bottom:20px;" scroll-y>
-          <view class="order-container" wx:for="{{ paginate.list }}" wx:if="{{ paginate.list.length>0 }}" wx:key="id" wx:for-item="order" bindtap="navigateTo" data-id="{{ order.id }}">
+          <view class="order-container" wx:for="{{ paginate.list }}" wx:if="{{ paginate.list.length>0 }}" wx:key="id" wx:for-item="order" wx:for-index="index" bindtap="navigateTo" data-id="{{ order.id }}">
             <view class="order-top">
               <view class="order-top-left">{{ order.created_at }}</view>
               <view class="order-top-right">{{ order.statusName }}</view>
@@ -24,7 +24,7 @@
               </view>
             </view>
             <view class="order-bottom">
-              <view class="order-bottom-item" wx:if="{{ order.status==10||order.status==20 }}" catchtap="cancel" data-oid='{{order.id}}' hover-class="weui-form-preview__btn_active">取消订单</view>
+              <view class="order-bottom-item" wx:if="{{ order.status==10||order.status==20 }}" catchtap="cancel" data-oid='{{order.id}}' data-indes='{{index}}' hover-class="weui-form-preview__btn_active">取消订单</view>
               <view class="order-bottom-item" wx:if="{{ order.status==10 }}" catchtap="pay" data-oid='{{order.id}}' hover-class="weui-form-preview__btn_active">支付订单</view>
               <view class="order-bottom-item" catchtap="checkDetail" data-oid='{{order.id}}' hover-class="weui-form-preview__btn_active">查看详情</view>
               <view class="order-bottom-item" catchtap="orderMore" data-oid='{{order.id}}' hover-class="weui-form-preview__btn_active">再来一单</view>

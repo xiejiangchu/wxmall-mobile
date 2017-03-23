@@ -49,7 +49,11 @@ Page({
                 })
             }
         });
-        //list
+        wx.showToast({
+            title: '加载中...',
+            icon: 'loading',
+            duration: 10000
+        });
         wx.request({
             url: App.globalData.host + 'item/list',
             method: 'GET',
@@ -61,10 +65,23 @@ Page({
                 'Accept': 'application/json'
             },
             success: function (res) {
-                that.setData({
-                    paginate: res.data.data,
-                    'prompt.hidden': res.data.data.list.length
-                })
+                if (res.data.code == 0) {
+                    that.setData({
+                        paginate: res.data.data,
+                        'prompt.hidden': res.data.data.list.length
+                    })
+                } else {
+                    wx.showToast({
+                        title: res.data.msg,
+                        duration: 1000
+                    });
+                }
+            },
+            fail: function () {
+                wx.stopPullDownRefresh();
+            },
+            complete: function () {
+                wx.hideToast();
             }
         });
     },

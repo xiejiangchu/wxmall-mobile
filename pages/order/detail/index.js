@@ -51,7 +51,8 @@ Page({
             'fail': function (res) {
             }
         })
-    }, cancel(e) {
+    },
+    cancel(e) {
         let that = this;
         wx.showModal({
             title: '友情提示',
@@ -77,11 +78,14 @@ Page({
                                 title: '取消成功',
                                 duration: 1000
                             });
+                            wx.navigateBack({
+                                delta: 1
+                            });
                         }
                     },
                     fail: function (e) {
                         wx.showToast({
-                            title: e,
+                            title: "服务器错误",
                             duration: 1000
                         });
                     }
@@ -110,10 +114,17 @@ Page({
                 'Accept': 'application/json'
             },
             success: function (res) {
-                wx.showToast({
-                    title: '加入成功',
-                    duration: 1000
-                });
+                if (res.data.code == 0) {
+                    wx.showToast({
+                        title: '加入成功',
+                        duration: 1000
+                    });
+                } else {
+                    wx.showToast({
+                        title: res.data.msg,
+                        duration: 1000
+                    });
+                }
             }
         });
     },
@@ -134,16 +145,23 @@ Page({
             },
             success: function (res) {
                 wx.stopPullDownRefresh() //停止下拉刷新
-                let order = res.data.data;
-                order.created_at = App.dateFormat(order.created_at, 'yyyy-MM-dd HH:mm:ss')
-                that.setData({
-                    order: order
-                })
+                if (res.data.code == 0) {
+                    let order = res.data.data;
+                    order.created_at = App.dateFormat(order.created_at, 'yyyy-MM-dd HH:mm:ss')
+                    that.setData({
+                        order: order
+                    })
+                } else {
+                    wx.showToast({
+                        title: res.data.code.msg,
+                        duration: 1000
+                    });
+                }
             },
             fail: function (e) {
                 wx.stopPullDownRefresh() //停止下拉刷新
                 wx.showToast({
-                    title: e,
+                    title: '服务器错误',
                     duration: 1000
                 });
             }

@@ -20,6 +20,7 @@ Page({
         }
     },
     onLoad(option) {
+        let paymentsList = App.OrderMap.get('orderData.orderCheckDto').payments;
         this.setData({
             bonus: App.OrderMap.get('orderData.bonus') | null,
             address: App.OrderMap.get('orderData.address'),
@@ -29,6 +30,13 @@ Page({
             time_start: App.OrderMap.get('orderData.orderCheckDto').time_start,
             time_end: App.OrderMap.get('orderData.orderCheckDto').time_end,
             bonusCount: App.OrderMap.get('orderData.orderCheckDto').bonusCount
+        });
+
+        let payments = [];
+        let pids = [];
+        paymentsList.forEach(function (item, index) {
+            payments.push(item.name);
+            pids.push(item.id);
         });
 
 
@@ -44,7 +52,9 @@ Page({
             carts.total = (carts.total - carts.bonus).toFixed(2);
         }
         this.setData({
-            carts: carts
+            carts: carts,
+            payments: payments,
+            pids: pids
         })
     },
     onShow() {
@@ -84,6 +94,11 @@ Page({
 
     },
     addOrder() {
+        wx.showToast({
+            title: '提交中...',
+            icon: 'loading',
+            duration: 10000
+        });
         const params = {
             sessionId: App.globalData.sessionId,
             aid: this.data.address.id,
@@ -127,7 +142,7 @@ Page({
                 });
             },
             complete: function () {
-
+                wx.hideToast();
             }
         });
     },

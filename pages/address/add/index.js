@@ -64,6 +64,11 @@ Page({
 		})
 	},
 	submitForm(e) {
+		wx.showToast({
+			title: '提交中...',
+			icon: 'loading',
+			duration: 10000
+		});
 		let that = this;
 		const params = e.detail.value
 		const id = this.data.id
@@ -100,6 +105,11 @@ Page({
 						duration: 1000
 					});
 				}
+			},
+			fail: function () {
+			},
+			complete: function () {
+				wx.hideToast();
 			}
 		});
 

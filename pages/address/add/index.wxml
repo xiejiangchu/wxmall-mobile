@@ -32,7 +32,7 @@
         <view class="weui-label">市区</view>
       </view>
       <view class="weui-cell__bd">
-        <input name="city" value="{{ form.city }}" class="weui-input" type="tel" placeholder="宜春市" />
+        <input name="city" value="{{ form.city }}" class="weui-input" type="text" placeholder="宜春市" />
       </view>
     </view>
     <view class="weui-cell weui-cell_input">
@@ -40,7 +40,7 @@
         <view class="weui-label">区县</view>
       </view>
       <view class="weui-cell__bd">
-        <input name="district" value="{{ form.district }}" class="weui-input" type="tel" placeholder="袁州区" />
+        <input name="district" value="{{ form.district }}" class="weui-input" type="text" placeholder="袁州区" />
       </view>
     </view>
     <view class="weui-cell weui-cell_input">
@@ -48,7 +48,7 @@
         <view class="weui-label">街道</view>
       </view>
       <view class="weui-cell__bd">
-        <input name="road" value="{{ form.road }}" class="weui-input" type="tel" placeholder="请输入街道地址" />
+        <input name="road" value="{{ form.road }}" class="weui-input" type="text" placeholder="请输入街道地址" />
       </view>
     </view>
     <view class="weui-cell weui-cell_textarea">

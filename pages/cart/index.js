@@ -80,31 +80,42 @@ Page({
         })
     },
     confirmOrder(e) {
-        wx.removeStorageSync('orderData.bonus'),
-            wx.request({
-                url: App.globalData.host + 'order/check',
-                method: 'POST',
-                data: {
-                },
-                header: {
-                    SESSIONID: App.globalData.sessionId,
-                    'Accept': 'application/json'
-                },
-                success: function (res) {
-                    if (res.data.data.address) {
-                        App.OrderMap.set('orderData.items', res.data.data.items);
-                        App.OrderMap.set('orderData.address', res.data.data.address);
-                        App.OrderMap.set('orderData.orderCheckDto', res.data.data);
-                        wx.navigateTo({
-                            url: '/pages/order/confirm/index'
-                        })
-                    } else {
-                        wx.navigateTo({
-                            url: '/pages/address/add/index'
-                        })
-                    }
+        wx.showToast({
+            title: '提交中...',
+            icon: 'loading',
+            duration: 10000
+        });
+        wx.removeStorageSync('orderData.bonus');
+        wx.request({
+            url: App.globalData.host + 'order/check',
+            method: 'POST',
+            data: {
+            },
+            header: {
+                SESSIONID: App.globalData.sessionId,
+                'Accept': 'application/json'
+            },
+            success: function (res) {
+                if (res.data.data.address) {
+                    App.OrderMap.set('orderData.items', res.data.data.items);
+                    App.OrderMap.set('orderData.address', res.data.data.address);
+                    App.OrderMap.set('orderData.orderCheckDto', res.data.data);
+                    wx.navigateTo({
+                        url: '/pages/order/confirm/index'
+                    })
+                } else {
+                    wx.navigateTo({
+                        url: '/pages/address/add/index'
+                    })
                 }
-            });
+            },
+            fail: function () {
+                wx.stopPullDownRefresh();
+            },
+            complete: function () {
+                wx.hideToast();
+            }
+        });
     },
     del(e) {
         let that = this;

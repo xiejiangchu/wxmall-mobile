@@ -73,6 +73,11 @@ Page({
     })
   },
   getList() {
+    wx.showToast({
+      title: '加载中...',
+      icon: 'loading',
+      duration: 10000
+    });
     let that = this;
     wx.request({
       url: App.globalData.host + 'order/list',
@@ -84,13 +89,20 @@ Page({
       },
       success: function (res) {
         wx.stopPullDownRefresh() //停止下拉刷新
-        res.data.data.list.forEach(function (item, index) {
-          item.created_at = App.dateFormat(item.created_at, 'yyyy-MM-dd');
-        });
-        that.setData({
-          paginate: res.data.data,
-          'prompt.hidden': res.data.data.size
-        });
+        if (res.data.code == 0) {
+          res.data.data.list.forEach(function (item, index) {
+            item.created_at = App.dateFormat(item.created_at, 'yyyy-MM-dd');
+          });
+          that.setData({
+            paginate: res.data.data,
+            'prompt.hidden': res.data.data.size
+          });
+        } else {
+          wx.showToast({
+            title: res.data.msg,
+            duration: 1000
+          });
+        }
       },
       fail: function () {
         wx.stopPullDownRefresh() //停止下拉刷新
@@ -100,7 +112,7 @@ Page({
         });
       },
       complete: function () {
-
+        wx.hideToast();
       }
     });
   },
@@ -200,6 +212,11 @@ Page({
     });
   },
   orderMore(e) {
+    wx.showToast({
+      title: '提交中...',
+      icon: 'loading',
+      duration: 10000
+    });
     let that = this;
     wx.request({
       url: App.globalData.host + 'order/orderMore',
@@ -233,11 +250,16 @@ Page({
         });
       },
       complete: function () {
-
+        wx.hideToast();
       }
     });
   },
   pay(e) {
+    wx.showToast({
+      title: '请求中...',
+      icon: 'loading',
+      duration: 10000
+    });
     let that = this;
     wx.request({
       url: App.globalData.host + 'order/pay',
@@ -250,7 +272,23 @@ Page({
         oid: e.currentTarget.dataset.oid
       },
       success: function (res) {
-        that.requestPayment(res.data);
+        if (res.data.code == 0) {
+          that.requestPayment(res.data);
+        } else {
+          wx.showToast({
+            title: res.data.msg,
+            duration: 1000
+          });
+        }
+      },
+      fail: function () {
+        wx.showToast({
+          title: '服务器错误',
+          duration: 1000
+        });
+      },
+      complete: function () {
+        wx.hideToast();
       }
     });
   },
@@ -269,6 +307,8 @@ Page({
     })
   },
   cancel(e) {
+    let index = e.currentTarget.dataset.index;
+    let oid = e.currentTarget.dataset.oid;
     let that = this;
     wx.showModal({
       title: '友情提示',
@@ -276,12 +316,17 @@ Page({
       cancelText: '取消',
       content: '确定要取消该订单嘛？',
       success: function () {
+        wx.showToast({
+          title: '请求中...',
+          icon: 'loading',
+          duration: 10000
+        });
         wx.request({
           url: App.globalData.host + 'order/cancel',
           method: 'PUT',
           data: {
             sessionId: App.globalData.sessionId,
-            oid: e.currentTarget.dataset.oid
+            oid: oid
           },
           header: {
             SESSIONID: App.globalData.sessionId,
@@ -294,17 +339,25 @@ Page({
                 title: '取消成功',
                 duration: 1000
               });
+              that.data.paginate.list.splice(index, 1);
+              let hidden = that.data.paginate.list.length > 0
+              that.setData({
+                paginate: that.data.paginate,
+                'prompt.hidden': hidden
+              });
             }
+          },
+          fail: function () {
+            wx.showToast({
+              title: '服务器错误',
+              duration: 1000
+            });
+          },
+          complete: function () {
+            wx.hideToast();
           }
         });
-      },
-      fail: function () {
-
-      },
-      complete: function () {
-
       }
     });
-
   }
 })

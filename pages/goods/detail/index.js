@@ -179,6 +179,11 @@ Page({
         this.initNumber();
     },
     getDetail(id) {
+        wx.showToast({
+            title: '加载中...',
+            icon: 'loading',
+            duration: 10000
+        });
         var that = this;
         wx.request({
             url: App.globalData.host + 'item/' + id,
@@ -203,7 +208,7 @@ Page({
                 });
             },
             complete: function () {
-
+                wx.hideToast();
             }
         });
     },

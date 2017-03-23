@@ -74,7 +74,7 @@
         <image src="{{item.item.src}}" class='image-small'></image>
         <view class='check-item-col-big'>
           <view class='name'>{{ item.item.name }}</view>
-          <view class='unit color-red'>{{ item.itemSpec.shop_price+"/"+item.itemSpec.unit }}</view>
+          <view class='unit color-red'>{{ item.itemSpec.shop_price+"/"+item.itemSpec.unit_sell+item.itemSpec.unit }}</view>
         </view>
         <view class="check-item-col amount">x{{ item.amount }}</view>
         <view class="check-item-col amount">{{ item.subTotal }}</view>

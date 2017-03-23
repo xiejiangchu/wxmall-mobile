@@ -1,6 +1,6 @@
 .container {
   width: 100%;
-  padding-bottom: 50px;
+  padding-bottom: 75px;
 }
 
 .address .weui-media-box {
@@ -59,13 +59,14 @@
 .check-item-row .check-item-col {
   flex: 1;
   font-size: 16px;
-  text-align: right;
+  text-align: center;
   color: #999;
 }
 
 .check-item-row .check-item-col-big {
   flex: 2;
   display: flex;
+  margin-left: 8px;
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
@@ -80,12 +81,12 @@
 
 .check-item-row .check-item-col-big .unit {
   color: #ff6347;
-  flex: 0 1 auto;
-  font-size: 8px;
+  flex: 0;
+  font-size: 10px;
   text-align: left;
-  padding: 0px 6px;
+  padding: 0px 4px;
   border: 1px solid red;
-  border-radius: 5px;
+  border-radius: 4px;
 }
 
 .check-item-row .amount {
@@ -132,6 +133,7 @@
   align-items: center;
   color: white;
   font-size: 16px;
+  z-index: 100;
 }
 
 .time-select {

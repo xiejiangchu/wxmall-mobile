@@ -113,9 +113,24 @@ Page({
 		}
 		switch (index) {
 			case 3:
-				wx.makePhoneCall({
-					phoneNumber: path
-				})
+				wx.showModal({
+					title: '友情提示',
+					showCancel: true,
+					cancelText: '取消',
+					content: '确定要联系客服吗？',
+					success: function () {
+						wx.makePhoneCall({
+							phoneNumber: path
+						});
+					},
+					fail: function () {
+
+					},
+					complete: function () {
+
+					}
+				});
+
 				break
 			default:
 				wx.navigateTo({ 'url': path })

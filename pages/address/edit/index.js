@@ -98,6 +98,11 @@ Page({
 		console.log(this.data);
 	},
 	submitForm(e) {
+		wx.showToast({
+			title: '提交中...',
+			icon: 'loading',
+			duration: 10000
+		});
 		let that = this;
 		const params = e.detail.value;
 		params.id = this.data.id;
@@ -134,11 +139,21 @@ Page({
 						duration: 1000
 					});
 				}
+			},
+			fail: function () {
+			},
+			complete: function () {
+				wx.hideToast();
 			}
 		});
 
 	},
 	delete() {
+		wx.showToast({
+			title: '提交中...',
+			icon: 'loading',
+			duration: 10000
+		});
 		let that = this;
 		wx.request({
 			url: App.globalData.host + 'address/' + that.data.id,
@@ -167,23 +182,13 @@ Page({
 						duration: 1000
 					});
 				}
+			},
+			fail: function () {
+				
+			},
+			complete: function () {
+				wx.hideToast();
 			}
 		});
-	},
-	showToast(message) {
-		wx.showToast({
-			title: message,
-			icon: 'success',
-			duration: 1500,
-		});
-	},
-	chooseLocation() {
-		App.WxService.chooseLocation()
-			.then(data => {
-				console.log(data)
-				this.setData({
-					'form.address': data.address
-				})
-			})
-	},
+	}
 })
