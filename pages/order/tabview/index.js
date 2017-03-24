@@ -186,11 +186,14 @@ Page({
     }
     stv.tStart = false;
     let type = this.data.tabs[this.data.activeTab].type;
+    let type_old = this.data.params.type;
     this.setData({
       'stv': this.data.stv,
       'params.type': type
     });
-    this.getList();
+    if (type != type_old) {
+      this.getList();
+    }
   },
   _updateSelectedPage(index_selected, type) {
     let {tabs, stv, activeTab} = this.data;
@@ -315,48 +318,50 @@ Page({
       showCancel: true,
       cancelText: '取消',
       content: '确定要取消该订单嘛？',
-      success: function () {
-        wx.showToast({
-          title: '请求中...',
-          icon: 'loading',
-          duration: 10000
-        });
-        wx.request({
-          url: App.globalData.host + 'order/cancel',
-          method: 'PUT',
-          data: {
-            sessionId: App.globalData.sessionId,
-            oid: oid
-          },
-          header: {
-            SESSIONID: App.globalData.sessionId,
-            'content-type': 'application/x-www-form-urlencoded',
-            'Accept': 'application/json'
-          },
-          success: function (res) {
-            if (res.data.code == 0) {
+      success: function (res) {
+        if (res.confirm) {
+          wx.showToast({
+            title: '请求中...',
+            icon: 'loading',
+            duration: 10000
+          });
+          wx.request({
+            url: App.globalData.host + 'order/cancel',
+            method: 'PUT',
+            data: {
+              sessionId: App.globalData.sessionId,
+              oid: oid
+            },
+            header: {
+              SESSIONID: App.globalData.sessionId,
+              'content-type': 'application/x-www-form-urlencoded',
+              'Accept': 'application/json'
+            },
+            success: function (res) {
+              if (res.data.code == 0) {
+                wx.showToast({
+                  title: '取消成功',
+                  duration: 1000
+                });
+                that.data.paginate.list.splice(index, 1);
+                let hidden = that.data.paginate.list.length > 0
+                that.setData({
+                  paginate: that.data.paginate,
+                  'prompt.hidden': hidden
+                });
+              }
+            },
+            fail: function () {
               wx.showToast({
-                title: '取消成功',
+                title: '服务器错误',
                 duration: 1000
               });
-              that.data.paginate.list.splice(index, 1);
-              let hidden = that.data.paginate.list.length > 0
-              that.setData({
-                paginate: that.data.paginate,
-                'prompt.hidden': hidden
-              });
+            },
+            complete: function () {
+              wx.hideToast();
             }
-          },
-          fail: function () {
-            wx.showToast({
-              title: '服务器错误',
-              duration: 1000
-            });
-          },
-          complete: function () {
-            wx.hideToast();
-          }
-        });
+          });
+        }
       }
     });
   }

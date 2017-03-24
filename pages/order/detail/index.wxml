@@ -48,7 +48,7 @@
   <view class="weui-panel__hd">留言信息</view>
   <view class="weui-panel__bd">
     <view class="weui-media-box weui-media-box_text">
-      <view class="weui-media-box__desc">{{ order.message }}</view>
+      <view class="weui-media-box__desc">{{ order.message || '无留言信息' }}</view>
     </view>
   </view>
 </view>

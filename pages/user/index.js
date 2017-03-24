@@ -118,10 +118,12 @@ Page({
 					showCancel: true,
 					cancelText: '取消',
 					content: '确定要联系客服吗？',
-					success: function () {
-						wx.makePhoneCall({
-							phoneNumber: path
-						});
+					success: function (res) {
+						if (res.confirm) {
+							wx.makePhoneCall({
+								phoneNumber: path
+							});
+						}
 					},
 					fail: function () {
 

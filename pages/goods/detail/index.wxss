@@ -181,9 +181,12 @@
 }
 
 .cart-number {
-  margin: 0 2px;
+  margin: 0 8px;
   font-size: 20px;
   width: 64px;
+  height: 20px;
+  text-align: center;
+  border: 1rpx solid rgba(71, 157, 230, 0.20);
 }
 
 .cart-btn-add:before, .cart-btn-add:after {

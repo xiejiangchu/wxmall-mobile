@@ -18,6 +18,7 @@ App({
     let that = this;
     let sessionId = wx.getStorageSync('sessionId');
     if (sessionId) {
+      that.globalData.sessionId = sessionId;
       wx.request({
         url: that.globalData.host + 'user/login',
         method: 'GET',

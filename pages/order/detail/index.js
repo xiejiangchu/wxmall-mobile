@@ -141,6 +141,7 @@ Page({
             method: 'GET',
             data: {},
             header: {
+                SESSIONID: App.globalData.sessionId,
                 'Accept': 'application/json'
             },
             success: function (res) {
@@ -153,7 +154,7 @@ Page({
                     })
                 } else {
                     wx.showToast({
-                        title: res.data.code.msg,
+                        title: res.data.msg,
                         duration: 1000
                     });
                 }

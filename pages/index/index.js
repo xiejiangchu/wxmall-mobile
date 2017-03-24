@@ -41,6 +41,7 @@ Page({
             method: 'GET',
             data: {},
             header: {
+                SESSIONID: App.globalData.sessionId,
                 'Accept': 'application/json'
             },
             success: function (res) {
@@ -58,10 +59,12 @@ Page({
             url: App.globalData.host + 'item/list',
             method: 'GET',
             data: {
+                sessionId: App.globalData.sessionId,
                 'pageNum': 1,
                 'pageSize': 10
             },
             header: {
+                SESSIONID: App.globalData.sessionId,
                 'Accept': 'application/json'
             },
             success: function (res) {
@@ -78,7 +81,7 @@ Page({
                 }
             },
             fail: function () {
-                wx.stopPullDownRefresh();
+
             },
             complete: function () {
                 wx.hideToast();
@@ -86,13 +89,11 @@ Page({
         });
     },
     onShow() {
+        let that = this;
         this.setData({
             'carts.items': App.OrderMap.get('orderData.items')
         });
         this.getCart();
-    },
-    onHide() {
-
     },
     getCart() {
         var that = this;

@@ -119,7 +119,7 @@ Page({
     },
     del(e) {
         let that = this;
-        const id = e.currentTarget.dataset.id
+        const gid = e.currentTarget.dataset.gid
         const spec = e.currentTarget.dataset.spec;
         wx.showModal({
             title: '友情提示',
@@ -132,7 +132,7 @@ Page({
                     method: 'PUT',
                     data: {
                         sessionId: App.globalData.sessionId,
-                        gid: id,
+                        gid: gid,
                         spec: spec,
                         amount: 0
                     },
@@ -219,9 +219,9 @@ Page({
     },
     bindKeyInput(e) {
         let spec = e.currentTarget.dataset.spec;
-        let id = e.currentTarget.dataset.id;
+        let gid = e.currentTarget.dataset.gid;
         let amount = Math.abs(e.detail.value);
-        this.putCartByUser(id, {
+        this.putCartByUser(gid, {
             amount: amount,
             spec: spec
         })
@@ -233,7 +233,7 @@ Page({
             method: 'PUT',
             data: {
                 sessionId: App.globalData.sessionId,
-                gid: id,
+                gid: gid,
                 spec: params.spec,
                 amount: params.amount
             },
@@ -270,20 +270,20 @@ Page({
     },
     decrease(e) {
         const spec = e.currentTarget.dataset.spec;
-        const id = e.currentTarget.dataset.id
+        const gid = e.currentTarget.dataset.gid
         const amount = Math.abs(e.currentTarget.dataset.amount)
         if (amount == 1) return
-        this.putCartByUser(id, {
+        this.putCartByUser(gid, {
             amount: amount - 1,
             spec: spec
         })
     },
     increase(e) {
         const spec = e.currentTarget.dataset.spec;
-        const id = e.currentTarget.dataset.id
+        const gid = e.currentTarget.dataset.gid
         const amount = Math.abs(e.currentTarget.dataset.amount)
         if (amount == 100) return
-        this.putCartByUser(id, {
+        this.putCartByUser(gid, {
             amount: amount + 1,
             spec: spec
         })

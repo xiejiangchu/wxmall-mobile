@@ -1,18 +1,18 @@
 <import src="../common/prompt.wxml" />
 <template is="prompt" data="{{ prompt }}" />
 <view class="container" wx:if="{{ carts.items.length>0 }}">
-  <view class="weui-panel weui-panel_access"  wx:for="{{ carts.items }}" wx:key="id">
+  <view class="weui-panel weui-panel_access" wx:for="{{ carts.items }}" wx:key="id">
     <view class="weui-panel__hd">
-      <text class="info-meta" bindtap="del" data-id="{{ item.item.id }}" data-spec="{{ item.spec }}">删除</text>
+      <text class="info-meta" bindtap="del" data-gid="{{ item.gid }}" data-spec="{{ item.spec }}">删除</text>
       <text class="info-meta" wx:if="{{ !canEdit }}" data-value="edit" bindtap="onTapEdit">编辑</text>
       <text class="info-meta" wx:if="{{ canEdit }}" bindtap="onTapEdit">完成</text>
     </view>
     <view class="weui-panel__bd">
-      <navigator data-id="{{ item.item.id }}"  class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
-        <view class="weui-media-box__hd weui-media-box__hd_in-appmsg" bindtap="checkDetail" >
+      <navigator data-id="{{ item.item.id }}" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
+        <view class="weui-media-box__hd weui-media-box__hd_in-appmsg" bindtap="checkDetail">
           <image class="weui-media-box__thumb" src="{{ img_host+item.item.thumb }}" />
         </view>
-        <view class="weui-media-box__bd weui-media-box__bd_in-appmsg" >
+        <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
           <view class="weui-media-box__title">{{ item.item.name }}</view>
           <view class="weui-media-box__desc">
             <text class="text-orangered">¥ {{ item.itemSpec.shop_price}}/{{ item.itemSpec.unit_sell }}{{ item.itemSpec.unit }}
@@ -24,9 +24,9 @@
           </view>
           <view class="quantity-wrapper" wx:if="{{ canEdit }}">
             <view class="customize-qua">
-              <view class="quantity-decrease" bindtap="decrease" data-id="{{ item.gid }}" data-spec="{{ item.spec }}" data-amount="{{ item.amount }}"></view>
-              <input class="quantity" type="number" data-id="{{ item.gid }}" data-spec="{{ item.spec }}" value="{{ item.amount }}" bindinput="bindKeyInput" />
-              <view class="quantity-increase" bindtap="increase" data-id="{{ item.gid }}" data-spec="{{ item.spec }}" data-amount="{{ item.amount }}"></view>
+              <view class="quantity-decrease" bindtap="decrease" data-gid="{{ item.gid }}" data-spec="{{ item.spec }}" data-amount="{{ item.amount }}"></view>
+              <input class="quantity" type="number" data-gid="{{ item.gid }}" data-spec="{{ item.spec }}" value="{{ item.amount }}" bindinput="bindKeyInput" focus="{{canEdit}}"/>
+              <view class="quantity-increase" bindtap="increase" data-gid="{{ item.gid }}" data-spec="{{ item.spec }}" data-amount="{{ item.amount }}"></view>
             </view>
           </view>
         </view>
