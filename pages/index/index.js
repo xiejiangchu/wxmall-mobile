@@ -61,7 +61,7 @@ Page({
             data: {
                 sessionId: App.globalData.sessionId,
                 'pageNum': 1,
-                'pageSize': 10
+                'pageSize': 20
             },
             header: {
                 SESSIONID: App.globalData.sessionId,
@@ -157,9 +157,46 @@ Page({
     onReachBottom() {
         if (!this.data.paginate.hasNextPage)
             return
-        this.getList();
+        this.getListMore();
     },
     getList() {
+        var that = this;
+        wx.request({
+            url: App.globalData.host + 'item/list',
+            method: 'GET',
+            data: {
+                'pageNum': 1,
+                'pageSize': that.data.paginate.pageSize
+            },
+            header: {
+                'Accept': 'application/json'
+            },
+            success: function (res) {
+                wx.stopPullDownRefresh() //停止下拉刷新
+                if (res.data.code == 0) {
+                    that.setData({
+                        paginate: res.data.data,
+                        'prompt.hidden': res.data.data.size
+                    })
+                } else {
+                    wx.showToast({
+                        title: res.data.msg || '服务器错误',
+                        duration: 1000
+                    });
+                }
+            },
+            fail: function () {
+                wx.showToast({
+                    title: '服务器错误',
+                    duration: 1000
+                });
+            },
+            complete: function () {
+
+            }
+        })
+    },
+    getListMore() {
         var that = this;
         wx.request({
             url: App.globalData.host + 'item/list',
@@ -173,12 +210,19 @@ Page({
             },
             success: function (res) {
                 wx.stopPullDownRefresh() //停止下拉刷新
-                var paginat_n = res.data.data;
-                paginat_n.list = that.data.paginate.list.concat(paginat_n.list);
-                that.setData({
-                    paginate: paginat_n,
-                    'prompt.hidden': res.data.data.list.length
-                })
+                if (res.data.code == 0) {
+                    var paginat_n = res.data.data;
+                    paginat_n.list = that.data.paginate.list.concat(paginat_n.list);
+                    that.setData({
+                        paginate: paginat_n,
+                        'prompt.hidden': res.data.data.list.length
+                    })
+                } else {
+                    wx.showToast({
+                        title: res.data.msg || '服务器错误',
+                        duration: 1000
+                    });
+                }
             },
             fail: function () {
                 wx.showToast({
@@ -387,7 +431,7 @@ Page({
                 'Accept': 'application/json'
             },
             data: {
-                SESSIONID: App.globalData.sessionId,
+                sessionId: App.globalData.sessionId,
                 gid: gid,
                 spec: spec,
                 amount: amount
@@ -401,7 +445,7 @@ Page({
                     that.initNumber();
                 } else {
                     wx.showToast({
-                        title: res.data.msg,
+                        title: res.data.msg || '服务器错误',
                         duration: 1000
                     });
                 }
@@ -441,7 +485,7 @@ Page({
                 'Accept': 'application/json'
             },
             data: {
-                SESSIONID: App.globalData.sessionId,
+                sessionId: App.globalData.sessionId,
                 gid: gid,
                 spec: spec,
                 amount: amount

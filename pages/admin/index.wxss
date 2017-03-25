@@ -1,0 +1,18 @@
+/* pages/admin/index.wxss */
+
+.container {
+  background: white;
+}
+
+.wa-row .item {
+  padding: 16px 0;
+  font-size: 16px;
+  text-align: center;
+  border-bottom: 1px solid rgba(71, 157, 230, 0.40);
+  border-top: 1px solid rgba(71, 157, 230, 0.40);
+  border-left: 1px solid rgba(71, 157, 230, 0.40);
+}
+
+.wa-row .item:last-child {
+  border-right: 1px solid rgba(71, 157, 230, 0.40);
+}

@@ -1,0 +1,12 @@
+<import src="../../common/prompt.wxml" />
+<template is="prompt" data="{{ prompt }}" />
+<view class="container">
+  <view class="item-container" wx:for="{{paginate.list}}" wx:key="{{item.id}}">
+    <image class="weui-media-box__thumb" src="{{ 'http://wxmall.image.alimmdn.com/'+item.thumb }}@100w_100h" />
+    <view class="name">{{item.name}}</view>
+    <view class="operation">
+      <view wx:if="{{item.is_online==1}}" class="operation-item bg-red" catchtap="offline" data-id='{{item.id}}' data-online="0" data-index="{{index}}" hover-class="weui-form-preview__btn_active">下架</view>
+      <view wx:if="{{item.is_online==0}}" class="operation-item bg-primary" catchtap="offline" data-id='{{item.id}}' data-online="1" data-index="{{index}}" hover-class="weui-form-preview__btn_active">上架</view>
+    </view>
+  </view>
+</view>

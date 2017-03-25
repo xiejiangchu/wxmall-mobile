@@ -233,6 +233,7 @@ Page({
         'Accept': 'application/json'
       },
       success: function (res) {
+        wx.hideToast();
         if (res.data.code == 0) {
           wx.showToast({
             title: '加入成功',
@@ -253,7 +254,7 @@ Page({
         });
       },
       complete: function () {
-        wx.hideToast();
+
       }
     });
   },
@@ -339,10 +340,6 @@ Page({
             },
             success: function (res) {
               if (res.data.code == 0) {
-                wx.showToast({
-                  title: '取消成功',
-                  duration: 1000
-                });
                 that.data.paginate.list.splice(index, 1);
                 let hidden = that.data.paginate.list.length > 0
                 that.setData({

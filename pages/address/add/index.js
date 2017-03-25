@@ -9,7 +9,7 @@ Page({
 			mobile: '15121030453',
 			city: '宜春市',
 			district: '袁州区',
-			road: '　凤凰路',
+			road: '凤凰路',
 			address: '老街67号',
 			is_def: !1,
 		},

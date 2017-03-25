@@ -19,7 +19,13 @@
     "pages/help/detail/index",
     "pages/search/index",
     "pages/about/index",
-    "pages/login/index"
+    "pages/login/index",
+    "pages/admin/index",
+    "pages/admin/item/index",
+    "pages/admin/iteminfo/index",
+    "pages/admin/spec/index",
+    "pages/admin/order/index",
+    "pages/admin/orderDetail/index"
   ],
   "window": {
     "navigationBarBackgroundColor": "#479de6",

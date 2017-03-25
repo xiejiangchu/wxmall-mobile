@@ -5,8 +5,9 @@ Page({
 		host: App.globalData.host,
 		img_host: App.globalData.img_host,
 		userInfo: {},
-		'hidden': true,
+		hidden: true,
 		orderCount: {},
+		is_admin: 0,
 		items: [
 			{
 				icon: '/assets/images/iconfont-order.png',
@@ -45,6 +46,13 @@ Page({
 				text: '关于我们',
 				path: '/pages/about/index'
 			},
+		],
+		admin: [
+			{
+				icon: '/assets/images/iconfont_add.png',
+				text: '后台管理',
+				path: '/pages/admin/index'
+			}
 		]
 	},
 	onShareAppMessage: function () {
@@ -68,7 +76,8 @@ Page({
 			success: function (res) {
 				wx.stopPullDownRefresh() //停止下拉刷新
 				that.setData({
-					orderCount: res.data.data
+					orderCount: res.data.data,
+					is_admin: res.data.data.admins
 				})
 			}
 		});
@@ -82,24 +91,7 @@ Page({
 		});
 	},
 	onShow() {
-		var that = this;
-		wx.request({
-			url: App.globalData.host + 'order/orderCount',
-			method: 'GET',
-			data: {
-				sessionId: App.globalData.sessionId
-			},
-			header: {
-				SESSIONID: App.globalData.sessionId,
-				'Accept': 'application/json'
-			},
-			success: function (res) {
-				wx.stopPullDownRefresh() //停止下拉刷新
-				that.setData({
-					orderCount: res.data.data
-				})
-			}
-		});
+		this.onPullDownRefresh();
 	},
 	navigateTo(e) {
 		const index = e.currentTarget.dataset.index
@@ -161,6 +153,14 @@ Page({
 				break
 			default:
 				wx.navigateTo({ 'url': path });
+		}
+	},
+	bindadmin(e) {
+		const index = e.currentTarget.dataset.index;
+		const path = e.currentTarget.dataset.path;
+		switch (index) {
+			default:
+				wx.navigateTo({ 'url': path })
 		}
 	},
 	logout() {

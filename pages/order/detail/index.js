@@ -74,10 +74,6 @@ Page({
                     },
                     success: function (res) {
                         if (res.data.code == 0) {
-                            wx.showToast({
-                                title: '取消成功',
-                                duration: 1000
-                            });
                             wx.navigateBack({
                                 delta: 1
                             });

@@ -1,0 +1,48 @@
+/* pages/admin/item/index.wxss */
+
+.container {
+  width: 100%;
+  background: white;
+  border: 1px solid rgba(71, 157, 230, 0.40);
+}
+
+.item-container {
+  display: flex;
+  height: 50px;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 4px;
+  overflow: hidden;
+  border-bottom: 1px solid rgba(71, 157, 230, 0.40);
+}
+
+.item-container name, .item-container .operation {
+  height: 50px;
+}
+
+.item-container image {
+  height: 45px;
+  width: 50px;
+}
+
+.name {
+  flex: 1;
+  text-align: center;
+  font-weight: bold;
+}
+
+.operation {
+  width: 160px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.operation .operation-item {
+  text-align: center;
+  padding: 0 8px;
+  color: white;
+  border-radius: 4px;
+}

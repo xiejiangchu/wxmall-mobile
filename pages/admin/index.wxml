@@ -1,0 +1,12 @@
+<view class="container">
+  <view class='wa-row'>
+    <view class='wa-col-33 item' hover-class="weui-cell_active" wx:for="{{ admins1 }}" wx:key="" data-path="{{ item.path }}" data-index="{{ index }}" bindtap="bindadmin">
+      {{item.text}}
+    </view>
+  </view>
+  <view class='wa-row'>
+    <view class='wa-col-33 item' hover-class="weui-cell_active" wx:for="{{ admins2 }}" wx:key="" data-path="{{ item.path }}" data-index="{{ index }}" bindtap="bindadmin">
+      {{item.text}}
+    </view>
+  </view>
+</view>

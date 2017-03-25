@@ -9,6 +9,8 @@ Page({
         date: App.dateFormat(new Date(), 'yyyy/MM/dd'),
         date_start: App.dateFormat(new Date(), 'yyyy/MM/dd'),
         date_end: null,
+        time_s: "09:00",
+        time_e: "09:00",
         time_start: "09:00",
         time_end: "11:00",
         payments: ["微信支付", "货到付款"],
@@ -27,6 +29,8 @@ Page({
             date: App.dateFormat(App.OrderMap.get('orderData.orderCheckDto').date_start, 'yyyy/MM/dd'),
             date_start: App.dateFormat(App.OrderMap.get('orderData.orderCheckDto').date_start, 'yyyy/MM/dd'),
             date_end: App.dateFormat(App.OrderMap.get('orderData.orderCheckDto').date_end, 'yyyy/MM/dd'),
+            time_s: App.OrderMap.get('orderData.orderCheckDto').time_start,
+            time_e: App.OrderMap.get('orderData.orderCheckDto').time_end,
             time_start: App.OrderMap.get('orderData.orderCheckDto').time_start,
             time_end: App.OrderMap.get('orderData.orderCheckDto').time_end,
             bonusCount: App.OrderMap.get('orderData.orderCheckDto').bonusCount
@@ -71,12 +75,12 @@ Page({
     },
     bindTimeChangeStart: function (e) {
         this.setData({
-            time_start: e.detail.value
+            time_s: e.detail.value
         })
     },
     bindTimeChangeEnd: function (e) {
         this.setData({
-            time_end: e.detail.value
+            time_e: e.detail.value
         })
     },
     bindKeyInput(e) {
@@ -105,8 +109,8 @@ Page({
             bid: this.data.bonus ? this.data.bonus.id : -1,
             pid: this.data.pids[this.data.paymentIndex],
             date: this.data.date + ' 00:00:00',
-            time_start: this.data.date + ' ' + this.data.time_start + ':00',
-            time_end: this.data.date + ' ' + this.data.time_end + ':00',
+            time_start: this.data.date + ' ' + this.data.time_s + ':00',
+            time_end: this.data.date + ' ' + this.data.time_e + ':00',
             message: this.data.message
         }
         wx.request({

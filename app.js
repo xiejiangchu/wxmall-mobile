@@ -5,8 +5,8 @@ import WxValidate from 'assets/plugins/WxValidate'
 App({
   globalData: {
     // host: 'http://119.23.17.74:8090/',
-    host: 'http://127.0.0.1:8090/',
-    // host: 'http://192.168.10.2:8090/',
+    // host: 'http://127.0.0.1:8090/',
+    host: 'http://192.168.10.3:8090/',
     // host: 'https://shop.vrspring.com/',
     img_host: 'http://wxmall.image.alimmdn.com/',
     userInfo: null,
