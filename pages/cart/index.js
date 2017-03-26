@@ -138,19 +138,17 @@ Page({
                             }
                         });
                     } else {
-                        if (res.confirm) {
-                            if (res.data.data.address) {
-                                App.OrderMap.set('orderData.items', res.data.data.items);
-                                App.OrderMap.set('orderData.address', res.data.data.address);
-                                App.OrderMap.set('orderData.orderCheckDto', res.data.data);
-                                wx.navigateTo({
-                                    url: '/pages/order/confirm/index'
-                                })
-                            } else {
-                                wx.navigateTo({
-                                    url: '/pages/address/add/index'
-                                })
-                            }
+                        if (res.data.data.address) {
+                            App.OrderMap.set('orderData.items', res.data.data.items);
+                            App.OrderMap.set('orderData.address', res.data.data.address);
+                            App.OrderMap.set('orderData.orderCheckDto', res.data.data);
+                            wx.navigateTo({
+                                url: '/pages/order/confirm/index'
+                            })
+                        } else {
+                            wx.navigateTo({
+                                url: '/pages/address/add/index'
+                            })
                         }
                     }
 
@@ -266,14 +264,23 @@ Page({
         });
     },
     onTapEdit(e) {
+        wx.hideKeyboard();
         this.setData({
             canEdit: !!e.currentTarget.dataset.value
-        })
+        });
     },
     bindKeyInput(e) {
         let spec = e.currentTarget.dataset.spec;
         let gid = e.currentTarget.dataset.gid;
         let amount = Math.abs(e.detail.value);
+        let index = e.currentTarget.dataset.index;
+        console.log(index);
+        if (amount < this.data.carts.items[index].itemSpec.min) {
+            amount = this.data.carts.items[index].itemSpec.min
+        }
+        if (amount > this.data.carts.items[index].itemSpec.max) {
+            amount = this.data.carts.items[index].itemSpec.max
+        }
         this.putCartByUser(gid, {
             amount: amount,
             spec: spec
@@ -307,7 +314,7 @@ Page({
                     'prompt.hidden': res.data.data.length == 0 ? false : true,
                     'carts.total': total.toFixed(2)
                 });
-                App.OrderMap.set('orderData.items', this.data.carts.items);
+                App.OrderMap.set('orderData.items', that.data.carts.items);
                 wx.stopPullDownRefresh();
             },
             fail: function () {

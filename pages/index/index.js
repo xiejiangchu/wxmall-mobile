@@ -12,6 +12,7 @@ Page({
         duration: 1000,
         circular: !0,
         paginate: {},
+        orderby: 0,
         prompt: {
             hidden: 0,
         },
@@ -35,54 +36,18 @@ Page({
     onLoad() {
         this.fetchFilterData();
         //banner
-        let that = this;
         this.getBanner();
-        wx.showToast({
-            title: '加载中...',
-            icon: 'loading',
-            duration: 10000
-        });
-        wx.request({
-            url: App.globalData.host + 'item/list',
-            method: 'GET',
-            data: {
-                sessionId: App.globalData.sessionId,
-                'pageNum': 1,
-                'pageSize': 20
-            },
-            header: {
-                SESSIONID: App.globalData.sessionId,
-                'Accept': 'application/json'
-            },
-            success: function (res) {
-                if (res.data.code == 0) {
-                    that.setData({
-                        paginate: res.data.data,
-                        'prompt.hidden': res.data.data.list.length
-                    })
-                } else {
-                    wx.showToast({
-                        title: res.data.msg,
-                        duration: 1000
-                    });
-                }
-            },
-            fail: function () {
-
-            },
-            complete: function () {
-                wx.hideToast();
-            }
-        });
+        this.getList();
     },
     getBanner() {
         let that = this;
         wx.request({
             url: App.globalData.host + 'banner/list',
             method: 'GET',
-            data: {},
+            data: {
+
+            },
             header: {
-                SESSIONID: App.globalData.sessionId,
                 'Accept': 'application/json'
             },
             success: function (res) {
@@ -93,7 +58,6 @@ Page({
         });
     },
     onShow() {
-        let that = this;
         this.setData({
             'carts.items': App.OrderMap.get('orderData.items')
         });
@@ -166,12 +130,19 @@ Page({
     },
     getList() {
         var that = this;
+        this.getBanner();
+        wx.showToast({
+            title: '加载中...',
+            icon: 'loading',
+            duration: 10000
+        });
         wx.request({
             url: App.globalData.host + 'item/list',
             method: 'GET',
             data: {
+                orderby: that.data.orderby,
                 'pageNum': 1,
-                'pageSize': 10
+                'pageSize': 20
             },
             header: {
                 'Accept': 'application/json'
@@ -197,7 +168,7 @@ Page({
                 });
             },
             complete: function () {
-
+                wx.hideToast();
             }
         })
     },
@@ -207,6 +178,7 @@ Page({
             url: App.globalData.host + 'item/list',
             method: 'GET',
             data: {
+                orderby: that.data.orderby,
                 'pageNum': that.data.paginate.nextPage,
                 'pageSize': that.data.paginate.pageSize
             },
@@ -240,24 +212,6 @@ Page({
             }
         })
     },
-    onTapTag(e) {
-        const type = e.currentTarget.dataset.type
-        const index = e.currentTarget.dataset.index
-        const goods = {
-            items: [],
-            params: {
-                page: 1,
-                limit: 10,
-                type: type,
-            },
-            paginate: {}
-        }
-        this.setData({
-            activeIndex: index,
-            goods: goods,
-        })
-        this.getList()
-    },
     fetchFilterData: function () { //获取筛选条件
         this.setData({
             filterdata: {
@@ -271,11 +225,11 @@ Page({
                         "title": "按商品名称",
                         "cate_two": [
                             {
-                                "id": 11,
+                                "id": 10,
                                 "title": "字典正序",
                             },
                             {
-                                "id": 10,
+                                "id": 11,
                                 "title": "字典反序",
                             }
                         ]
@@ -285,11 +239,11 @@ Page({
                         "title": "按上架时间",
                         "cate_two": [
                             {
-                                "id": 21,
+                                "id": 20,
                                 "title": "由新到旧",
                             },
                             {
-                                "id": 20,
+                                "id": 21,
                                 "title": "由旧到新",
                             }
                         ]
@@ -299,11 +253,11 @@ Page({
                         "title": "按商品类别",
                         "cate_two": [
                             {
-                                "id": 21,
+                                "id": 30,
                                 "title": "由低到高",
                             },
                             {
-                                "id": 20,
+                                "id": 31,
                                 "title": "由高到低",
                             }
                         ]
@@ -320,11 +274,11 @@ Page({
                         "title": "按价格",
                         "cate_two": [
                             {
-                                "id": 21,
+                                "id": 80,
                                 "title": "由高到低",
                             },
                             {
-                                "id": 20,
+                                "id": 81,
                                 "title": "由低到高",
                             }
                         ]
@@ -334,11 +288,11 @@ Page({
                         "name": "销量",
                         "cate_two": [
                             {
-                                "id": 91,
+                                "id": 90,
                                 "name": "由高到低"
                             },
                             {
-                                "id": 90,
+                                "id": 91,
                                 "name": "由低到高"
                             }
                         ]
@@ -371,6 +325,15 @@ Page({
             cateid: dataset.cateid,
             subcateindex: d.cateindex == dataset.cateindex ? d.subcateindex : 0
         });
+        if (!d.filterdata.cate[d.cateindex].cate_two) {
+            console.log('aaaa');
+            this.hideFilter();
+            this.setData({
+                orderby: this.data.cateid
+            });
+            this.getList();
+        }
+        console.log('商家分类：一级id__' + this.data.cateid + ',二级id__' + this.data.subcateid);
     },
     setSubcateIndex: function (e) { //分类二级索引
         const dataset = e.currentTarget.dataset;
@@ -380,6 +343,10 @@ Page({
         });
         this.hideFilter();
         console.log('商家分类：一级id__' + this.data.cateid + ',二级id__' + this.data.subcateid);
+        this.setData({
+            orderby: this.data.subcateid
+        });
+        this.getList();
     },
     setSellIndex: function (e) { //地区一级索引
         const d = this.data;
@@ -426,20 +393,26 @@ Page({
         if (amount < this.data.paginate.list[index].min) {
             amount = this.data.paginate.list[index].min;
         }
+        this.putCartByUser(gid, {
+            amount: amount,
+            spec: spec
+        })
+    },
+    putCartByUser(gid, params) {
         let that = this;
         wx.request({
             url: App.globalData.host + 'cart/update',
             method: 'PUT',
+            data: {
+                sessionId: App.globalData.sessionId,
+                gid: gid,
+                spec: params.spec,
+                amount: params.amount
+            },
             header: {
                 SESSIONID: App.globalData.sessionId,
                 'content-type': 'application/x-www-form-urlencoded',
                 'Accept': 'application/json'
-            },
-            data: {
-                sessionId: App.globalData.sessionId,
-                gid: gid,
-                spec: spec,
-                amount: amount
             },
             success: function (res) {
                 if (res.data.code == 0) {
@@ -480,44 +453,9 @@ Page({
         if (amount < this.data.paginate.list[index].min) {
             amount = this.data.paginate.list[index].min;
         }
-        let that = this;
-        wx.request({
-            url: App.globalData.host + 'cart/update',
-            method: 'PUT',
-            header: {
-                SESSIONID: App.globalData.sessionId,
-                'content-type': 'application/x-www-form-urlencoded',
-                'Accept': 'application/json'
-            },
-            data: {
-                sessionId: App.globalData.sessionId,
-                gid: gid,
-                spec: spec,
-                amount: amount
-            },
-            success: function (res) {
-                if (res.data.code == 0) {
-                    that.setData({
-                        'carts.items': res.data.data
-                    });
-                    App.OrderMap.set('orderData.items', res.data.data);
-                    that.initNumber();
-                } else {
-                    wx.showToast({
-                        title: res.data.msg,
-                        duration: 1000
-                    });
-                }
-            },
-            fail: function () {
-                wx.showToast({
-                    title: '服务器错误',
-                    duration: 1000
-                });
-            },
-            complete: function () {
-
-            }
-        });
+        this.putCartByUser(gid, {
+            amount: amount,
+            spec: spec
+        })
     },
 })

@@ -1,7 +1,7 @@
 <import src="../common/prompt.wxml" />
 <template is="prompt" data="{{ prompt }}" />
 <view class="container" wx:if="{{ carts.items.length>0 }}">
-  <view class="weui-panel weui-panel_access" wx:for="{{ carts.items }}" wx:key="id">
+  <view class="weui-panel weui-panel_access" wx:for="{{ carts.items }}" wx:key="id" wx:for-index="index">
     <view class="weui-panel__hd">
       <text class="info-meta" bindtap="del" data-gid="{{ item.gid }}" data-spec="{{ item.spec }}">删除</text>
       <text class="info-meta" wx:if="{{ !canEdit }}" data-value="edit" bindtap="onTapEdit">编辑</text>
@@ -25,7 +25,7 @@
           <view class="quantity-wrapper" wx:if="{{ canEdit }}">
             <view class="customize-qua">
               <view class="quantity-decrease" bindtap="decrease" data-gid="{{ item.gid }}" data-spec="{{ item.spec }}" data-amount="{{ item.amount }}"></view>
-              <input class="quantity" type="number" data-gid="{{ item.gid }}" data-spec="{{ item.spec }}" value="{{ item.amount }}" bindinput="bindKeyInput" focus="{{canEdit}}"/>
+              <input class="quantity" type="number" data-gid="{{ item.gid }}" data-spec="{{ item.spec }}" value="{{ item.amount }}" data-index="{{index}}" bindinput="bindKeyInput" focus="{{canEdit}}" />
               <view class="quantity-increase" bindtap="increase" data-gid="{{ item.gid }}" data-spec="{{ item.spec }}" data-amount="{{ item.amount }}"></view>
             </view>
           </view>

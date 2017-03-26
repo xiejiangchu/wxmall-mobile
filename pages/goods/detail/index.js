@@ -78,7 +78,7 @@ Page({
     },
     onShow() {
         this.setData({
-            'cart.items': App.OrderMap.get('orderData.items')
+            'carts.items': App.OrderMap.get('orderData.items')
         });
         this.getDetail(this.data.id);
     },
@@ -133,19 +133,17 @@ Page({
                             }
                         });
                     } else {
-                        if (res.confirm) {
-                            if (res.data.data.address) {
-                                App.OrderMap.set('orderData.items', res.data.data.items);
-                                App.OrderMap.set('orderData.address', res.data.data.address);
-                                App.OrderMap.set('orderData.orderCheckDto', res.data.data);
-                                wx.navigateTo({
-                                    url: '/pages/order/confirm/index'
-                                })
-                            } else {
-                                wx.navigateTo({
-                                    url: '/pages/address/add/index'
-                                })
-                            }
+                        if (res.data.data.address) {
+                            App.OrderMap.set('orderData.items', res.data.data.items);
+                            App.OrderMap.set('orderData.address', res.data.data.address);
+                            App.OrderMap.set('orderData.orderCheckDto', res.data.data);
+                            wx.navigateTo({
+                                url: '/pages/order/confirm/index'
+                            })
+                        } else {
+                            wx.navigateTo({
+                                url: '/pages/address/add/index'
+                            })
                         }
                     }
 
@@ -170,8 +168,8 @@ Page({
         that.setData({
             'spec.amount': 0
         });
-        if (this.data.cart.items && this.data.cart.items.length > 0) {
-            this.data.cart.items.forEach(function (item, index) {
+        if (this.data.carts.items && this.data.carts.items.length > 0) {
+            this.data.carts.items.forEach(function (item, index) {
                 if (item.gid == that.data.id && item.spec == that.data.spec.tid) {
                     that.setData({
                         'spec.amount': item.amount
@@ -202,7 +200,7 @@ Page({
             },
             success: function (res) {
                 that.setData({
-                    'cart.items': res.data.data
+                    'carts.items': res.data.data
                 });
                 App.OrderMap.set('orderData.items', res.data.data);
                 that.initNumber();
@@ -224,38 +222,10 @@ Page({
         if (amount < this.data.item.itemSpecList[this.data.spec.index].min) {
             amount = this.data.item.itemSpecList[this.data.spec.index].min;
         }
-        let that = this;
-        wx.request({
-            url: App.globalData.host + 'cart/update',
-            method: 'PUT',
-            header: {
-                SESSIONID: App.globalData.sessionId,
-                'content-type': 'application/x-www-form-urlencoded',
-                'Accept': 'application/json'
-            },
-            data: {
-                SESSIONID: App.globalData.sessionId,
-                gid: that.data.id,
-                spec: that.data.spec.tid,
-                amount: amount
-            },
-            success: function (res) {
-                that.setData({
-                    'cart.items': res.data.data
-                });
-                App.OrderMap.set('orderData.items', res.data.data);
-                that.initNumber();
-            },
-            fail: function () {
-                wx.showToast({
-                    title: '服务器错误',
-                    duration: 1000
-                });
-            },
-            complete: function () {
-
-            }
-        });
+        this.putCartByUser(this.data.id, {
+            amount: amount,
+            spec: this.data.spec.tid
+        })
     },
     subCart(e) {
         if (!this.data.spec.tid) {
@@ -272,29 +242,10 @@ Page({
         if (amount < this.data.item.itemSpecList[this.data.spec.index].min) {
             amount = this.data.item.itemSpecList[this.data.spec.index].min;
         }
-        let that = this;
-        wx.request({
-            url: App.globalData.host + 'cart/update',
-            method: 'PUT',
-            header: {
-                SESSIONID: App.globalData.sessionId,
-                'content-type': 'application/x-www-form-urlencoded',
-                'Accept': 'application/json'
-            },
-            data: {
-                SESSIONID: App.globalData.sessionId,
-                gid: that.data.id,
-                spec: that.data.spec.tid,
-                amount: amount
-            },
-            success: function (res) {
-                that.setData({
-                    'cart.items': res.data.data
-                });
-                App.OrderMap.set('orderData.items', this.data.carts.items);
-                that.initNumber();
-            }
-        });
+        this.putCartByUser(this.data.id, {
+            amount: amount,
+            spec: this.data.spec.tid
+        })
     },
     switchType(e) {
         let tid = e.currentTarget.dataset.tid;
@@ -304,6 +255,47 @@ Page({
             'spec.index': index
         });
         this.initNumber();
+    },
+    putCartByUser(gid, params) {
+        let that = this;
+        wx.request({
+            url: App.globalData.host + 'cart/update',
+            method: 'PUT',
+            data: {
+                sessionId: App.globalData.sessionId,
+                gid: gid,
+                spec: params.spec,
+                amount: params.amount
+            },
+            header: {
+                SESSIONID: App.globalData.sessionId,
+                'content-type': 'application/x-www-form-urlencoded',
+                'Accept': 'application/json'
+            },
+            success: function (res) {
+                if (res.data.code == 0) {
+                    that.setData({
+                        'carts.items': res.data.data
+                    });
+                    App.OrderMap.set('orderData.items', res.data.data);
+                    that.initNumber();
+                } else {
+                    wx.showToast({
+                        title: res.data.msg || '服务器错误',
+                        duration: 1000
+                    });
+                }
+            },
+            fail: function () {
+                wx.showToast({
+                    title: '服务器错误',
+                    duration: 1000
+                });
+            },
+            complete: function () {
+
+            }
+        });
     },
     getDetail(id) {
         wx.showToast({

@@ -15,6 +15,8 @@ Page({
         time_end: "11:00",
         payments: ["微信支付", "货到付款"],
         pids: [1, 2],
+        point: 0,
+        point_total: 0,
         paymentIndex: 0,
         bonusCount: 0,
         bonus: {
@@ -33,7 +35,8 @@ Page({
             time_e: App.OrderMap.get('orderData.orderCheckDto').time_end,
             time_start: App.OrderMap.get('orderData.orderCheckDto').time_start,
             time_end: App.OrderMap.get('orderData.orderCheckDto').time_end,
-            bonusCount: App.OrderMap.get('orderData.orderCheckDto').bonusCount
+            bonusCount: App.OrderMap.get('orderData.orderCheckDto').bonusCount,
+            point_total: App.OrderMap.get('orderData.orderCheckDto').point
         });
 
         let payments = [];
@@ -67,6 +70,18 @@ Page({
         wx.redirectTo({
             url: '/pages/address/confirm/index?ret=' + this.data.address_id
         })
+    },
+    bindPointInput(e) {
+        let point = e.detail.value;
+        if (!point || point < 0) {
+            point = 0;
+        }
+        if (point > this.data.point_total) {
+            point = this.data.point_total
+        }
+        this.setData({
+            point: point
+        });
     },
     bindDateChange: function (e) {
         this.setData({
@@ -105,6 +120,7 @@ Page({
         });
         const params = {
             sessionId: App.globalData.sessionId,
+            point: this.data.point,
             aid: this.data.address.id,
             bid: this.data.bonus ? this.data.bonus.id : -1,
             pid: this.data.pids[this.data.paymentIndex],
