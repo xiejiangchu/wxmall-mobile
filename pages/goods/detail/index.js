@@ -1,5 +1,7 @@
 const App = getApp()
-
+var wxCharts = require('../../../assets/plugins/wxcharts-min.js');
+var pieChart = null;
+var radarChart = null;
 Page({
     data: {
         indicatorDots: !0,
@@ -27,7 +29,52 @@ Page({
     onLoad(option) {
         this.setData({
             id: option.id
-        })
+        });
+        var windowWidth = 320;
+        try {
+            var res = wx.getSystemInfoSync();
+            windowWidth = res.windowWidth;
+        } catch (e) {
+            console.error('getSystemInfoSync failed!');
+        }
+        pieChart = new wxCharts({
+            animation: true,
+            canvasId: 'pieCanvas',
+            type: 'pie',
+            series: [{
+                name: '成交量1',
+                data: 15,
+            }, {
+                name: '成交量2',
+                data: 35,
+            }, {
+                name: '成交量3',
+                data: 78,
+            }, {
+                name: '成交量4',
+                data: 63,
+            }],
+            width: windowWidth,
+            height: 300,
+            dataLabel: true,
+        });
+
+        radarChart = new wxCharts({
+            canvasId: 'radarCanvas',
+            type: 'radar',
+            categories: ['1', '2', '3', '4', '5', '6'],
+            series: [{
+                name: '成交量1',
+                data: [90, 110, 125, 95, 87, 122]
+            }],
+            width: windowWidth,
+            height: 200,
+            extra: {
+                radar: {
+                    max: 150
+                }
+            }
+        });
     },
     onShow() {
         this.setData({
@@ -37,6 +84,86 @@ Page({
     },
     onHide() {
 
+    },
+    confirmOrder(e) {
+        wx.showToast({
+            title: '提交中...',
+            icon: 'loading',
+            duration: 10000
+        });
+        wx.removeStorageSync('orderData.bonus');
+        wx.request({
+            url: App.globalData.host + 'order/check',
+            method: 'POST',
+            data: {
+            },
+            header: {
+                SESSIONID: App.globalData.sessionId,
+                'Accept': 'application/json'
+            },
+            success: function (res) {
+                if (res.data.code == 0) {
+                    if (res.data.data.changed == 1) {
+                        wx.showModal({
+                            title: '友情提示',
+                            showCancel: true,
+                            cancelText: '取消',
+                            content: '商品数据发生变化，是否继续？',
+                            success: function (r) {
+                                if (r.confirm) {
+                                    if (res.data.data.address) {
+                                        App.OrderMap.set('orderData.items', res.data.data.items);
+                                        App.OrderMap.set('orderData.address', res.data.data.address);
+                                        App.OrderMap.set('orderData.orderCheckDto', res.data.data);
+                                        wx.navigateTo({
+                                            url: '/pages/order/confirm/index'
+                                        })
+                                    } else {
+                                        wx.navigateTo({
+                                            url: '/pages/address/add/index'
+                                        })
+                                    }
+                                }
+                            },
+                            fail: function () {
+
+                            },
+                            complete: function () {
+
+                            }
+                        });
+                    } else {
+                        if (res.confirm) {
+                            if (res.data.data.address) {
+                                App.OrderMap.set('orderData.items', res.data.data.items);
+                                App.OrderMap.set('orderData.address', res.data.data.address);
+                                App.OrderMap.set('orderData.orderCheckDto', res.data.data);
+                                wx.navigateTo({
+                                    url: '/pages/order/confirm/index'
+                                })
+                            } else {
+                                wx.navigateTo({
+                                    url: '/pages/address/add/index'
+                                })
+                            }
+                        }
+                    }
+
+                } else {
+                    wx.showToast({
+                        title: res.data.msg || '服务器错误',
+                        duration: 1000
+                    });
+                }
+            },
+            fail: function () {
+                wx.stopPullDownRefresh();
+            },
+            complete: function () {
+
+                wx.hideToast();
+            }
+        });
     },
     initNumber() {
         let that = this;

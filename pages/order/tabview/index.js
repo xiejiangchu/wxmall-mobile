@@ -116,14 +116,61 @@ Page({
       }
     });
   },
+  getListMore() {
+    wx.showToast({
+      title: '加载中...',
+      icon: 'loading',
+      duration: 10000
+    });
+    let that = this;
+    wx.request({
+      url: App.globalData.host + 'order/list',
+      method: 'GET',
+      data: that.data.params,
+      header: {
+        SESSIONID: App.globalData.sessionId,
+        'Accept': 'application/json'
+      },
+      success: function (res) {
+        wx.stopPullDownRefresh() //停止下拉刷新
+        if (res.data.code == 0) {
+          var paginat_n = res.data.data;
+          paginat_n.list = that.data.paginate.list.concat(paginat_n.list);
+          paginat_n.list.forEach(function (item, index) {
+            item.created_at = App.dateFormat(item.created_at, 'yyyy-MM-dd');
+          });
+          that.setData({
+            paginate: paginat_n,
+            'prompt.hidden': paginat_n.list.size
+          });
+        } else {
+          wx.showToast({
+            title: res.data.msg,
+            duration: 1000
+          });
+        }
+      },
+      fail: function () {
+        wx.stopPullDownRefresh() //停止下拉刷新
+        wx.showToast({
+          title: '服务器错误',
+          duration: 1000
+        });
+      },
+      complete: function () {
+        wx.hideToast();
+      }
+    });
+  },
   onPullDownRefresh() {
     this.initData();
     this.getList();
   },
   onReachBottom() {
+    console.log('adfads');
     if (!this.data.paginate || !this.data.paginate.hasNextPage) return
     this.data.params.pageNum = this.data.paginate.nextPage;
-    this.getList();
+    this.getListMore();
   },
   handlerStart(e) {
     let {clientX, clientY} = e.touches[0];

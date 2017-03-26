@@ -1,2 +1,36 @@
-<!--pages/admin/order/index.wxml-->
-<text>pages/admin/order/index.wxml</text>
+<import src="../../common/nav.wxml" />
+<import src="../../common/prompt.wxml" />
+<template is="nav" data="{{ navList, activeIndex }}" />
+<view class="stv-container">
+  <view class="tab-bar">
+    <view wx:for="{{tabs}}" wx:key="type" data-index="{{index}}" data-type="{{item.type}}" bindtap="handlerTabTap" class="tab {{activeTab==index?'tab-active':''}}" style="width: {{stv.windowWidth/tabs.length}}px">
+      <text>{{item.name}}</text>
+    </view>
+    <view style="width: {{stv.lineWidth}}px; left: {{stv.offset/tabs.length}}px" class="under-line {{!stv.tStart? 'withAnimate': ''}}"></view>
+  </view>
+  <view class="scroll-view">
+    <view bindtouchstart="handlerStart" catchtouchmove="handlerMove" bindtouchcancel="handlerCancel" bindtouchend="handlerEnd" class="scroll-view-wrapper {{!stv.tStart? 'withAnimate': ''}}" style="left: -{{stv.offset}}px">
+      <view style="width: {{stv.windowWidth}}px;" wx:for="{{tabs}}" wx:key="unique" class="one-scene">
+        <scroll-view style="height:100%;padding-bottom:20px;" scroll-y>
+          <view class="order-container" wx:for="{{ paginate.list }}" wx:if="{{ paginate.list.length>0 }}" wx:key="id" wx:for-item="order" wx:for-index="index" bindtap="navigateTo" data-id="{{ order.id }}">
+            <view class="order-top">
+              <view class="order-top-left"><text class="color-red">{{ order.user.name }}</text>@{{ order.created_at }}</view>
+              <view class="order-top-right">{{ order.statusName }}</view>
+            </view>
+            <view class="order-content">
+              <view class="order-content-item">
+                <view class="order-content-item-left">{{ order.orderItems[0].name }}</view>
+                <view class="order-content-item-right">{{ order.orderItems.length }}种商品，共¥{{ order.order_money }}</view>
+              </view>
+            </view>
+            <view class="order-bottom">
+              <view class="order-bottom-item" wx:if="{{ order.status==10||order.status==20 }}" catchtap="cancel" data-oid='{{order.id}}' data-indes='{{index}}' hover-class="weui-form-preview__btn_active">确认订单</view>
+              <view class="order-bottom-item" catchtap="checkDetail" data-oid='{{order.id}}' hover-class="weui-form-preview__btn_active">查看详情</view>
+            </view>
+          </view>
+          <template is="prompt" data="{{ prompt }}" />
+        </scroll-view>
+      </view>
+    </view>
+  </view>
+</view>

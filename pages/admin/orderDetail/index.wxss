@@ -1,1 +1,133 @@
-/* pages/admin/orderDetail/index.wxss */
+/* pages/pages/order/detail/index.wxss */
+
+.weui-panel .weui-panel__hd {
+  margin: 0;
+  margin-left: 0rpx;
+  font-size: 16px;
+  padding: 4px;
+  color:#666;
+}
+
+.weui-panel .weui-panel__hd::after {
+  content: " ";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  height: 1px;
+  border-bottom: 1px solid rgba(71, 157, 230, 0.40);
+}
+
+.address {
+  margin: 0;
+  padding: 0;
+  margin-bottom: 10px;
+}
+
+.address .weui-media-box {
+  padding-left: 35px;
+  padding-right: 35px;
+}
+
+.address .addr {
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  width: 20px;
+  height: 20px;
+  -webkit-transform: translate3d(0, -50%, 0);
+  transform: translate3d(0, -50%, 0);
+}
+
+.address .addr .icon {
+  width: 20px;
+  height: 20px;
+}
+
+.address .weui-cell__ft {
+  position: absolute;
+  top: 50%;
+  right: 13px;
+  width: 20px;
+  height: 20px;
+  -webkit-transform: translate3d(0, -50%, 0);
+  transform: translate3d(0, -50%, 0);
+}
+
+.order-container {
+  background: white;
+}
+
+.order-top {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 4px;
+  font-size: 16px;
+}
+
+.order-top-left {
+  color: gray;
+}
+
+.order-top-right {
+  color: red;
+}
+
+.order-content {
+  border-top: 1px solid rgba(71, 157, 230, 0.40);
+  border-bottom: 1px solid rgba(71, 157, 230, 0.40);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-size: 14px;
+}
+
+.order-content-item {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  border-bottom: 1px dashed rgba(0, 0, 0, 0.15);
+}
+
+.order-content-item view {
+  flex: 1;
+  text-align: center;
+}
+
+.order-content-item .amount {
+  text-align: right;
+}
+
+.weui-panel {
+  padding: 0;
+}
+
+.weui-panel .weui-panel__bd {
+  padding: 0;
+}
+
+.weui-media-box__desc {
+  padding: 4px 0px;
+}
+
+.order-bottom {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  border-bottom: 1px solid rgba(71, 157, 230, 0.40);
+}
+
+.order-bottom-item {
+  flex: 1;
+  padding: 4px;
+  font-size: 14px;
+  border-left: 1px solid rgba(71, 157, 230, 0.40);
+  text-align: center;
+}
+
+.order-bottom:last-child {
+  border-right: 1px solid rgba(71, 157, 230, 0.40);
+}

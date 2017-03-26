@@ -36,20 +36,7 @@ Page({
         this.fetchFilterData();
         //banner
         let that = this;
-        wx.request({
-            url: App.globalData.host + 'banner/list',
-            method: 'GET',
-            data: {},
-            header: {
-                SESSIONID: App.globalData.sessionId,
-                'Accept': 'application/json'
-            },
-            success: function (res) {
-                that.setData({
-                    banners: res.data.data
-                })
-            }
-        });
+        this.getBanner();
         wx.showToast({
             title: '加载中...',
             icon: 'loading',
@@ -85,6 +72,23 @@ Page({
             },
             complete: function () {
                 wx.hideToast();
+            }
+        });
+    },
+    getBanner() {
+        let that = this;
+        wx.request({
+            url: App.globalData.host + 'banner/list',
+            method: 'GET',
+            data: {},
+            header: {
+                SESSIONID: App.globalData.sessionId,
+                'Accept': 'application/json'
+            },
+            success: function (res) {
+                that.setData({
+                    banners: res.data.data
+                })
             }
         });
     },
@@ -153,6 +157,7 @@ Page({
     },
     onPullDownRefresh() {
         this.getList();
+        this.getBanner();
     },
     onReachBottom() {
         if (!this.data.paginate.hasNextPage)
@@ -166,7 +171,7 @@ Page({
             method: 'GET',
             data: {
                 'pageNum': 1,
-                'pageSize': that.data.paginate.pageSize
+                'pageSize': 10
             },
             header: {
                 'Accept': 'application/json'

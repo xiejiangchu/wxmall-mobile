@@ -6,7 +6,7 @@
     <view wx:for="{{navLeftItems}}" wx:key="id" class="nav_left_items {{params.cid2 == item.id ? 'active' : ''}}" bindtap="switchLevel2" data-index="{{index}}" data-id="{{item.id}}">{{item.name}}</view>
   </view>
   <view class="nav_right">
-    <view wx:if="{{navRightItems&&navRightItems.length>0}}">
+    <view class="right-container" wx:if="{{navRightItems&&navRightItems.length>0}}">
       <block wx:for="{{navRightItems}}" wx:key="id">
         <view class="nav_right_items">
           <navigator bindtap="navigateTo" data-id="{{ item.id }}">

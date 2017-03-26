@@ -124,6 +124,7 @@ Page({
             },
             success: function (res) {
                 if (res.data.code == 0) {
+                    App.OrderMap.set('orderData.items', []);
                     wx.showToast({
                         title: '提交成功',
                         duration: 1000

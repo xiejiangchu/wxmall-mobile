@@ -57,6 +57,7 @@ Page({
                 'Accept': 'application/json'
             },
             success: function (res) {
+                wx.stopPullDownRefresh();
                 if (res.data.code == 0) {
                     let total = 0;
                     res.data.data.forEach(function (item, index) {
@@ -75,7 +76,9 @@ Page({
                         duration: 1000
                     });
                 }
-
+            },
+            complete: function () {
+                wx.stopPullDownRefresh();
             }
         });
     },
@@ -104,23 +107,65 @@ Page({
                 'Accept': 'application/json'
             },
             success: function (res) {
-                if (res.data.data.address) {
-                    App.OrderMap.set('orderData.items', res.data.data.items);
-                    App.OrderMap.set('orderData.address', res.data.data.address);
-                    App.OrderMap.set('orderData.orderCheckDto', res.data.data);
-                    wx.navigateTo({
-                        url: '/pages/order/confirm/index'
-                    })
+                if (res.data.code == 0) {
+                    if (res.data.data.changed == 1) {
+                        wx.showModal({
+                            title: '友情提示',
+                            showCancel: true,
+                            cancelText: '取消',
+                            content: '商品数据发生变化，是否继续？',
+                            success: function (r) {
+                                if (r.confirm) {
+                                    if (res.data.data.address) {
+                                        App.OrderMap.set('orderData.items', res.data.data.items);
+                                        App.OrderMap.set('orderData.address', res.data.data.address);
+                                        App.OrderMap.set('orderData.orderCheckDto', res.data.data);
+                                        wx.navigateTo({
+                                            url: '/pages/order/confirm/index'
+                                        })
+                                    } else {
+                                        wx.navigateTo({
+                                            url: '/pages/address/add/index'
+                                        })
+                                    }
+                                }
+                            },
+                            fail: function () {
+
+                            },
+                            complete: function () {
+
+                            }
+                        });
+                    } else {
+                        if (res.confirm) {
+                            if (res.data.data.address) {
+                                App.OrderMap.set('orderData.items', res.data.data.items);
+                                App.OrderMap.set('orderData.address', res.data.data.address);
+                                App.OrderMap.set('orderData.orderCheckDto', res.data.data);
+                                wx.navigateTo({
+                                    url: '/pages/order/confirm/index'
+                                })
+                            } else {
+                                wx.navigateTo({
+                                    url: '/pages/address/add/index'
+                                })
+                            }
+                        }
+                    }
+
                 } else {
-                    wx.navigateTo({
-                        url: '/pages/address/add/index'
-                    })
+                    wx.showToast({
+                        title: res.data.msg || '服务器错误',
+                        duration: 1000
+                    });
                 }
             },
             fail: function () {
                 wx.stopPullDownRefresh();
             },
             complete: function () {
+
                 wx.hideToast();
             }
         });
