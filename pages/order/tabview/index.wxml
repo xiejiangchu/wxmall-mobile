@@ -10,9 +10,9 @@
   </view>
   <view class="scroll-view">
     <view bindtouchstart="handlerStart" catchtouchmove="handlerMove" bindtouchcancel="handlerCancel" bindtouchend="handlerEnd" class="scroll-view-wrapper {{!stv.tStart? 'withAnimate': ''}}" style="left: -{{stv.offset}}px">
-      <view style="width: {{stv.windowWidth}}px;" wx:for="{{tabs}}" wx:key="unique" class="one-scene">
-        <scroll-view style="height:100%;padding-bottom:20px;" scroll-y>
-          <view class="order-container" wx:for="{{ paginate.list }}" wx:if="{{ paginate.list.length>0 }}" wx:key="id" wx:for-item="order" wx:for-index="index" bindtap="navigateTo" data-id="{{ order.id }}">
+      <view style="width: {{stv.windowWidth}}px;" wx:for="{{tabs}}" wx:key="{{name}}" class="one-scene">
+        <scroll-view style="height:100%;padding-bottom:20px;" scroll-y bindscrolltolower="scrollBottom" bindscrolltoupper="scrollTop">
+          <view class="order-container" wx:for="{{ paginate.list }}" wx:if="{{ paginate.list.length>0 }}" wx:key="{{order.id}}" wx:for-item="order" wx:for-index="index" bindtap="navigateTo" data-id="{{ order.id }}">
             <view class="order-top">
               <view class="order-top-left">{{ order.created_at }}</view>
               <view class="order-top-right">{{ order.statusName }}</view>

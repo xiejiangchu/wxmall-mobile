@@ -63,6 +63,12 @@ Page({
         });
         this.getCart();
     },
+    slideClick(e) {
+        let id = e.currentTarget.dataset.url;
+        wx.navigateTo({
+            url: '/pages/goods/detail/index?id=' + id
+        })
+    },
     getCart() {
         var that = this;
         wx.request({

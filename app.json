@@ -12,6 +12,7 @@
     "pages/order/confirm/index",
     "pages/order/detail/index",
     "pages/order/tabview/index",
+    "pages/cart/success/index",
     "pages/bonus/tabview/index",
     "pages/bonus/select/index",
     "pages/goods/detail/index",

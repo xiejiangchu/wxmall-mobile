@@ -29,10 +29,22 @@
     </view>
     <view class="weui-cell weui-cell_input">
       <view class="weui-cell__hd">
+        <view class="weui-label">省市</view>
+      </view>
+      <view class="weui-cell__bd">
+        <picker bindchange="bindProvinceChange" value="{{ form.province }}" range="{{provinces}}">
+          <view class="weui-select">{{provinces[provinceIndex]}}</view>
+        </picker>
+      </view>
+    </view>
+    <view class="weui-cell weui-cell_input">
+      <view class="weui-cell__hd">
         <view class="weui-label">市区</view>
       </view>
       <view class="weui-cell__bd">
-        <input name="city" value="{{ form.city }}" class="weui-input" type="text" placeholder="宜春市" />
+        <picker bindchange="bindCityChange" value="{{ form.city }}" range="{{cities}}">
+          <view class="weui-select">{{cities[cityIndex]}}</view>
+        </picker>
       </view>
     </view>
     <view class="weui-cell weui-cell_input">
@@ -40,7 +52,9 @@
         <view class="weui-label">区县</view>
       </view>
       <view class="weui-cell__bd">
-        <input name="district" value="{{ form.district }}" class="weui-input" type="text" placeholder="袁州区" />
+        <picker bindchange="bindDistrictChange" value="{{ form.district }}" range="{{districts}}">
+          <view class="weui-select">{{districts[districtIndex]}}</view>
+        </picker>
       </view>
     </view>
     <view class="weui-cell weui-cell_input">
@@ -48,7 +62,9 @@
         <view class="weui-label">街道</view>
       </view>
       <view class="weui-cell__bd">
-        <input name="road" value="{{ form.road }}" class="weui-input" type="text" placeholder="请输入街道地址" />
+        <picker bindchange="bindRoadChange" value="{{ form.road }}" range="{{roads}}">
+          <view class="weui-select">{{roads[roadIndex]}}</view>
+        </picker>
       </view>
     </view>
     <view class="weui-cell weui-cell_textarea">
@@ -57,7 +73,7 @@
       </view>
       <view class="weui-cell__bd">
         <textarea name="address" value="{{ form.address }}" class="weui-textarea" placeholder="请输入收货人地址" style="height: 3.3em" />
-        <view class="weui-textarea-icon" bindtap="chooseLocation">
+        <view class="weui-textarea-icon">
           <image src="../../../assets/images/iconfont-addr-default.png"></image>
         </view>
       </view>

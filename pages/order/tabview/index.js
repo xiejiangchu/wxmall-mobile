@@ -72,6 +72,12 @@ Page({
       }
     })
   },
+  scrollTop() {
+    console.log('top');
+  },
+  scrollBottom() {
+    this.getListMore();
+  },
   getList() {
     wx.showToast({
       title: '加载中...',
@@ -117,12 +123,10 @@ Page({
     });
   },
   getListMore() {
-    wx.showToast({
-      title: '加载中...',
-      icon: 'loading',
-      duration: 10000
-    });
     let that = this;
+    if (!that.data.paginate.hasNextPage)
+      return;
+    that.data.params.pageNum = that.data.paginate.nextPage;
     wx.request({
       url: App.globalData.host + 'order/list',
       method: 'GET',
@@ -132,7 +136,6 @@ Page({
         'Accept': 'application/json'
       },
       success: function (res) {
-        wx.stopPullDownRefresh() //停止下拉刷新
         if (res.data.code == 0) {
           var paginat_n = res.data.data;
           paginat_n.list = that.data.paginate.list.concat(paginat_n.list);
@@ -151,14 +154,12 @@ Page({
         }
       },
       fail: function () {
-        wx.stopPullDownRefresh() //停止下拉刷新
         wx.showToast({
           title: '服务器错误',
           duration: 1000
         });
       },
       complete: function () {
-        wx.hideToast();
       }
     });
   },

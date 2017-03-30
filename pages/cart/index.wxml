@@ -8,8 +8,8 @@
       <text class="info-meta" wx:if="{{ canEdit }}" bindtap="onTapEdit">完成</text>
     </view>
     <view class="weui-panel__bd">
-      <navigator data-id="{{ item.item.id }}" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
-        <view class="weui-media-box__hd weui-media-box__hd_in-appmsg" bindtap="checkDetail">
+      <navigator class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
+        <view class="weui-media-box__hd weui-media-box__hd_in-appmsg" data-id="{{ item.item.id }}" bindtap="checkDetail">
           <image class="weui-media-box__thumb" src="{{ img_host+item.item.thumb }}" />
         </view>
         <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">

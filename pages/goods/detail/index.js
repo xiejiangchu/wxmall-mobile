@@ -85,6 +85,17 @@ Page({
     onHide() {
 
     },
+    previewImage(e) {
+        let urls = [];
+        let index = e.currentTarget.dataset.index || 0;
+        this.data.item.imageList.forEach(function (item, index) {
+            urls.push(item.url);
+        });
+        wx.previewImage({
+            current: urls[index], // 当前显示图片的http链接
+            urls: urls // 需要预览的图片http链接列表
+        })
+    },
     confirmOrder(e) {
         wx.showToast({
             title: '提交中...',
@@ -208,7 +219,7 @@ Page({
         });
     },
     addCart(e) {
-        if (!this.data.spec.tid) {
+        if (!this.data.spec.tid || this.data.spec.tid <= 0) {
             wx.showToast({
                 title: '请选择规格',
                 duration: 1000
@@ -228,7 +239,7 @@ Page({
         })
     },
     subCart(e) {
-        if (!this.data.spec.tid) {
+        if (!this.data.spec.tid || this.data.spec.tid <= 0) {
             wx.showToast({
                 title: '请选择规格',
                 duration: 1000
@@ -250,11 +261,14 @@ Page({
     switchType(e) {
         let tid = e.currentTarget.dataset.tid;
         let index = e.currentTarget.dataset.index;
-        this.setData({
-            'spec.tid': tid,
-            'spec.index': index
-        });
-        this.initNumber();
+        let remain = e.currentTarget.dataset.remain;
+        if (remain > 0) {
+            this.setData({
+                'spec.tid': tid,
+                'spec.index': index
+            });
+            this.initNumber();
+        }
     },
     putCartByUser(gid, params) {
         let that = this;
@@ -314,9 +328,15 @@ Page({
             success: function (res) {
                 wx.stopPullDownRefresh() //停止下拉刷新
                 that.setData({
-                    item: res.data.data,
-                    'spec.tid': res.data.data.itemSpecList[0].id,
-                    'spec.index': 0
+                    item: res.data.data
+                });
+                res.data.data.itemSpecList.forEach(function (item, index) {
+                    if (item.remain > 0) {
+                        that.setData({
+                            'spec.tid': item.id,
+                            'spec.index': index
+                        })
+                    }
                 });
                 that.initNumber();
             },

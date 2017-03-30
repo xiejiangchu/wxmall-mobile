@@ -13,6 +13,18 @@ Page({
 			address: '',
 			is_def: !1,
 		},
+		provincesSrc: [],
+		provinces: [],
+		provinceIndex: -1,
+		citiesSrc: [],
+		cities: [],
+		cityIndex: -1,
+		districtsSrc: [],
+		districts: [],
+		districtIndex: -1,
+		roadsSrc: [],
+		roads: [],
+		roadIndex: -1,
 		radio: [
 			{
 				name: '先生',
@@ -58,6 +70,221 @@ Page({
 	},
 	onShow() {
 		this.renderForm(this.data.id);
+		this.init();
+	},
+	init() {
+		if (this.data.provinces.length > 0) {
+			return;
+		}
+		let that = this;
+		wx.request({
+			url: App.globalData.host + 'cnArea/getByLevel',
+			method: 'GET',
+			data: {
+				level: 0
+			},
+			header: {
+				SESSIONID: App.globalData.sessionId,
+				'content-type': 'application/x-www-form-urlencoded',
+				'Accept': 'application/json'
+			},
+			success: function (res) {
+				if (res.data.code == 0) {
+					let provinces = [];
+					res.data.data.forEach(function (item, index) {
+						provinces.push(item.name);
+					});
+					that.setData({
+						provincesSrc: res.data.data,
+						provinces: provinces
+					})
+				} else {
+					wx.showToast({
+						title: res.data.msg || "服务器错误",
+						duration: 1000
+					});
+				}
+			},
+			fail: function () {
+			},
+			complete: function () {
+				wx.hideToast();
+			}
+		});
+	},
+	bindProvinceChange(e) {
+		this.setData({
+			provinceIndex: e.detail.value,
+			'form.province': this.data.provinces[e.detail.value],
+		});
+		let that = this;
+		wx.request({
+			url: App.globalData.host + 'cnArea/getByPid',
+			method: 'GET',
+			data: {
+				pid: that.data.provincesSrc[e.detail.value].id
+			},
+			header: {
+				SESSIONID: App.globalData.sessionId,
+				'content-type': 'application/x-www-form-urlencoded',
+				'Accept': 'application/json'
+			},
+			success: function (res) {
+				if (res.data.code == 0) {
+					let cities = [];
+					res.data.data.forEach(function (item, index) {
+						cities.push(item.name);
+					});
+					that.setData({
+						citiesSrc: res.data.data,
+						cities: cities,
+						'form.city': cities[that.data.cityIndex]
+					})
+				} else {
+					wx.showToast({
+						title: res.data.msg || "服务器错误",
+						duration: 1000
+					});
+				}
+			},
+			fail: function () {
+			},
+			complete: function () {
+
+			}
+		});
+
+	},
+	bindCityChange(e) {
+		this.setData({
+			cityIndex: e.detail.value,
+			'form.city': this.data.cities[e.detail.value],
+		});
+		let that = this;
+		wx.request({
+			url: App.globalData.host + 'cnArea/getByPid',
+			method: 'GET',
+			data: {
+				pid: that.data.citiesSrc[e.detail.value].id
+			},
+			header: {
+				SESSIONID: App.globalData.sessionId,
+				'content-type': 'application/x-www-form-urlencoded',
+				'Accept': 'application/json'
+			},
+			success: function (res) {
+				if (res.data.code == 0) {
+					let districts = [];
+					res.data.data.forEach(function (item, index) {
+						districts.push(item.name);
+					});
+					that.setData({
+						districtsSrc: res.data.data,
+						districts: districts,
+						'form.district': districts[that.data.districtIndex]
+					})
+				} else {
+					wx.showToast({
+						title: res.data.msg || "服务器错误",
+						duration: 1000
+					});
+				}
+			},
+			fail: function () {
+			},
+			complete: function () {
+
+			}
+		});
+	},
+	bindDistrictChange(e) {
+		this.setData({
+			districtIndex: e.detail.value,
+			'form.district': this.data.districts[e.detail.value],
+		});
+		let that = this;
+		wx.request({
+			url: App.globalData.host + 'cnArea/getByPid',
+			method: 'GET',
+			data: {
+				pid: that.data.districtsSrc[e.detail.value].id
+			},
+			header: {
+				SESSIONID: App.globalData.sessionId,
+				'content-type': 'application/x-www-form-urlencoded',
+				'Accept': 'application/json'
+			},
+			success: function (res) {
+				if (res.data.code == 0) {
+					let roads = [];
+					res.data.data.forEach(function (item, index) {
+						roads.push(item.name);
+					});
+					that.setData({
+						roadsSrc: res.data.data,
+						roads: roads,
+						'form.road': roads[that.data.roadIndex]
+					})
+				} else {
+					wx.showToast({
+						title: res.data.msg || "服务器错误",
+						duration: 1000
+					});
+				}
+			},
+			fail: function () {
+			},
+			complete: function () {
+
+			}
+		});
+	},
+	bindRoadChange(e) {
+		this.setData({
+			roadIndex: e.detail.value,
+			'form.road': this.data.roads[e.detail.value],
+		});
+	},
+	submitForm(e) {
+		wx.showToast({
+			title: '提交中...',
+			icon: 'loading',
+			duration: 10000
+		});
+		let that = this;
+		that.data.form.address = e.detail.value.address
+		that.data.form.is_def = that.data.form.is_def ? 1 : 0;
+		wx.request({
+			url: App.globalData.host + 'address/',
+			method: 'POST',
+			data: that.data.form,
+			header: {
+				SESSIONID: App.globalData.sessionId,
+				'Accept': 'application/json'
+			},
+			success: function (res) {
+				if (res.data.code == 0) {
+					wx.hideToast();
+					wx.showToast({
+						title: '增加成功',
+						duration: 1000
+					});
+					wx.navigateBack({
+						delta: 1
+					});
+				} else {
+					wx.showToast({
+						title: res.data.msg || "服务器错误",
+						duration: 1000
+					});
+				}
+			},
+			fail: function () {
+			},
+			complete: function () {
+			}
+		});
+
 	},
 	renderForm(id) {
 		let that = this;
@@ -76,6 +303,7 @@ Page({
 						receiver: res.data.data.receiver,
 						gender: res.data.data.gender,
 						mobile: res.data.data.mobile,
+						province: res.data.data.province,
 						city: res.data.data.city,
 						district: res.data.data.district,
 						road: res.data.data.road,
@@ -95,58 +323,6 @@ Page({
 			radio: radio,
 			'form.gender': value,
 		})
-		console.log(this.data);
-	},
-	submitForm(e) {
-		wx.showToast({
-			title: '提交中...',
-			icon: 'loading',
-			duration: 10000
-		});
-		let that = this;
-		const params = e.detail.value;
-		params.id = this.data.id;
-		if (!this.WxValidate.checkForm(e)) {
-			const error = this.WxValidate.errorList[0]
-			wx.showModal({
-				title: '友情提示',
-				content: `${error.param} : ${error.msg}`,
-				showCancel: !1,
-			})
-			return false;
-		}
-		params.is_def = params.is_def ? 1 : 0;
-		wx.request({
-			url: App.globalData.host + 'address/edit',
-			method: 'POST',
-			data: params,
-			header: {
-				SESSIONID: App.globalData.sessionId,
-				'Accept': 'application/json'
-			},
-			success: function (res) {
-				if (res.data.code == 0) {
-					wx.showToast({
-						title: '修改成功',
-						duration: 1000
-					});
-					wx.navigateBack({
-						delta: 1
-					});
-				} else {
-					wx.showToast({
-						title: res.data.msg,
-						duration: 1000
-					});
-				}
-			},
-			fail: function () {
-			},
-			complete: function () {
-				wx.hideToast();
-			}
-		});
-
 	},
 	delete() {
 		wx.showToast({
@@ -184,7 +360,7 @@ Page({
 				}
 			},
 			fail: function () {
-				
+
 			},
 			complete: function () {
 				wx.hideToast();

@@ -1,4 +1,10 @@
 /* pages/pages/address/add/index.wxss */
-.weui-btn{
-    background: "#479de6";
+
+.weui-btn {
+  background: "#479de6";
+  padding: 0 16px;
+}
+
+.weui-select {
+  border-right: none;
 }

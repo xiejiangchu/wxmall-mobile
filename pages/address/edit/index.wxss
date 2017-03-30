@@ -2,3 +2,7 @@
 .button-sp-area{
 	margin-bottom: 20px;
 }
+
+.weui-select {
+  border-right: none;
+}

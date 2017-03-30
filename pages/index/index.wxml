@@ -15,7 +15,7 @@
 <view class="container">
   <swiper class="swiper_box" indicator-dots="{{indicatorDots}}" vertical="{{vertical}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" bindchange="swiperchange">
     <block wx:for="{{banners}}" wx:key='id'>
-      <swiper-item>
+      <swiper-item bindtap="slideClick" data-url="{{item.target}}">
         <image src="{{img_host}}{{item.url}}" class="slide-image" />
         <text>{{item.tips}}</text>
       </swiper-item>
@@ -67,10 +67,11 @@
       <view class="unit-container">
         <view class='left'> </view>
         <view class='right'>
-          <view class="text-unit-container" wx:for="{{ item.itemSpecList }}" wx:for-item="itemSpec" wx:key="id">
+          <view class="text-unit-container" wx:for="{{ item.itemSpecList }}" wx:for-item="itemSpec" wx:key="id" wx:if="{{itemSpec.remain>0}}">
             <text class='text-unit-shop'>
               <text class='color-red'>¥ {{ itemSpec.shop_price }}/{{itemSpec.unit_sell}}{{itemSpec.unit}}</text>
               <text class='color-primary' style='margin-left:8px;'>销量:{{itemSpec.sale_num}}</text>
+              <text class='' style='margin-left:8px;'>库存:{{itemSpec.remain}}</text>
             </text>
             <view class="cart-btn">
               <view class='cart-btn-item cart-btn-item-border' bindtap="subCart" data-gid="{{ item.id }}" data-spec="{{ itemSpec.id }}" data-index="{{ index }}" wx:if="{{cartMap[item.id+'_'+itemSpec.id]>0}}">

@@ -23,6 +23,36 @@ Page({
             id: -1
         }
     },
+    onPullDownRefresh() {
+        this.confirmOrder()
+    },
+    confirmOrder() {
+        let that = this;
+        wx.removeStorageSync('orderData.bonus');
+        wx.request({
+            url: App.globalData.host + 'order/check',
+            method: 'POST',
+            data: {
+            },
+            header: {
+                SESSIONID: App.globalData.sessionId,
+                'Accept': 'application/json'
+            },
+            success: function (res) {
+
+                App.OrderMap.set('orderData.items', res.data.data.items);
+                App.OrderMap.set('orderData.address', res.data.data.address);
+                App.OrderMap.set('orderData.orderCheckDto', res.data.data);
+                that.onLoad();
+            },
+            fail: function () {
+                wx.stopPullDownRefresh();
+            },
+            complete: function () {
+                wx.stopPullDownRefresh();
+            }
+        });
+    },
     onLoad(option) {
         let paymentsList = App.OrderMap.get('orderData.orderCheckDto').payments;
         this.setData({
@@ -45,8 +75,6 @@ Page({
             payments.push(item.name);
             pids.push(item.id);
         });
-
-
         let carts = {
             items: App.OrderMap.get('orderData.items'),
             totalAmount: App.OrderMap.get('orderData.orderCheckDto').totalAmount,
@@ -128,7 +156,7 @@ Page({
             time_start: this.data.date + ' ' + this.data.time_s + ':00',
             time_end: this.data.date + ' ' + this.data.time_e + ':00',
             message: this.data.message
-        }
+        };
         wx.request({
             url: App.globalData.host + 'order/',
             method: 'POST',
@@ -140,13 +168,16 @@ Page({
             },
             success: function (res) {
                 if (res.data.code == 0) {
-                    App.OrderMap.set('orderData.items', []);
-                    wx.showToast({
-                        title: '提交成功',
-                        duration: 1000
-                    });
-                    wx.navigateBack({
-                        delta: 1
+                    // App.OrderMap.set('orderData.items', []);
+                    // wx.showToast({
+                    //     title: '提交成功',
+                    //     duration: 1000
+                    // });
+                    // wx.navigateBack({
+                    //     delta: 2
+                    // });
+                    wx.redirectTo({
+                        'url': '/pages/cart/success/index'
                     });
                 } else {
                     wx.showToast({

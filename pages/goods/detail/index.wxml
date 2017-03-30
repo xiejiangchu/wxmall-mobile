@@ -6,7 +6,7 @@
       </swiper-item>
     </block>
   </swiper>
-  <view class='item-container pass pass-green' data-info='{{item.notice}}'>
+  <view class='item-container pass pass-{{item.notice_color}}' data-info='{{item.notice}}'>
     <view class='item-no'>{{ item.no }}</view>
     <view class="wa-row bg-white name-container">
       <view class="wa-grid-50 center-all">
@@ -19,7 +19,8 @@
     <view class="bg-white btn-container">
       <view class='text-left color-gray'>规格：</view>
       <view class="spec-container">
-        <view class="btn-wrap {{spec.tid == itemSpec.id ? 'active' : ''}}" wx:for="{{ item.itemSpecList }}" wx:for-item="itemSpec" wx:for-index="index" wx:key="id" bindtap="switchType" data-tid="{{itemSpec.id}}" data-index="{{index}}">
+        <view class="btn-wrap {{spec.tid == itemSpec.id ? 'active' : ''}} {{itemSpec.remain<=0 ? 'no-remain' : ''}}" wx:for="{{ item.itemSpecList }}" wx:for-item="itemSpec" wx:for-index="index" wx:key="id" bindtap="switchType" data-tid="{{itemSpec.id}}" data-index="{{index}}"
+        data-remain="{{itemSpec.remain}}">
           <view class="market">
             <text class="color-gray">市价:{{ itemSpec.market_price}}{{itemSpec.unit}}</text>
           </view>

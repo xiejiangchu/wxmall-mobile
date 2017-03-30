@@ -4,14 +4,14 @@
   <view class="scroll-list">
     <view class="weui-panel address-container" wx:if="{{ !!paginate.list }}">
       <view class="weui-panel__bd">
-        <view class="weui-media-box weui-media-box_text" wx:for="{{ paginate.list }}" wx:key="">
+        <view class="weui-media-box weui-media-box_text" bindtap="toAddressEdit" data-id="{{ item.id }}" wx:for="{{ paginate.list }}" wx:key="">
           <view class="weui-media-box__title weui-media-box__title_in-text">{{ item.receiver }} {{ item.mobile }}</view>
           <view class="weui-media-box__desc">{{ item.city }}{{ item.district }}{{ item.address }}</view>
           <view class="weui-media-box__info">
             <view class="weui-media-box__info__meta text-orangered" wx:if="{{ item.is_def==1 }}">默认地址</view>
             <view class="weui-media-box__info__meta" wx:if="{{ item.is_def!=1 }}" bindtap="setDefalutAddress" data-id="{{ item.id }}">设为默认</view>
           </view>
-          <view class="edit" bindtap="toAddressEdit" data-id="{{ item.id }}">
+          <view class="edit">
             <image class="icon" src="../../../assets/images/iconfont-edit.png" />
           </view>
         </view>
