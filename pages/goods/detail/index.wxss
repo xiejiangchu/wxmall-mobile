@@ -186,7 +186,7 @@
   flex: 1;
 }
 
-.item-bottom .item-cart {
+.item-bottom .item-cart-submit {
   color: white;
   padding: 0 8px;
   height: 100%;
@@ -342,4 +342,11 @@
 .cart-btn-add:after {
   width: 20px;
   height: 1px;
+}
+.item-cart{
+  padding: 8px 16px;
+}
+.item-cart-image{
+  width: 20px;
+  height: 20px;
 }

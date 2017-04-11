@@ -57,11 +57,23 @@ Page({
                 'Accept': 'application/json'
             },
             success: function (res) {
-                that.setData({
-                    paginate: res.data.data,
-                    address: res.data.data.list,
-                    'prompt.hidden': res.data.data.list.length
-                })
+                if (res.data.code == 0) {
+                    that.setData({
+                        paginate: res.data.data,
+                        address: res.data.data.list,
+                        'prompt.hidden': res.data.data.list.length
+                    })
+                } else {
+                    wx.showToast({
+                        title: res.data.msg || "服务器错误",
+                        duration: 1000
+                    });
+                }
+            },
+            fail: function () {
+            },
+            complete: function () {
+                wx.stopPullDownRefresh();
             }
         })
     },

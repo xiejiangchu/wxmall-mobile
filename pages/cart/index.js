@@ -177,37 +177,40 @@ Page({
             showCancel: true,
             cancelText: '取消',
             content: '确定要删除该商品吗？',
-            success: function () {
-                wx.request({
-                    url: App.globalData.host + 'cart/update',
-                    method: 'PUT',
-                    data: {
-                        sessionId: App.globalData.sessionId,
-                        gid: gid,
-                        spec: spec,
-                        amount: 0
-                    },
-                    header: {
-                        SESSIONID: App.globalData.sessionId,
-                        'content-type': 'application/x-www-form-urlencoded',
-                        'Accept': 'application/json'
-                    },
-                    success: function (res) {
-                        let total = 0;
-                        res.data.data.forEach(function (item, index) {
-                            item.total = item.amount * item.itemSpec.shop_price;
-                            item.total = item.total.toFixed(2);
-                            total += item.amount * item.itemSpec.shop_price
-                        });
-                        that.setData({
-                            'carts.items': res.data.data,
-                            'prompt.hidden': res.data.data.length == 0 ? false : true,
-                            'carts.total': total.toFixed(2)
-                        });
-                        App.OrderMap.set('orderData.items', this.data.carts.items);
-                        wx.stopPullDownRefresh();
-                    }
-                });
+            success: function (r) {
+                if (r.confirm) {
+                    wx.request({
+                        url: App.globalData.host + 'cart/update',
+                        method: 'PUT',
+                        data: {
+                            sessionId: App.globalData.sessionId,
+                            gid: gid,
+                            spec: spec,
+                            amount: 0
+                        },
+                        header: {
+                            SESSIONID: App.globalData.sessionId,
+                            'content-type': 'application/x-www-form-urlencoded',
+                            'Accept': 'application/json'
+                        },
+                        success: function (res) {
+                            let total = 0;
+                            res.data.data.forEach(function (item, index) {
+                                item.total = item.amount * item.itemSpec.shop_price;
+                                item.total = item.total.toFixed(2);
+                                total += item.amount * item.itemSpec.shop_price
+                            });
+                            that.setData({
+                                'carts.items': res.data.data,
+                                'prompt.hidden': res.data.data.length == 0 ? false : true,
+                                'carts.total': total.toFixed(2)
+                            });
+                            App.OrderMap.set('orderData.items', this.data.carts.items);
+                            wx.stopPullDownRefresh();
+                        }
+                    });
+                }
+
             },
             fail: function () {
                 wx.stopPullDownRefresh();
@@ -224,33 +227,35 @@ Page({
             showCancel: true,
             cancelText: '取消',
             content: '确定要清空购物车吗？',
-            success: function () {
-                wx.request({
-                    url: App.globalData.host + 'cart/clear',
-                    method: 'PUT',
-                    data: {
-                        sessionId: App.globalData.sessionId
-                    },
-                    header: {
-                        SESSIONID: App.globalData.sessionId,
-                        'content-type': 'application/x-www-form-urlencoded',
-                        'Accept': 'application/json'
-                    },
-                    success: function (res) {
-                        let total = 0;
-                        res.data.data.forEach(function (item, index) {
-                            item.total = item.amount * item.itemSpec.shop_price;
-                            item.total = item.total.toFixed(2);
-                            total += item.amount * item.itemSpec.shop_price
-                        });
-                        that.setData({
-                            'carts.items': res.data.data,
-                            'prompt.hidden': res.data.data.length == 0 ? false : true,
-                            'carts.total': total.toFixed(2)
-                        });
-                        wx.stopPullDownRefresh();
-                    }
-                });
+            success: function (r) {
+                if (r.confirm) {
+                    wx.request({
+                        url: App.globalData.host + 'cart/clear',
+                        method: 'PUT',
+                        data: {
+                            sessionId: App.globalData.sessionId
+                        },
+                        header: {
+                            SESSIONID: App.globalData.sessionId,
+                            'content-type': 'application/x-www-form-urlencoded',
+                            'Accept': 'application/json'
+                        },
+                        success: function (res) {
+                            let total = 0;
+                            res.data.data.forEach(function (item, index) {
+                                item.total = item.amount * item.itemSpec.shop_price;
+                                item.total = item.total.toFixed(2);
+                                total += item.amount * item.itemSpec.shop_price
+                            });
+                            that.setData({
+                                'carts.items': res.data.data,
+                                'prompt.hidden': res.data.data.length == 0 ? false : true,
+                                'carts.total': total.toFixed(2)
+                            });
+                            wx.stopPullDownRefresh();
+                        }
+                    });
+                }
             },
             fail: function () {
                 wx.showToast({

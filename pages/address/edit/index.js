@@ -72,6 +72,9 @@ Page({
 		this.renderForm(this.data.id);
 		this.init();
 	},
+	onPullDownRefresh() {
+		wx.stopPullDownRefresh();
+	},
 	init() {
 		if (this.data.provinces.length > 0) {
 			return;

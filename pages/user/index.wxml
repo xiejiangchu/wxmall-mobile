@@ -80,7 +80,6 @@
       </navigator>
     </view>
   </view>
-  <view class="logout" bindtap="logout">登出账号</view>
 </view>
 <modal hidden="{{hidden}}" title="友情提示" confirm-text="确定" cancel-text="取消" bindcancel="cancel" bindconfirm="confirm" no-cancel="{{nocancel}}">
   确定要登出吗？

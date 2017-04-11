@@ -1,4 +1,3 @@
-<import src="../common/nav.wxml" />
 <import src="../common/prompt.wxml" />
 <view class="weui-search-bar">
   <view class="weui-search-bar__form">
@@ -65,22 +64,20 @@
         </navigator>
       </view>
       <view class="unit-container">
-        <view class='left'> </view>
         <view class='right'>
           <view class="text-unit-container" wx:for="{{ item.itemSpecList }}" wx:for-item="itemSpec" wx:key="id" wx:if="{{itemSpec.remain>0}}">
             <text class='text-unit-shop'>
-              <text class='color-red'>¥ {{ itemSpec.shop_price }}/{{itemSpec.unit_sell}}{{itemSpec.unit}}</text>
+              <text class='color-red'>¥ {{ itemSpec.shop_price }}/{{itemSpec.unit}}</text>
               <text class='color-primary' style='margin-left:8px;'>销量:{{itemSpec.sale_num}}</text>
-              <text class='' style='margin-left:8px;'>库存:{{itemSpec.remain}}</text>
             </text>
             <view class="cart-btn">
-              <view class='cart-btn-item cart-btn-item-border' bindtap="subCart" data-gid="{{ item.id }}" data-spec="{{ itemSpec.id }}" data-index="{{ index }}" wx:if="{{cartMap[item.id+'_'+itemSpec.id]>0}}">
+              <view class='cart-btn-item cart-btn-item-border' bindtap="subCart" data-gid="{{ item.id }}" data-spec="{{ itemSpec.id }}" data-index="{{ index }}" data-step="{{ itemSpec.unit_sell }}" wx:if="{{cartMap[item.id+'_'+itemSpec.id]>0}}">
                 <text class="cart-btn-sub"></text>
               </view>
               <view class='cart-btn-item' wx:if="{{cartMap[item.id+'_'+itemSpec.id]>0}}">
                 <text class="cart-number">{{cartMap[item.id+"_"+itemSpec.id]}}</text>
               </view>
-              <view class='cart-btn-item cart-btn-item-border' bindtap="addCart" data-gid="{{ item.id }}" data-spec="{{ itemSpec.id }}" data-index="{{ index }}">
+              <view class='cart-btn-item cart-btn-item-border' bindtap="addCart" data-gid="{{ item.id }}" data-spec="{{ itemSpec.id }}" data-index="{{ index }}" data-step="{{ itemSpec.unit_sell }}">
                 <text class="cart-btn-add"></text>
               </view>
             </view>

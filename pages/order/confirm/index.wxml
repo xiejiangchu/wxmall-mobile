@@ -65,7 +65,7 @@
         <view class="weui-label">使用积分</view>
       </view>
       <view class="weui-cell__bd">
-        <input class="weui-input" bindinput="bindPointInput" placeholder="可使用{{point}}个积分" />
+        <input class="weui-input" bindinput="bindPointInput" value="{{point>0? point:''}}" placeholder="可使用{{point_total}}个积分" />
       </view>
     </view>
   </view>
@@ -82,7 +82,7 @@
   <view class="weui-form-preview">
     <view class="weui-form-preview__bd">
       <view class='wa-row check-item-row' wx:for="{{ carts.items }}" wx:key="id">
-        <image src="{{item.item.src}}" class='image-small'></image>
+        <image src="{{img_host}}{{item.item.thumb}}" class='image-small'></image>
         <view class='check-item-col-big'>
           <view class='name'>{{ item.item.name }}</view>
           <view class='unit color-red'>{{ item.itemSpec.shop_price+"/"+item.itemSpec.unit_sell+item.itemSpec.unit }}</view>

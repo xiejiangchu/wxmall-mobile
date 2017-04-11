@@ -10,7 +10,9 @@ Page({
         interval: 3000,
         duration: 1000,
         id: 0,
-        item: {},
+        item: {
+            id:10
+        },
         spec: {
             tid: -1,
             index: 0,
@@ -18,10 +20,10 @@ Page({
         },
         cart: {
             items: {}
-        }
+        },
+        loading: false
     },
     swiperchange(e) {
-        // console.log(e.detail.current)
     },
     onPullDownRefresh() {
         this.getDetail(this.data.id);
@@ -226,7 +228,8 @@ Page({
             });
             return;
         }
-        let amount = this.data.spec.amount + 1;
+        let step = this.data.item.itemSpecList[this.data.spec.index].unit_sell;
+        let amount = this.data.spec.amount + step;
         if (amount > this.data.item.itemSpecList[this.data.spec.index].max) {
             amount = this.data.item.itemSpecList[this.data.spec.index].max;
         }
@@ -246,7 +249,8 @@ Page({
             });
             return;
         }
-        let amount = this.data.spec.amount - 1;
+        let step = this.data.item.itemSpecList[this.data.spec.index].unit_sell;
+        let amount = this.data.spec.amount - step;
         if (amount > this.data.item.itemSpecList[this.data.spec.index].max) {
             amount = this.data.item.itemSpecList[this.data.spec.index].max;
         }
@@ -272,6 +276,9 @@ Page({
     },
     putCartByUser(gid, params) {
         let that = this;
+        if (that.data.loading)
+            return;
+        that.data.loading = true;
         wx.request({
             url: App.globalData.host + 'cart/update',
             method: 'PUT',
@@ -307,7 +314,7 @@ Page({
                 });
             },
             complete: function () {
-
+                that.data.loading = false;
             }
         });
     },
@@ -327,18 +334,28 @@ Page({
             },
             success: function (res) {
                 wx.stopPullDownRefresh() //停止下拉刷新
-                that.setData({
-                    item: res.data.data
-                });
-                res.data.data.itemSpecList.forEach(function (item, index) {
-                    if (item.remain > 0) {
-                        that.setData({
-                            'spec.tid': item.id,
-                            'spec.index': index
-                        })
-                    }
-                });
-                that.initNumber();
+                if (res.data.code == 0) {
+                    that.setData({
+                        item: res.data.data
+                    });
+                    res.data.data.itemSpecList.forEach(function (item, index) {
+                        if (item.remain > 0) {
+                            that.setData({
+                                'spec.tid': item.id,
+                                'spec.index': index
+                            })
+                        }
+                    });
+                    that.initNumber();
+                } else {
+                    that.setData({
+                        item: null
+                    });
+                    wx.showToast({
+                        title: res.data.msg || '服务器错误',
+                        duration: 1000
+                    });
+                }
             },
             fail: function () {
                 wx.showToast({
@@ -350,6 +367,11 @@ Page({
                 wx.hideToast();
             }
         });
+    },
+    backIndex: function (e) {
+        wx.switchTab({
+            url: '/pages/index/index'
+        })
     },
     onShareAppMessage: function () {
         return {

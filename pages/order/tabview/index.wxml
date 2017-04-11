@@ -1,6 +1,6 @@
 <import src="../../common/nav.wxml" />
 <import src="../../common/prompt.wxml" />
-<template is="nav" data="{{ navList, activeIndex }}" />
+
 <view class="stv-container">
   <view class="tab-bar">
     <view wx:for="{{tabs}}" wx:key="type" data-index="{{index}}" data-type="{{item.type}}" bindtap="handlerTabTap" class="tab {{activeTab==index?'tab-active':''}}" style="width: {{stv.windowWidth/tabs.length}}px">

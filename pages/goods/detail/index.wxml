@@ -1,4 +1,4 @@
-<view class="container" style="margin-bottom:80px;">
+<view class="container" style="margin-bottom:80px;" wx:if="{{item.id!=null}}">
   <swiper class="swiper_box" indicator-dots="{{ indicatorDots }}" vertical="{{ vertical }}" autoplay="{{ autoplay }}" interval="{{ interval }}" duration="{{ duration }}">
     <block wx:for="{{ item.imageList }}" wx:key="id">
       <swiper-item>
@@ -22,10 +22,11 @@
         <view class="btn-wrap {{spec.tid == itemSpec.id ? 'active' : ''}} {{itemSpec.remain<=0 ? 'no-remain' : ''}}" wx:for="{{ item.itemSpecList }}" wx:for-item="itemSpec" wx:for-index="index" wx:key="id" bindtap="switchType" data-tid="{{itemSpec.id}}" data-index="{{index}}"
         data-remain="{{itemSpec.remain}}">
           <view class="market">
-            <text class="color-gray">市价:{{ itemSpec.market_price}}{{itemSpec.unit}}</text>
+            市价:
+            <text class="color-gray">{{ itemSpec.market_price}}</text>
           </view>
           <view class="shop">
-            <text class='color-red'> {{ itemSpec.shop_price }}/{{itemSpec.unit_sell}}{{itemSpec.unit}} </text>
+            <text class='color-red'> {{ itemSpec.shop_price }}/{{itemSpec.unit}} </text>
           </view>
           <view class="sell">
             <text class='color-primary'>销量:{{itemSpec.sale_num}}</text>
@@ -51,7 +52,7 @@
     </view>
   </view>
 </view>
-<view class="item-bottom">
+<view class="item-bottom" wx:if="{{item.id!=null}}">
   <view class='item-btn'>
     <view class="cart-btn">
       <view class='cart-btn-item cart-btn-item-border' bindtap="subCart" data-gid="{{ item.id }}" data-spec="{{ itemSpec.id }}" data-index="{{ index }}">
@@ -60,10 +61,28 @@
       <view class='cart-btn-item'>
         <input class="cart-number" type="number" value="{{spec.amount}}" bindinput="inputTyping" />
       </view>
-      <view class='cart-btn-item cart-btn-item-border' bindtap="addCart" data-gid="{{ item.id }}" data-spec="{{ itemSpec.id }}" data-index="{{ index }}">
+      <view class='cart-btn-item cart-btn-item-border' bindtap="addCart" data-gid="{{ item.id }}" data-spec="{{ itemSpec.id }}" data-index="{{ index }}" data-step="{{ itemSpec.unit_sell }}">
         <text class="cart-btn-add"></text>
       </view>
     </view>
   </view>
-  <view class='item-cart' bindtap="confirmOrder">立即结算</view>
+  <view class='item-cart'>
+    <image class='item-cart-image' src="../../../assets/images/iconfont-cart-active.png"></image>
+  </view>
+  <view class='item-cart-submit' bindtap="confirmOrder">立即结算</view>
+</view>
+<view class="prompt-container" wx:if='{{item.id==null}}'>
+  <view class="weui-msg">
+    <view class="weui-msg__icon-area">
+      <icon type="warn" size="93"></icon>
+    </view>
+    <view class="weui-msg__text-area">
+      <view class="weui-msg__desc">商品未找到或已经下架</view>
+    </view>
+    <view class="weui-msg__opr-area">
+      <view class="weui-btn-area">
+        <button class="prompt-button" type="default" size='mini' bindtap="backIndex">返回首页</button>
+      </view>
+    </view>
+  </view>
 </view>

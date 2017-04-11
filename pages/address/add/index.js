@@ -69,6 +69,9 @@ Page({
 	onShow() {
 		this.init();
 	},
+	onPullDownRefresh() {
+		this.init();
+	},
 	radioChange(e) {
 		const params = e.detail.value
 		const value = e.detail.value
@@ -115,6 +118,7 @@ Page({
 			fail: function () {
 			},
 			complete: function () {
+				wx.stopPullDownRefresh();
 				wx.hideToast();
 			}
 		});

@@ -22,6 +22,9 @@ Page({
             }
         })
     },
+    onPullDownRefresh() {
+        wx.stopPullDownRefresh();
+    },
     radioChange(e) {
         let idx = e.detail.value;
         let address = this.data.paginate.list[idx];

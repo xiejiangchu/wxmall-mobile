@@ -162,24 +162,14 @@ swiper-item image {
 
 .unit-container {
   width: 100%;
-  display: flex;
-  flex-direction: row;
-}
-
-.unit-container .left {
-  flex: 0 0 auto;
-  width: 90px;
-  height: 100%;
+  position: relative;
 }
 
 .unit-container .right {
-  flex: 2;
-  display: flex;
-  flex-direction: column;
+  margin-left: 90px;
   padding-top: 8px;
   padding-bottom: 8px;
-  justify-content: flex-start;
-  align-items: flex-start;
+  font-size: 14px;
   border-top: 1px dashed #dfdfdf;
 }
 
@@ -207,7 +197,6 @@ swiper-item image {
   right: 5px;
   top: 2px;
   bottom: 2px;
-  width: 20%;
   padding: 2px;
   display: flex;
   flex-direction: row;

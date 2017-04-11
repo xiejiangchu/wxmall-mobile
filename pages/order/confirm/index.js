@@ -2,6 +2,7 @@ const App = getApp()
 
 Page({
     data: {
+        img_host: App.globalData.img_host,
         hidden: !0,
         carts: {},
         address: null,
@@ -21,7 +22,8 @@ Page({
         bonusCount: 0,
         bonus: {
             id: -1
-        }
+        },
+        point_rate: 100
     },
     onPullDownRefresh() {
         this.confirmOrder()
@@ -66,7 +68,8 @@ Page({
             time_start: App.OrderMap.get('orderData.orderCheckDto').time_start,
             time_end: App.OrderMap.get('orderData.orderCheckDto').time_end,
             bonusCount: App.OrderMap.get('orderData.orderCheckDto').bonusCount,
-            point_total: App.OrderMap.get('orderData.orderCheckDto').point
+            point_total: App.OrderMap.get('orderData.orderCheckDto').point,
+            point_rate: App.OrderMap.get('orderData.orderCheckDto').point_rate
         });
 
         let payments = [];
@@ -75,6 +78,10 @@ Page({
             payments.push(item.name);
             pids.push(item.id);
         });
+        this.setData({
+            payments: payments,
+            pids: pids
+        })
         let carts = {
             items: App.OrderMap.get('orderData.items'),
             totalAmount: App.OrderMap.get('orderData.orderCheckDto').totalAmount,
@@ -87,12 +94,24 @@ Page({
             carts.total = (carts.total - carts.bonus).toFixed(2);
         }
         this.setData({
-            carts: carts,
-            payments: payments,
-            pids: pids
+            carts: carts
         })
     },
     onShow() {
+    },
+    calc() {
+        let carts = {
+            totalAmount: App.OrderMap.get('orderData.orderCheckDto').totalAmount
+        }
+        if (this.data.bonus) {
+            carts.bonus = this.data.bonus.money;
+        } else {
+            carts.bonus = 0;
+        }
+        carts.total = (carts.totalAmount - carts.bonus - this.data.carts.point).toFixed(2);
+        this.setData({
+            'carts.total': carts.total
+        })
     },
     selectAddress(e) {
         wx.redirectTo({
@@ -107,9 +126,12 @@ Page({
         if (point > this.data.point_total) {
             point = this.data.point_total
         }
+        let point_money = (point / this.data.point_rate).toFixed(2);
         this.setData({
-            point: point
+            point: point,
+            'carts.point': point_money
         });
+        this.calc();
     },
     bindDateChange: function (e) {
         this.setData({

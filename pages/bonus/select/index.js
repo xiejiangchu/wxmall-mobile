@@ -63,12 +63,11 @@ Page({
     })
   },
   onPullDownRefresh() {
-    console.info('onPullDownRefresh')
+
     this.initData();
     this.getList();
   },
   onReachBottom() {
-    console.info('onReachBottom')
     if (!this.data.paginate || !this.data.paginate.hasNextPage) return
     this.getList();
   },

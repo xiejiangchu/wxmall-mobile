@@ -1,0 +1,62 @@
+<view class="weui-cells__title">优惠券发放</view>
+<view class="weui-cells weui-cells_after-title">
+  <view class="weui-cell weui-cell_input">
+    <view class="weui-cell__hd">
+      <view class="weui-label">用户</view>
+    </view>
+    <view class="weui-cell__bd">
+      <picker bindchange="bindUserChange" value="{{userIndex}}" range="{{userList}}">
+        <view class="weui-select">{{userList[userIndex]}}</view>
+      </picker>
+    </view>
+  </view>
+  <view class="weui-cell weui-cell_input">
+    <view class="weui-cell__hd">
+      <view class="weui-label">类型</view>
+    </view>
+    <view class="weui-cell__bd">
+      <picker bindchange="bindBonusChange" value="{{bonusIndex}}" range="{{bonusList}}">
+        <view class="weui-select">{{bonusList[bonusIndex]}}</view>
+      </picker>
+    </view>
+  </view>
+</view>
+<view class="weui-btn-area">
+  <button class="weui-btn" type="primary" bindtap="give">发放</button>
+</view>
+<view class="weui-cells__title">优惠券有效期管理</view>
+<view class="weui-cells weui-cells_after-title">
+  <view class="weui-cell weui-cell_input">
+    <view class="weui-cell__hd">
+      <view class="weui-label">类型</view>
+    </view>
+    <view class="weui-cell__bd">
+      <picker bindchange="bonusModifyChange" value="{{bonusModifyIndex}}" range="{{bonusModifyList}}">
+        <view class="weui-select">{{bonusModifyList[bonusModifyIndex]}}</view>
+      </picker>
+    </view>
+  </view>
+  <view class="weui-cell weui-cell_input">
+    <view class="weui-cell__hd">
+      <view class="weui-label">从</view>
+    </view>
+    <view class="weui-cell__bd">
+      <picker mode="date" value="{{bonusSrc[bonusModifyIndex].start_at}}" start="{{start}}" end="2020-09-01" bindchange="bindDateChangeStart">
+        <view class="weui-input">{{bonusSrc[bonusModifyIndex].start_at}}</view>
+      </picker>
+    </view>
+  </view>
+  <view class="weui-cell weui-cell_input">
+    <view class="weui-cell__hd">
+      <view class="weui-label">到</view>
+    </view>
+    <view class="weui-cell__bd">
+      <picker mode="date" value="{{bonusSrc[bonusModifyIndex].end_at}}" start="{{start}}" end="2020-09-01" bindchange="bindDateChangeEnd">
+        <view class="weui-input">{{bonusSrc[bonusModifyIndex].end_at}}</view>
+      </picker>
+    </view>
+  </view>
+</view>
+<view class="weui-btn-area">
+  <button class="weui-btn" type="primary" bindtap="bonusModify">修改</button>
+</view>

@@ -26,7 +26,8 @@
     "pages/admin/iteminfo/index",
     "pages/admin/spec/index",
     "pages/admin/order/index",
-    "pages/admin/orderDetail/index"
+    "pages/admin/orderDetail/index",
+    "pages/admin/bonus/index"
   ],
   "window": {
     "navigationBarBackgroundColor": "#479de6",

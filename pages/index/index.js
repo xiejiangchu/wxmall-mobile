@@ -17,6 +17,7 @@ Page({
             hidden: 0,
         },
         'cartMap': {},
+        loading: false,
 
         filterdata: {},  //筛选条件数据
         showfilter: false, //是否显示下拉筛选
@@ -389,9 +390,10 @@ Page({
         let gid = e.currentTarget.dataset.gid;
         let spec = e.currentTarget.dataset.spec;
         let index = e.currentTarget.dataset.index;
-        let amount = 1;
+        let step = e.currentTarget.dataset.step;
+        let amount = step;
         if (this.data.cartMap.hasOwnProperty(gid + "_" + spec)) {
-            amount = this.data.cartMap[gid + "_" + spec] + 1;
+            amount = this.data.cartMap[gid + "_" + spec] + step;
         }
         if (amount > this.data.paginate.list[index].max) {
             amount = this.data.paginate.list[index].max;
@@ -406,6 +408,9 @@ Page({
     },
     putCartByUser(gid, params) {
         let that = this;
+        if (that.data.loading)
+            return;
+        that.data.loading = true;
         wx.request({
             url: App.globalData.host + 'cart/update',
             method: 'PUT',
@@ -441,7 +446,7 @@ Page({
                 });
             },
             complete: function () {
-
+                that.data.loading = false;
             }
         });
     },
@@ -449,9 +454,10 @@ Page({
         let gid = e.currentTarget.dataset.gid;
         let spec = e.currentTarget.dataset.spec;
         let index = e.currentTarget.dataset.index;
+        let step = e.currentTarget.dataset.step;
         let amount = 0;
         if (this.data.cartMap.hasOwnProperty(gid + "_" + spec)) {
-            amount = this.data.cartMap[gid + "_" + spec] - 1;
+            amount = this.data.cartMap[gid + "_" + spec] - step;
         }
         if (amount > this.data.paginate.list[index].max) {
             amount = this.data.paginate.list[index].max;

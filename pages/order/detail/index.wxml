@@ -19,20 +19,15 @@
   <view class="order-content">
     <view class="order-content-item" wx:for="{{ order.orderItems }}" wx:key="id" wx:for-item="item">
       <view>{{ item.name }}</view>
-      <view class="amount">{{item.shop_price}}/{{item.unit_sell}}{{item.unit}}x{{ item.amount }}</view>
+      <view class="amount">{{item.shop_price}}/{{item.unit}} x {{ item.amount }}</view>
       <view class="amount">¥ {{ item.total }}</view>
     </view>
-    <view class="order-content-item">
-      <view> </view>
-      <view class="amount">M {{ order.order_weight }}</view>
-      <view class="amount">¥ {{ order.order_money }}</view>
-    </view>
   </view>
-   <view class="order-bottom">
-             <view class="order-bottom-item" wx:if="{{ order.status==10||order.status==20 }}" bindtap="cancel" data-oid='{{order.id}}' hover-class="weui-form-preview__btn_active">取消订单</view>
-              <view class="order-bottom-item" wx:if="{{ order.status==10 }}" bindtap="pay" data-oid='{{order.id}}' hover-class="weui-form-preview__btn_active">支付订单</view>
-              <view class="order-bottom-item" bindtap="orderMore" data-oid='{{order.id}}' hover-class="weui-form-preview__btn_active">再来一单</view>
-            </view>
+  <view class="order-bottom">
+    <view class="order-bottom-item" wx:if="{{ order.status==10||order.status==20 }}" bindtap="cancel" data-oid='{{order.id}}' hover-class="weui-form-preview__btn_active">取消订单</view>
+    <view class="order-bottom-item" wx:if="{{ order.status==10 }}" bindtap="pay" data-oid='{{order.id}}' hover-class="weui-form-preview__btn_active">支付订单</view>
+    <view class="order-bottom-item" bindtap="orderMore" data-oid='{{order.id}}' hover-class="weui-form-preview__btn_active">再来一单</view>
+  </view>
 </view>
 <view class="weui-panel weui-panel_access">
   <view class="weui-panel__hd">订单信息</view>
@@ -40,6 +35,8 @@
     <view class="weui-media-box weui-media-box_text">
       <view class="weui-media-box__desc">订单号：{{ order.no }}</view>
       <view class="weui-media-box__desc">支付方式：{{ order.payment }}</view>
+      <view class="weui-media-box__desc">红包优惠：{{ order.bonus||0.0 }}</view>
+      <view class="weui-media-box__desc">积分优惠：{{ order.point_used/100||0 }}</view>
       <view class="weui-media-box__desc">下单时间：{{ order.created_at }}</view>
     </view>
   </view>

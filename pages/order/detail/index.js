@@ -130,7 +130,6 @@ Page({
     getOrderDetail(id) {
         if (!id || id <= 0)
             return;
-        console.log(id);
         let that = this;
         wx.request({
             url: App.globalData.host + 'order/' + id,

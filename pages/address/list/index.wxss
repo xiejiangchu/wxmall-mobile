@@ -31,6 +31,11 @@ addr-icon {
 }
 
 .btn-plus {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 48px;
   background: #479de6;
   color: white;
 }
