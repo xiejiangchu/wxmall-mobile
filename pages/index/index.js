@@ -71,7 +71,7 @@ Page({
         })
     },
     getCart() {
-        var that = this;
+        let that = this;
         wx.request({
             url: App.globalData.host + 'cart/item/',
             method: 'GET',
@@ -84,11 +84,9 @@ Page({
             },
             success: function (res) {
                 if (res.data.code == 0) {
-                    let total = 0;
                     res.data.data.forEach(function (item, index) {
                         item.total = item.amount * item.itemSpec.shop_price;
                         item.total = item.total.toFixed(2);
-                        total += item.amount * item.itemSpec.shop_price
                     });
                     that.setData({
                         'carts.items': res.data.data
@@ -149,7 +147,7 @@ Page({
             data: {
                 orderby: that.data.orderby,
                 'pageNum': 1,
-                'pageSize': 20
+                'pageSize': 12
             },
             header: {
                 'Accept': 'application/json'
@@ -268,17 +266,10 @@ Page({
                                 "title": "由高到低",
                             }
                         ]
-                    }
-
-                ],
-                "sell": [
-                    {
-                        "id": 7,
-                        "name": "不限"
                     },
                     {
                         "id": 8,
-                        "title": "按价格",
+                        "title": "按商品价格",
                         "cate_two": [
                             {
                                 "id": 80,
@@ -292,7 +283,7 @@ Page({
                     },
                     {
                         "id": 9,
-                        "name": "销量",
+                        "title": "按商品销量",
                         "cate_two": [
                             {
                                 "id": 90,
@@ -308,7 +299,7 @@ Page({
             }
         })
     },
-    setFilterPanel: function (e) { //展开筛选面板
+    setFilterPanel: function (e) {
         const d = this.data;
         const i = e.currentTarget.dataset.findex;
         if (d.showfilterindex == i) {
@@ -322,9 +313,8 @@ Page({
                 showfilterindex: i,
             })
         }
-        console.log('显示第几个筛选类别：' + d.showfilterindex);
     },
-    setCateIndex: function (e) { //分类一级索引
+    setCateIndex: function (e) {
         const d = this.data;
         const dataset = e.currentTarget.dataset;
         this.setData({
@@ -340,38 +330,18 @@ Page({
             });
             this.getList();
         }
-        console.log('商家分类：一级id__' + this.data.cateid + ',二级id__' + this.data.subcateid);
     },
-    setSubcateIndex: function (e) { //分类二级索引
+    setSubcateIndex: function (e) {
         const dataset = e.currentTarget.dataset;
         this.setData({
             subcateindex: dataset.subcateindex,
             subcateid: dataset.subcateid,
         });
         this.hideFilter();
-        console.log('商家分类：一级id__' + this.data.cateid + ',二级id__' + this.data.subcateid);
         this.setData({
             orderby: this.data.subcateid
         });
         this.getList();
-    },
-    setSellIndex: function (e) { //地区一级索引
-        const d = this.data;
-        const dataset = e.currentTarget.dataset;
-        this.setData({
-            sellindex: dataset.sellindex,
-            sellid: dataset.sellid,
-            subsellindex: d.sellindex == dataset.sellindex ? d.subsellindex : 0
-        })
-        console.log('所在地区：一级id__' + this.data.sellid + ',二级id__' + this.data.subsellid);
-    },
-    setSubsellIndex: function (e) { //地区二级索引
-        const dataset = e.currentTarget.dataset;
-        this.setData({
-            subsellindex: dataset.subsellindex,
-            subsellid: dataset.subsellid,
-        })
-        console.log('所在地区：一级id__' + this.data.sellid + ',二级id__' + this.data.subsellid);
     },
     hideFilter: function () { //关闭筛选面板
         this.setData({
@@ -391,15 +361,17 @@ Page({
         let spec = e.currentTarget.dataset.spec;
         let index = e.currentTarget.dataset.index;
         let step = e.currentTarget.dataset.step;
+        let specindex = e.currentTarget.dataset.specindex;
         let amount = step;
         if (this.data.cartMap.hasOwnProperty(gid + "_" + spec)) {
             amount = this.data.cartMap[gid + "_" + spec] + step;
         }
-        if (amount > this.data.paginate.list[index].max) {
-            amount = this.data.paginate.list[index].max;
+        if (amount > this.data.paginate.list[index].itemSpecList[specindex].max) {
+            amount = this.data.paginate.list[index].itemSpecList[specindex].max;
+            return;
         }
-        if (amount < this.data.paginate.list[index].min) {
-            amount = this.data.paginate.list[index].min;
+        if (amount < this.data.paginate.list[index].itemSpecList[specindex].min) {
+            amount = this.data.paginate.list[index].itemSpecList[specindex].min;
         }
         this.putCartByUser(gid, {
             amount: amount,
@@ -455,15 +427,17 @@ Page({
         let spec = e.currentTarget.dataset.spec;
         let index = e.currentTarget.dataset.index;
         let step = e.currentTarget.dataset.step;
+        let specindex = e.currentTarget.dataset.specindex;
         let amount = 0;
         if (this.data.cartMap.hasOwnProperty(gid + "_" + spec)) {
             amount = this.data.cartMap[gid + "_" + spec] - step;
         }
-        if (amount > this.data.paginate.list[index].max) {
-            amount = this.data.paginate.list[index].max;
+        if (amount > this.data.paginate.list[index].itemSpecList[specindex].max) {
+            amount = this.data.paginate.list[index].itemSpecList[specindex].max;
+            return;
         }
-        if (amount < this.data.paginate.list[index].min) {
-            amount = this.data.paginate.list[index].min;
+        if (amount < this.data.paginate.list[index].itemSpecList[specindex].min) {
+            amount = this.data.paginate.list[index].itemSpecList[specindex].min;
         }
         this.putCartByUser(gid, {
             amount: amount,

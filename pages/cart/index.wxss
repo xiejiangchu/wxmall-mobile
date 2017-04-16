@@ -1,8 +1,9 @@
-.container{
+.container {
   padding-top: 10px;
   padding-bottom: 80px;
 }
-.weui-panel__hd{
+
+.weui-panel__hd {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -20,7 +21,7 @@
   background-color: #fff;
 }
 
-.weui-media-box__info{
+.weui-media-box__info {
   margin-top: 4px;
   display: flex;
   flex-direction: row;
@@ -32,7 +33,7 @@
   position: absolute;
   top: 30%;
   right: 0;
-  bottom:0;
+  bottom: 0;
   background-color: #fff;
 }
 
@@ -114,14 +115,21 @@
 }
 
 .check-btn-area .check-total {
-  flex: 2;
+  flex: 3;
   display: flex;
-  align-content: center;
-  justify-content: flex-start;
-  text-align: center;
+  flex-direction: column;
+  justify-content: center;
   height: 48px;
   padding: 0 5px;
-  line-height: 48px;
+}
+
+.total-value {
+  font-size: 16px;
+}
+
+.total-msg {
+  font-size: 12px;
+  text-align: right;
 }
 
 .check-btn-area .btn {

@@ -25,7 +25,6 @@
   <view class="filter-flex">
     <view class="filter-tab">
       <text bindtap="setFilterPanel" data-findex="1" class="{{showfilterindex==1?'active':''}}">　商品排序</text>
-      <text bindtap="setFilterPanel" data-findex="2" class="{{showfilterindex==2?'active':''}}">规格排序</text>
     </view>
     <view class="filter-content" wx:if="{{showfilter}}">
       <view class="filter-panel" wx:if="{{showfilterindex==1}}">
@@ -34,14 +33,6 @@
         </view>
         <view class="filter-panel-right">
           <view wx:for="{{filterdata.cate[cateindex].cate_two}}" wx:key="{{item.id}}" bindtap="setSubcateIndex" data-subcateindex="{{index}}" data-subcateid="{{item.id}}" class="{{subcateindex==index?'active':''}}">{{item.title}}</view>
-        </view>
-      </view>
-      <view class="filter-panel" wx:if="{{showfilterindex==2}}">
-        <view class="filter-panel-left">
-          <view wx:for="{{filterdata.sell}}" wx:key="{{item.id}}" bindtap="setSellIndex" data-sellindex="{{index}}" data-sellid="{{item.id}}" class="{{sellindex==index?'active':''}}">{{item.name}}</view>
-        </view>
-        <view class="filter-panel-right">
-          <view wx:for="{{filterdata.sell[sellindex].cate_two}}" wx:key="{{item.id}}" bindtap="setSubsellIndex" data-subsellindex="{{index}}" data-subsellid="{{item.id}}" class="{{subsellindex==index?'active':''}}">{{item.name}}</view>
         </view>
       </view>
     </view>
@@ -65,19 +56,19 @@
       </view>
       <view class="unit-container">
         <view class='right'>
-          <view class="text-unit-container" wx:for="{{ item.itemSpecList }}" wx:for-item="itemSpec" wx:key="id" wx:if="{{itemSpec.remain>0}}">
+          <view class="text-unit-container" wx:for="{{ item.itemSpecList }}" wx:for-item="itemSpec" wx:key="id" wx:if="{{itemSpec.remain>0}}" wx:for-index="specindex">
             <text class='text-unit-shop'>
-              <text class='color-red'>¥ {{ itemSpec.shop_price }}/{{itemSpec.unit}}</text>
+              <text class='color-red'>{{ itemSpec.shop_price >0? "¥ "+ itemSpec.shop_price:itemSpec.promote_price+"积分" }}/{{itemSpec.unit}} </text>
               <text class='color-primary' style='margin-left:8px;'>销量:{{itemSpec.sale_num}}</text>
             </text>
             <view class="cart-btn">
-              <view class='cart-btn-item cart-btn-item-border' bindtap="subCart" data-gid="{{ item.id }}" data-spec="{{ itemSpec.id }}" data-index="{{ index }}" data-step="{{ itemSpec.unit_sell }}" wx:if="{{cartMap[item.id+'_'+itemSpec.id]>0}}">
+              <view class='cart-btn-item cart-btn-item-border' bindtap="subCart" data-gid="{{ item.id }}" data-spec="{{ itemSpec.id }}" data-index="{{ index }}" data-specindex="{{ specindex }}" data-step="{{ itemSpec.unit_sell }}" wx:if="{{cartMap[item.id+'_'+itemSpec.id]>0}}">
                 <text class="cart-btn-sub"></text>
               </view>
               <view class='cart-btn-item' wx:if="{{cartMap[item.id+'_'+itemSpec.id]>0}}">
                 <text class="cart-number">{{cartMap[item.id+"_"+itemSpec.id]}}</text>
               </view>
-              <view class='cart-btn-item cart-btn-item-border' bindtap="addCart" data-gid="{{ item.id }}" data-spec="{{ itemSpec.id }}" data-index="{{ index }}" data-step="{{ itemSpec.unit_sell }}">
+              <view class='cart-btn-item cart-btn-item-border' bindtap="addCart" data-gid="{{ item.id }}" data-spec="{{ itemSpec.id }}" data-index="{{ index }}" data-step="{{ itemSpec.unit_sell }}" data-specindex="{{ specindex }}">
                 <text class="cart-btn-add"></text>
               </view>
             </view>

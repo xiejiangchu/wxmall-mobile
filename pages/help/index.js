@@ -13,7 +13,7 @@ Page({
     onShow() {
         let that=this;
         wx.request({
-            url: App.globalData.host + 'sysConfig/about',
+            url: App.globalData.host + 'sysConfig/questions',
             method: 'GET',
             header: {
                 sessionId: App.globalData.sessionId,

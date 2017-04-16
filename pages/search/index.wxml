@@ -1,4 +1,4 @@
-<import src="../common/list.wxml" />
+<import src="../common/prompt.wxml" />
 <view class="weui-search-bar">
   <view class="weui-search-bar__form">
     <view class="weui-search-bar__box">
@@ -16,4 +16,21 @@
     <view class="weui-cell__ft">共找到 {{paginate.total}}个商品</view>
   </view>
 </view>
-<template is="list" data="{{ paginate, prompt }}" />
+<template is="prompt" data="{{ prompt }}" />
+<view class="scroll-list">
+  <view class="weui-panel weui-panel_access" wx:if="{{ !!paginate.list.length }}">
+    <view class="weui-panel__bd">
+      <navigator class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active" wx:for="{{ paginate.list }}" wx:key="" bindtap="navigateTo" data-id="{{ item.id }}">
+        <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
+          <image class="weui-media-box__thumb" src="{{ img_host+item.thumb }}" />
+        </view>
+        <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
+          <view class="weui-media-box__title">{{ item.name }}</view>
+          <view class="weui-media-box__desc">
+            <text class="text-orangered">{{ item.summary }}</text>
+          </view>
+        </view>
+      </navigator>
+    </view>
+  </view>
+</view>

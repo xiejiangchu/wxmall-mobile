@@ -1,5 +1,9 @@
 /* pages/pages/address/add/index.wxss */
 
+.weui-cells:last-of-type {
+  margin-bottom: 60px;
+}
+
 .weui-btn {
   background: "#479de6";
   padding: 0 16px;
@@ -7,4 +11,15 @@
 
 .weui-select {
   border-right: none;
+}
+
+.btn-plus {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 48px;
+  background: #479de6;
+  color: white;
+  line-height: 48px;
 }

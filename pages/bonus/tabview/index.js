@@ -60,14 +60,21 @@ Page({
         'Accept': 'application/json'
       },
       success: function (res) {
-        res.data.data.list.forEach(function (item, index) {
-          item.start_at = App.dateFormat(item.start_at, 'yyyy-MM-dd');
-          item.end_at = App.dateFormat(item.end_at, 'yyyy-MM-dd');
-        });
-        that.setData({
-          paginate: res.data.data,
-          'prompt.hidden': res.data.data.size
-        })
+        if (res.data.code == 0) {
+          res.data.data.list.forEach(function (item, index) {
+            item.start_at = App.dateFormat(item.start_at, 'yyyy-MM-dd');
+            item.end_at = App.dateFormat(item.end_at, 'yyyy-MM-dd');
+          });
+          that.setData({
+            paginate: res.data.data,
+            'prompt.hidden': res.data.data.size
+          })
+        } else {
+          wx.showToast({
+            title: res.data.msg || '服务器错误',
+            duration: 1000
+          });
+        }
       }
     })
   },
@@ -95,6 +102,55 @@ Page({
           paginate: res.data.data,
           'prompt.hidden': res.data.data.size
         })
+      }
+    })
+  },
+  codeInput(e) {
+    this.setData({
+      code: e.detail.value
+    })
+  },
+  fetch() {
+    let that = this;
+    wx.showToast({
+      title: '提交中...',
+      icon: 'loading',
+      duration: 10000
+    });
+    wx.request({
+      url: App.globalData.host + 'bonus/fetchBonusByCode',
+      method: 'GET',
+      data: {
+        code: that.data.code,
+        sessionId: App.globalData.sessionId
+      },
+      header: {
+        SESSIONID: App.globalData.sessionId,
+        'Accept': 'application/json'
+      },
+      success: function (res) {
+        wx.hideToast();
+        if (res.data.code == 0) {
+          res.data.data.list.forEach(function (item, index) {
+            item.start_at = App.dateFormat(item.start_at, 'yyyy-MM-dd');
+            item.end_at = App.dateFormat(item.end_at, 'yyyy-MM-dd');
+          });
+          that.setData({
+            paginate: res.data.data,
+            'prompt.hidden': res.data.data.size
+          })
+        } else {
+          wx.showToast({
+            title: res.data.msg || '服务器错误',
+            duration: 1000
+          });
+        }
+      },
+      fail: function () {
+        wx.showToast({
+          title: '服务器错误',
+          duration: 1000
+        });
       }
     })
   },
@@ -168,7 +224,7 @@ Page({
     let type = this.data.tabs[this.data.activeTab].type;
     this.setData({
       'stv': this.data.stv,
-      'params.type': type
+      'type': type
     });
     this.getList();
   },
@@ -177,14 +233,13 @@ Page({
     activeTab = index_selected;
     this.setData({
       'activeTab': activeTab,
-      'params.type': type
+      'type': type
     })
     stv.offset = stv.windowWidth * activeTab;
     this.setData({ stv: this.data.stv })
     this.getList();
   },
   handlerTabTap(e) {
-    console.log(e.currentTarget.dataset.type);
     this._updateSelectedPage(e.currentTarget.dataset.index, e.currentTarget.dataset.type);
   }
 })

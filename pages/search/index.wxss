@@ -1,1 +1,4 @@
 /* pages/pages/search/index.wxss */
+.searchbar-result{
+    margin-top: 0px;
+}

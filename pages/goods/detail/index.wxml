@@ -1,4 +1,5 @@
-<view class="container" style="margin-bottom:80px;" wx:if="{{item.id!=null}}">
+<import src="../../../assets/wemark/wemark.wxml" />
+<view class="container" style="margin-bottom:20px;" wx:if="{{item.id!=null}}">
   <swiper class="swiper_box" indicator-dots="{{ indicatorDots }}" vertical="{{ vertical }}" autoplay="{{ autoplay }}" interval="{{ interval }}" duration="{{ duration }}">
     <block wx:for="{{ item.imageList }}" wx:key="id">
       <swiper-item>
@@ -26,7 +27,7 @@
             <text class="color-gray">{{ itemSpec.market_price}}</text>
           </view>
           <view class="shop">
-            <text class='color-red'> {{ itemSpec.shop_price }}/{{itemSpec.unit}} </text>
+            <text class='color-red'>{{ itemSpec.shop_price >0? "¥"+itemSpec.shop_price:itemSpec.promote_price+"积分" }}/{{itemSpec.unit}} </text>
           </view>
           <view class="sell">
             <text class='color-primary'>销量:{{itemSpec.sale_num}}</text>
@@ -35,21 +36,30 @@
       </view>
     </view>
     <view class='item-summary'>
-      <view class='text-left color-gray'>介绍：</view>
+      <view class='text-left color-gray'>简单介绍：</view>
       <view class='item-summary-content'>{{ item.summary }}</view>
     </view>
-    <view class='item-description'>
-      <view class='text-left color-gray'>详情：</view>
-      <view class='item-summary-content'>{{ item.description }}</view>
+    <view class="weui-panel" style="margin-bottom:80px;">
+      <view class="weui-panel__hd">
+        <text class="title">详细信息</text>
+      </view>
+      <view class="weui-panel__bd">
+        <view class="weui-media-box weui-media-box_text">
+          <view class="content">
+            <template is="wemark" data="{{...wemark}}"></template>
+          </view>
+        </view>
+      </view>
     </view>
-    <view class='item-canvas'>
+
+    <!--<view class='item-canvas'>
       <view class='text-left color-gray'>营养成分：</view>
       <canvas canvas-id="pieCanvas" class="canvas" style="height:250px;z-index:15;" bindtouchstart="touchHandler"></canvas>
     </view>
     <view class='item-canvas'>
       <view class='text-left color-gray'>营养成分：</view>
       <canvas canvas-id="radarCanvas" class="canvas" style="height:200px;z-index:15;" bindtouchstart="touchHandler"></canvas>
-    </view>
+    </view>-->
   </view>
 </view>
 <view class="item-bottom" wx:if="{{item.id!=null}}">
@@ -67,7 +77,11 @@
     </view>
   </view>
   <view class='item-cart'>
-    <image class='item-cart-image' src="../../../assets/images/iconfont-cart-active.png"></image>
+    <image class='item-cart-image' bindtap="backCart" src="../../../assets/images/iconfont-cart-active.png">
+      <view class='count' wx:if="{{carts.totalCount>0}}">
+        {{carts.totalCount>99?'99+':carts.totalCount}}
+      </view>
+    </image>
   </view>
   <view class='item-cart-submit' bindtap="confirmOrder">立即结算</view>
 </view>

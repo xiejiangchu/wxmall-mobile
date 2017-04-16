@@ -10,8 +10,18 @@
   </view>
   <view class="scroll-view">
     <view bindtouchstart="handlerStart" catchtouchmove="handlerMove" bindtouchcancel="handlerCancel" bindtouchend="handlerEnd" class="scroll-view-wrapper {{!stv.tStart? 'withAnimate': ''}}" style="left: -{{stv.offset}}px">
-      <view style="width: {{stv.windowWidth}}px;" wx:for="{{tabs}}" wx:key="unique" class="one-scene">
+      <view style="width: {{stv.windowWidth}}px;" wx:for="{{tabs}}" wx:for-index="index" wx:key="unique" class="one-scene">
         <scroll-view style="height:100%" scroll-y>
+          <view class="weui-cells weui-cells_after-title" wx:if="{{index==0}}">
+            <view class="weui-cell weui-cell_input weui-cell_vcode">
+              <view class="weui-cell__bd">
+                <input class="weui-input" placeholder="请输入兑换码" bindinput="codeInput" />
+              </view>
+              <view class="weui-cell__ft" bindtap="fetch">
+                <view class="weui-vcode-btn">兑换</view>
+              </view>
+            </view>
+          </view>
           <view class="stamp-container {{activeTab > 0 ? 'stamp-container-gray' : (item.money < 50? 'stamp-container-green': (item.money < 100? 'stamp-container-orange':'stamp-container-red'))}}" wx:for="{{ paginate.list }}" wx:if="{{ paginate.list.length>0 }}"
           wx:key="id">
             <view class="stamp">
@@ -23,8 +33,9 @@
                 </view>
                 <view class='note'>
                   订单满{{item.min_amount}}元
-                  <text wx:if="{{item.cid1}}">cid1</text>
-                  <text wx:if="{{item.cid2}}">cid2</text>
+                  <text wx:if="{{item.gid>0}}">{{item.gid_name}}</text>
+                  <text wx:if="{{item.gid==0 && item.cid2>0}}">{{item.cid2_name}}</text>
+                  <text wx:if="{{item.gid==0 && item.cid2==0 && item.cid1>0}}">{{item.cid1_name}}</text>
                 </view>
               </view>
               <view class="copy">

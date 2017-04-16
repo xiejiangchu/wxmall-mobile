@@ -1,7 +1,7 @@
 <import src="../../common/prompt-bonus.wxml" />
 <view class="bonus-container">
-  <radio-group class="radio-group" bindchange="radioChange" wx:if="{{ paginate.list.length>0 }}">
-    <view class='select-item' wx:for="{{ paginate.list }}" wx:key="id" wx:for-index="idx">
+  <radio-group class="radio-group" bindchange="radioChange" wx:if="{{list.length>0 }}">
+    <view class='select-item' wx:for="{{ list }}" wx:key="id" wx:for-index="idx">
       <label class="radio">
         <radio value="{{ idx }}" checked="{{ item.checked }}" disabled="{{item.min_amount>min}}" />
       </label>

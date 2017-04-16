@@ -23,14 +23,15 @@ Page({
         bonus: {
             id: -1
         },
-        point_rate: 100
+        point_rate: 100,
+        promote_price: 0
     },
     onPullDownRefresh() {
         this.confirmOrder()
     },
     confirmOrder() {
         let that = this;
-        wx.removeStorageSync('orderData.bonus');
+       App.OrderMap.delete('orderData.bonus');
         wx.request({
             url: App.globalData.host + 'order/check',
             method: 'POST',
@@ -58,7 +59,7 @@ Page({
     onLoad(option) {
         let paymentsList = App.OrderMap.get('orderData.orderCheckDto').payments;
         this.setData({
-            bonus: App.OrderMap.get('orderData.bonus') | null,
+            bonus: App.OrderMap.get('orderData.bonus') || null,
             address: App.OrderMap.get('orderData.address'),
             date: App.dateFormat(App.OrderMap.get('orderData.orderCheckDto').date_start, 'yyyy/MM/dd'),
             date_start: App.dateFormat(App.OrderMap.get('orderData.orderCheckDto').date_start, 'yyyy/MM/dd'),
@@ -69,7 +70,8 @@ Page({
             time_end: App.OrderMap.get('orderData.orderCheckDto').time_end,
             bonusCount: App.OrderMap.get('orderData.orderCheckDto').bonusCount,
             point_total: App.OrderMap.get('orderData.orderCheckDto').point,
-            point_rate: App.OrderMap.get('orderData.orderCheckDto').point_rate
+            point_rate: App.OrderMap.get('orderData.orderCheckDto').point_rate,
+            promote_price: App.OrderMap.get('orderData.orderCheckDto').promote_price
         });
 
         let payments = [];
@@ -189,6 +191,7 @@ Page({
                 'Accept': 'application/json'
             },
             success: function (res) {
+                wx.hideToast();
                 if (res.data.code == 0) {
                     // App.OrderMap.set('orderData.items', []);
                     // wx.showToast({
@@ -216,7 +219,7 @@ Page({
                 });
             },
             complete: function () {
-                wx.hideToast();
+                
             }
         });
     },

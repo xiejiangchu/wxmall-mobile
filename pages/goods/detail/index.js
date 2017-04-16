@@ -2,6 +2,7 @@ const App = getApp()
 var wxCharts = require('../../../assets/plugins/wxcharts-min.js');
 var pieChart = null;
 var radarChart = null;
+var wemark = require('../../../assets/wemark/wemark');
 Page({
     data: {
         indicatorDots: !0,
@@ -11,17 +12,19 @@ Page({
         duration: 1000,
         id: 0,
         item: {
-            id:10
+            id: 10
         },
         spec: {
             tid: -1,
             index: 0,
             amount: 0
         },
-        cart: {
-            items: {}
+        carts: {
+            items: {},
+            totalCount: 0
         },
-        loading: false
+        loading: false,
+        wemark: {}
     },
     swiperchange(e) {
     },
@@ -39,44 +42,44 @@ Page({
         } catch (e) {
             console.error('getSystemInfoSync failed!');
         }
-        pieChart = new wxCharts({
-            animation: true,
-            canvasId: 'pieCanvas',
-            type: 'pie',
-            series: [{
-                name: '成交量1',
-                data: 15,
-            }, {
-                name: '成交量2',
-                data: 35,
-            }, {
-                name: '成交量3',
-                data: 78,
-            }, {
-                name: '成交量4',
-                data: 63,
-            }],
-            width: windowWidth,
-            height: 300,
-            dataLabel: true,
-        });
+        // pieChart = new wxCharts({
+        //     animation: true,
+        //     canvasId: 'pieCanvas',
+        //     type: 'pie',
+        //     series: [{
+        //         name: '成交量1',
+        //         data: 15,
+        //     }, {
+        //         name: '成交量2',
+        //         data: 35,
+        //     }, {
+        //         name: '成交量3',
+        //         data: 78,
+        //     }, {
+        //         name: '成交量4',
+        //         data: 63,
+        //     }],
+        //     width: windowWidth,
+        //     height: 300,
+        //     dataLabel: true,
+        // });
 
-        radarChart = new wxCharts({
-            canvasId: 'radarCanvas',
-            type: 'radar',
-            categories: ['1', '2', '3', '4', '5', '6'],
-            series: [{
-                name: '成交量1',
-                data: [90, 110, 125, 95, 87, 122]
-            }],
-            width: windowWidth,
-            height: 200,
-            extra: {
-                radar: {
-                    max: 150
-                }
-            }
-        });
+        // radarChart = new wxCharts({
+        //     canvasId: 'radarCanvas',
+        //     type: 'radar',
+        //     categories: ['1', '2', '3', '4', '5', '6'],
+        //     series: [{
+        //         name: '成交量1',
+        //         data: [90, 110, 125, 95, 87, 122]
+        //     }],
+        //     width: windowWidth,
+        //     height: 200,
+        //     extra: {
+        //         radar: {
+        //             max: 150
+        //         }
+        //     }
+        // });
     },
     onShow() {
         this.setData({
@@ -104,7 +107,7 @@ Page({
             icon: 'loading',
             duration: 10000
         });
-        wx.removeStorageSync('orderData.bonus');
+        App.OrderMap.delete('orderData.bonus');
         wx.request({
             url: App.globalData.host + 'order/check',
             method: 'POST',
@@ -115,6 +118,7 @@ Page({
                 'Accept': 'application/json'
             },
             success: function (res) {
+                wx.hideToast();
                 if (res.data.code == 0) {
                     if (res.data.data.changed == 1) {
                         wx.showModal({
@@ -145,6 +149,16 @@ Page({
 
                             }
                         });
+                    } else if (res.data.data.changed == 80000) {
+                        wx.showToast({
+                            title: '积分不足',
+                            duration: 1000
+                        });
+                    } else if (res.data.data.changed == 80001) {
+                        wx.showToast({
+                            title: '订单金额低于起送金额',
+                            duration: 1000
+                        });
                     } else {
                         if (res.data.data.address) {
                             App.OrderMap.set('orderData.items', res.data.data.items);
@@ -168,11 +182,7 @@ Page({
                 }
             },
             fail: function () {
-                wx.stopPullDownRefresh();
-            },
-            complete: function () {
-
-                wx.hideToast();
+                
             }
         });
     },
@@ -181,8 +191,10 @@ Page({
         that.setData({
             'spec.amount': 0
         });
+        let totalCount = 0;
         if (this.data.carts.items && this.data.carts.items.length > 0) {
             this.data.carts.items.forEach(function (item, index) {
+                totalCount += item.amount;
                 if (item.gid == that.data.id && item.spec == that.data.spec.tid) {
                     that.setData({
                         'spec.amount': item.amount
@@ -190,6 +202,9 @@ Page({
                 }
             });
         }
+        that.setData({
+            'carts.totalCount': totalCount
+        });
     },
     inputTyping(e) {
         let amount = e.detail.value;
@@ -338,6 +353,10 @@ Page({
                     that.setData({
                         item: res.data.data
                     });
+                    wemark.parse(res.data.data.description, that, {
+                        imageWidth: wx.getSystemInfoSync().windowWidth - 40,
+                        name: 'wemark'
+                    })
                     res.data.data.itemSpecList.forEach(function (item, index) {
                         if (item.remain > 0) {
                             that.setData({
@@ -371,6 +390,11 @@ Page({
     backIndex: function (e) {
         wx.switchTab({
             url: '/pages/index/index'
+        })
+    },
+    backCart: function (e) {
+        wx.switchTab({
+            url: '/pages/cart/index'
         })
     },
     onShareAppMessage: function () {

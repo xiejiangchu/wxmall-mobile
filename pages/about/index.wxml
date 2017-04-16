@@ -1,10 +1,10 @@
-<view class="about">
-	<view class="about-item">
-		<text class="about-item-title">关于项目</text>
-		<text class="about-item-content">微信小程序</text>
-	</view>
-	<view class="about-item" wx:for="{{sysConfig}}" wx:key="{{item.id}}">
-		<text class="about-item-title">{{item.name}}</text>
-		<text class="about-item-content link">{{item.value}}</text>
-	</view>
+<import src="../../assets/wemark/wemark.wxml" />
+<view class="weui-panel">
+  <view class="weui-panel__bd">
+    <view class="weui-media-box weui-media-box_text">
+      <view class="content">
+        <template is="wemark" data="{{...wemark}}"></template>
+      </view>
+    </view>
+  </view>
 </view>

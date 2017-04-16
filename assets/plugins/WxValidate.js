@@ -8,8 +8,8 @@
 class WxValidate {
 	constructor(rules = {}, messages = {}) {
 		Object.assign(this, {
-			rules, 
-			messages, 
+			rules,
+			messages,
 		})
 		this.__init()
 	}
@@ -187,7 +187,7 @@ class WxValidate {
 	 */
 	isValidMethod(value) {
 		let methods = []
-		for(let method in this.methods) {
+		for (let method in this.methods) {
 			if (method && typeof this.methods[method] === 'function') {
 				methods.push(method)
 			}
@@ -201,7 +201,7 @@ class WxValidate {
 	formatTpl(source, params) {
 		const that = this
 		if (arguments.length === 1) {
-			return function() {
+			return function () {
 				let args = Array.from(arguments)
 				args.unshift(source)
 				return that.formatTpl.apply(this, args)
@@ -214,10 +214,10 @@ class WxValidate {
 			params = Array.from(arguments).slice(1)
 		}
 		if (params.constructor !== Array) {
-			params = [ params ]
+			params = [params]
 		}
-		params.forEach(function(n, i) {
-			source = source.replace(new RegExp("\\{" + i + "\\}", "g"), function() {
+		params.forEach(function (n, i) {
+			source = source.replace(new RegExp("\\{" + i + "\\}", "g"), function () {
 				return n
 			})
 		})
@@ -228,7 +228,7 @@ class WxValidate {
 	 * 判断规则依赖是否存在
 	 */
 	depend(param) {
-		switch(typeof param) {
+		switch (typeof param) {
 			case 'boolean':
 				param = param
 				break
@@ -269,7 +269,7 @@ class WxValidate {
 	defaultMessage(param, rule) {
 		let message = this.customMessage(param, rule) || this.defaults.messages[rule.method]
 		let type = typeof message
-		
+
 		if (type === 'undefined') {
 			message = `Warning: No message defined for ${rule.method}.`
 		} else if (type === 'function') {
@@ -289,9 +289,9 @@ class WxValidate {
 		let msg = this.defaultMessage(param, rule)
 
 		this.errorList.push({
-			param: param, 
-			msg: msg, 
-			value: value, 
+			param: param,
+			msg: msg,
+			value: value,
 		})
 	}
 
@@ -309,22 +309,22 @@ class WxValidate {
 		// 缓存字段对应的值
 		const data = event.detail.value
 		const value = data[param] || ''
-		
+
 		// 遍历某个指定字段的所有规则，依次验证规则，否则缓存错误信息
-		for(let method in rules) {
+		for (let method in rules) {
 
 			// 判断验证方法是否存在
 			if (this.isValidMethod(method)) {
 
 				// 缓存规则的属性及值
-				const rule = { 
-					method: method, 
-					parameters: rules[method] 
+				const rule = {
+					method: method,
+					parameters: rules[method]
 				}
 
 				// 调用验证方法
 				const result = this.methods[method](value, rule.parameters)
-				
+
 				// 若result返回值为dependency-mismatch，则说明该字段的值为空或非必填字段
 				if (result === 'dependency-mismatch') {
 					continue
@@ -348,6 +348,51 @@ class WxValidate {
 
 		for (let param in this.rules) {
 			this.checkParam(param, this.rules[param], event)
+		}
+
+		return this.valid()
+	}
+
+	/**
+	 * 验证所有字段的规则，返回验证是否通过
+	 * @param {Object} event 表单数据对象
+	 */
+	checkData(data) {
+		this.errorList = []
+
+		for (let param in this.rules) {
+
+			const value = data[param] || ''
+
+			let methods = this.rules[param];
+
+			// 遍历某个指定字段的所有规则，依次验证规则，否则缓存错误信息
+			for (let method in methods) {
+
+				// 判断验证方法是否存在
+				if (this.isValidMethod(method)) {
+
+					// 缓存规则的属性及值
+					const rule = {
+						method: method,
+						parameters: methods[method]
+					}
+
+					// 调用验证方法
+					const result = this.methods[method](value, rule.parameters)
+
+					// 若result返回值为dependency-mismatch，则说明该字段的值为空或非必填字段
+					if (result === 'dependency-mismatch') {
+						continue
+					}
+
+					// 判断是否通过验证，否则缓存错误信息，跳出循环
+					if (!result) {
+						this.formatTplAndAdd(param, rule, value)
+						break
+					}
+				}
+			}
 		}
 
 		return this.valid()

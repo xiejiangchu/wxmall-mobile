@@ -32,7 +32,7 @@ Page({
 			{
 				icon: '/assets/images/iconfont-help.png',
 				text: '常见问题',
-				path: '/pages/help/list/index',
+				path: '/pages/help/index',
 			},
 		],
 		settings: [

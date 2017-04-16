@@ -1,12 +1,7 @@
 const App = getApp();
 Page({
   data: {
-    order: {},
-    params: {
-      pageNum: 1,
-      pageSize: 10,
-    },
-    min: 0,
+    list: [],
     prompt: {
       hidden: !0,
       icon: '/assets/images/iconfont-order-default.png',
@@ -14,21 +9,8 @@ Page({
       text: '暂时没有优惠券',
     },
   },
-  onLoad: function (options) {
-    this.setData({
-      min: options.min
-    })
+  onLoad: function () {
     this.onPullDownRefresh(0);
-  },
-  initData() {
-    let type = (this.data.params && this.data.params.type) || '10';
-    this.setData({
-      params: {
-        pageNum: 1,
-        pageSize: 10,
-        type: type,
-      }
-    })
   },
   getList() {
     wx.showToast({
@@ -38,20 +20,23 @@ Page({
     });
     let that = this;
     wx.request({
-      url: App.globalData.host + 'bonus/list',
+      url: App.globalData.host + 'bonus/getEnabledByCart',
       method: 'GET',
-      data: that.data.params,
+      data: {
+        sessionId: App.globalData.sessionId
+      },
       header: {
+        SESSIONID: App.globalData.sessionId,
         'Accept': 'application/json'
       },
       success: function (res) {
-        res.data.data.list.forEach(function (item, index) {
+        res.data.data.forEach(function (item, index) {
           item.start_at = App.dateFormat(item.start_at, 'yyyy-MM-dd');
           item.end_at = App.dateFormat(item.end_at, 'yyyy-MM-dd');
         });
         that.setData({
-          paginate: res.data.data,
-          'prompt.hidden': res.data.data.size
+          list: res.data.data,
+          'prompt.hidden': res.data.data.length
         })
       },
       fail: function () {
@@ -63,18 +48,12 @@ Page({
     })
   },
   onPullDownRefresh() {
-
-    this.initData();
-    this.getList();
-  },
-  onReachBottom() {
-    if (!this.data.paginate || !this.data.paginate.hasNextPage) return
     this.getList();
   },
   radioChange(e) {
     let idx = e.detail.value;
-    let bonus = this.data.paginate.list[idx];
-    wx.setStorageSync('orderData.bonus', bonus)
+    let bonus = this.data.list[idx];
+    App.OrderMap.set('orderData.bonus', bonus);
     wx.redirectTo({
       url: '/pages/order/confirm/index'
     })

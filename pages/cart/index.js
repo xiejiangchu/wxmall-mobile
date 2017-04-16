@@ -96,7 +96,7 @@ Page({
             icon: 'loading',
             duration: 10000
         });
-        wx.removeStorageSync('orderData.bonus');
+        App.OrderMap.delete('orderData.bonus');
         wx.request({
             url: App.globalData.host + 'order/check',
             method: 'POST',
@@ -107,6 +107,7 @@ Page({
                 'Accept': 'application/json'
             },
             success: function (res) {
+                wx.hideToast();
                 if (res.data.code == 0) {
                     if (res.data.data.changed == 1) {
                         wx.showModal({
@@ -137,6 +138,16 @@ Page({
 
                             }
                         });
+                    } else if (res.data.data.changed == 80000) {
+                        wx.showToast({
+                            title: '积分不足',
+                            duration: 1000
+                        });
+                    } else if (res.data.data.changed == 80001) {
+                        wx.showToast({
+                            title: '订单金额低于起送金额',
+                            duration: 1000
+                        });
                     } else {
                         if (res.data.data.address) {
                             App.OrderMap.set('orderData.items', res.data.data.items);
@@ -160,11 +171,11 @@ Page({
                 }
             },
             fail: function () {
-                wx.stopPullDownRefresh();
+
             },
             complete: function () {
 
-                wx.hideToast();
+
             }
         });
     },
@@ -205,7 +216,7 @@ Page({
                                 'prompt.hidden': res.data.data.length == 0 ? false : true,
                                 'carts.total': total.toFixed(2)
                             });
-                            App.OrderMap.set('orderData.items', this.data.carts.items);
+                            App.OrderMap.set('orderData.items', that.data.carts.items);
                             wx.stopPullDownRefresh();
                         }
                     });

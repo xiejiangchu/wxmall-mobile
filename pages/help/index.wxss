@@ -1,4 +1,3 @@
 .weui-panel{
-  background: white;
   min-height: 100%;
 }

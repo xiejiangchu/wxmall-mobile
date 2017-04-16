@@ -2,18 +2,21 @@ const App = getApp()
 
 Page({
     data: {
+        img_host: App.globalData.img_host,
         inputVal: '',
         paginate: {},
         list: []
     },
     clearInput() {
         this.setData({
-            inputVal: ''
+            inputVal: '',
+             paginate: {}
         })
     },
     inputTyping(e) {
         this.setData({
-            inputVal: e.detail.value
+            inputVal: e.detail.value,
+            paginate: {}
         })
         this.search();
     },

@@ -54,7 +54,7 @@
   <view class="weui-cells weui-cells_after-title">
     <view class="weui-cell weui-cell_select">
       <view class="weui-cell__bd">
-        <view class="weui-select" bindtap="selectBonus">{{ bonus? '红包抵扣'+bonus.money : '当前共有'+bonusCount+'个红包' }}</view>
+        <view class="weui-select" bindtap="selectBonus">{{ bonus? bonus.name+" - "+bonus.money : '当前共有'+bonusCount+'个红包' }}</view>
       </view>
     </view>
   </view>
@@ -85,7 +85,7 @@
         <image src="{{img_host}}{{item.item.thumb}}" class='image-small'></image>
         <view class='check-item-col-big'>
           <view class='name'>{{ item.item.name }}</view>
-          <view class='unit color-red'>{{ item.itemSpec.shop_price+"/"+item.itemSpec.unit_sell+item.itemSpec.unit }}</view>
+          <view class='unit color-red'>{{ item.itemSpec.shop_price >0? "¥"+item.itemSpec.shop_price:item.itemSpec.promote_price+"积分" }}/{{item.itemSpec.unit}} </view>
         </view>
         <view class="check-item-col amount">x{{ item.amount }}</view>
         <view class="check-item-col amount">{{ item.subTotal }}</view>

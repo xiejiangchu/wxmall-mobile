@@ -249,3 +249,9 @@
   overflow: hidden;
   background: #999;
 }
+.weui-cells{
+  margin-top:8px;
+}
+.weui-vcode-btn{
+  color:#479de6;
+}

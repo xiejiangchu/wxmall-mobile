@@ -4,14 +4,14 @@ Page({
 	data: {
 		show: !0,
 		form: {
-			receiver: '谢江初',
+			receiver: '',
 			gender: 0,
-			mobile: '15121030453',
+			mobile: '',
 			province: '江西省',
 			city: '宜春市',
 			district: '袁州区',
 			road: '凤凰路',
-			address: '老街67号',
+			address: '',
 			is_def: !1,
 		},
 		provincesSrc: [],
@@ -39,7 +39,7 @@ Page({
 		],
 	},
 	onLoad() {
-		this.WxValidate = App.WxValidate({
+		this.data.WxValidate = App.WxValidate({
 			receiver: {
 				required: true,
 				minlength: 2,
@@ -52,14 +52,46 @@ Page({
 			address: {
 				required: true,
 				minlength: 2,
-				maxlength: 100,
+				maxlength: 200,
 			},
+			province: {
+				required: true
+			},
+			city: {
+				required: true
+			},
+			district: {
+				required: true
+			},
+			road: {
+				required: true
+			},
+			address: {
+				required: true
+			}
 		}, {
 				receiver: {
 					required: '请输入收货人姓名',
+					maxlength: "收货人姓名长度过长"
 				},
 				mobile: {
 					required: '请输入收货人电话',
+				},
+				
+				province: {
+					required: "请选择省份"
+				},
+				city: {
+					required: "请选择市"
+				},
+				district: {
+					required: "请选择区"
+				},
+				road: {
+					required: "请选择街道"
+				},
+				address: {
+					required: "请输入详细地址"
 				},
 				address: {
 					required: '请输入收货人地址',
@@ -257,14 +289,27 @@ Page({
 		});
 	},
 	submitForm(e) {
+		let that = this;
 		wx.showToast({
 			title: '提交中...',
 			icon: 'loading',
 			duration: 10000
 		});
-		let that = this;
-		that.data.form.address = e.detail.value.address
+		that.data.form.receiver = e.detail.value.receiver;
+		that.data.form.mobile = e.detail.value.mobile;
+		that.data.form.address = e.detail.value.address;
 		that.data.form.is_def = e.detail.value.is_def ? 1 : 0;
+
+		if (!this.data.WxValidate.checkData(that.data.form)) {
+			wx.showToast({
+				title: this.data.WxValidate.validationErrors()[0].msg || '参数错误',
+				duration: 1000
+			});
+			return;
+		}
+
+
+
 		wx.request({
 			url: App.globalData.host + 'address/',
 			method: 'POST',
