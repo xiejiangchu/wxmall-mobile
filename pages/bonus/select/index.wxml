@@ -15,8 +15,9 @@
             </view>
             <view class='note'>
               订单满{{item.min_amount}}元
-              <text wx:if="{{item.cid1}}">cid1</text>
-              <text wx:if="{{item.cid2}}">cid2</text>
+              <text wx:if="{{item.gid>0}}">{{item.gid_name}}</text>
+              <text wx:if="{{item.gid==0 && item.cid2>0}}">{{item.cid2_name}}</text>
+              <text wx:if="{{item.gid==0 && item.cid2==0 && item.cid1>0}}">{{item.cid1_name}}</text>
             </view>
           </view>
           <view class="copy">

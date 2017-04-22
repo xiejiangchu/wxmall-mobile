@@ -1,4 +1,3 @@
-<import src="../../common/nav.wxml" />
 <import src="../../common/prompt.wxml" />
 
 <view class="stv-container">
@@ -24,10 +23,11 @@
               </view>
             </view>
             <view class="order-bottom">
-              <view class="order-bottom-item" wx:if="{{ order.status==10||order.status==20 }}" catchtap="cancel" data-oid='{{order.id}}' data-indes='{{index}}' hover-class="weui-form-preview__btn_active">取消订单</view>
-              <view class="order-bottom-item" wx:if="{{ order.status==10 }}" catchtap="pay" data-oid='{{order.id}}' hover-class="weui-form-preview__btn_active">支付订单</view>
-              <view class="order-bottom-item" catchtap="checkDetail" data-oid='{{order.id}}' hover-class="weui-form-preview__btn_active">查看详情</view>
-              <view class="order-bottom-item" catchtap="orderMore" data-oid='{{order.id}}' hover-class="weui-form-preview__btn_active">再来一单</view>
+              <view class="order-bottom-item " wx:if="{{ order.status==10||order.status==20 }}" catchtap="cancel" data-oid='{{order.id}}' data-indes='{{index}}' hover-class="weui-form-preview__btn_active">取消订单</view>
+              <view class="order-bottom-item " wx:if="{{ order.status==10 }}" catchtap="pay" data-oid='{{order.id}}' hover-class="weui-form-preview__btn_active">支付订单</view>
+             
+              <view class="order-bottom-item " catchtap="orderMore" data-oid='{{order.id}}' hover-class="weui-form-preview__btn_active">再来一单</view>
+               <view class="order-bottom-item " catchtap="checkDetail" data-oid='{{order.id}}' hover-class="weui-form-preview__btn_active">查看详情</view>
             </view>
           </view>
           <template is="prompt" data="{{ prompt }}" />

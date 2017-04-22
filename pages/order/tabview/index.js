@@ -33,7 +33,7 @@ Page({
     },
     prompt: {
       hidden: !0,
-      icon: '/assets/images/iconfont-order-default.png',
+      icon: '/assets/images/order-empty.png',
       title: '您还没有相关的订单',
       text: '可以去看看有哪些想买的',
     },

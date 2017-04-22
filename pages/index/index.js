@@ -6,7 +6,7 @@ Page({
         img_host: App.globalData.img_host,
         activeIndex: 0,
         indicatorDots: !0,
-        autoplay: !1,
+        autoplay: true,
         current: 0,
         interval: 3000,
         duration: 1000,
@@ -16,6 +16,7 @@ Page({
         prompt: {
             hidden: 0,
         },
+        left: 0,
         'cartMap': {},
         loading: false,
 
@@ -39,6 +40,13 @@ Page({
         //banner
         this.getBanner();
         this.getList();
+
+        // setInterval(function () {
+        //     let left = this.data.left - 2;
+        //     this.setData({
+        //         'left': left
+        //     })
+        // }.bind(this), 50);
     },
     getBanner() {
         let that = this;
@@ -135,7 +143,6 @@ Page({
     },
     getList() {
         var that = this;
-        this.getBanner();
         wx.showToast({
             title: '加载中...',
             icon: 'loading',

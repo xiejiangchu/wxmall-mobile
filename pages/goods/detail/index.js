@@ -7,7 +7,7 @@ Page({
     data: {
         indicatorDots: !0,
         vertical: !1,
-        autoplay: !1,
+        autoplay: true,
         interval: 3000,
         duration: 1000,
         id: 0,
@@ -39,47 +39,12 @@ Page({
         try {
             var res = wx.getSystemInfoSync();
             windowWidth = res.windowWidth;
+            this.setData({
+                'windowWidth': windowWidth
+            });
         } catch (e) {
             console.error('getSystemInfoSync failed!');
         }
-        // pieChart = new wxCharts({
-        //     animation: true,
-        //     canvasId: 'pieCanvas',
-        //     type: 'pie',
-        //     series: [{
-        //         name: '成交量1',
-        //         data: 15,
-        //     }, {
-        //         name: '成交量2',
-        //         data: 35,
-        //     }, {
-        //         name: '成交量3',
-        //         data: 78,
-        //     }, {
-        //         name: '成交量4',
-        //         data: 63,
-        //     }],
-        //     width: windowWidth,
-        //     height: 300,
-        //     dataLabel: true,
-        // });
-
-        // radarChart = new wxCharts({
-        //     canvasId: 'radarCanvas',
-        //     type: 'radar',
-        //     categories: ['1', '2', '3', '4', '5', '6'],
-        //     series: [{
-        //         name: '成交量1',
-        //         data: [90, 110, 125, 95, 87, 122]
-        //     }],
-        //     width: windowWidth,
-        //     height: 200,
-        //     extra: {
-        //         radar: {
-        //             max: 150
-        //         }
-        //     }
-        // });
     },
     onShow() {
         this.setData({
@@ -182,7 +147,7 @@ Page({
                 }
             },
             fail: function () {
-                
+
             }
         });
     },
@@ -353,10 +318,11 @@ Page({
                     that.setData({
                         item: res.data.data
                     });
+
                     wemark.parse(res.data.data.description, that, {
-                        imageWidth: wx.getSystemInfoSync().windowWidth - 40,
                         name: 'wemark'
                     })
+
                     res.data.data.itemSpecList.forEach(function (item, index) {
                         if (item.remain > 0) {
                             that.setData({

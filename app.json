@@ -2,6 +2,7 @@
   "pages": [
     "pages/index/index",
     "pages/cart/index",
+    "pages/cart/success/index",
     "pages/user/index",
     "pages/classify/index",
     "pages/start/index",
@@ -12,7 +13,6 @@
     "pages/order/confirm/index",
     "pages/order/detail/index",
     "pages/order/tabview/index",
-    "pages/cart/success/index",
     "pages/bonus/tabview/index",
     "pages/bonus/select/index",
     "pages/goods/detail/index",
@@ -29,7 +29,7 @@
     "pages/admin/bonus/index"
   ],
   "window": {
-    "navigationBarBackgroundColor": "#479de6",
+    "navigationBarBackgroundColor": "#FF4500",
     "navigationBarTextStyle": "white",
     "navigationBarTitleText": "月都商城",
     "backgroundColor": "#f8f8f8",
@@ -38,32 +38,32 @@
   },
   "tabBar": {
     "color": "#999999",
-    "selectedColor": "#479de6",
+    "selectedColor": "#FF4500",
     "borderStyle": "black",
     "backgroundColor": "#fefefe",
     "list": [
       {
         "pagePath": "pages/index/index",
-        "iconPath": "assets/images/iconfont-home.png",
-        "selectedIconPath": "assets/images/iconfont-home-active.png",
+        "iconPath": "assets/images/home-off.png",
+        "selectedIconPath": "assets/images/home.png",
         "text": "主页"
       },
       {
         "pagePath": "pages/classify/index",
-        "iconPath": "assets/images/iconfont-list.png",
-        "selectedIconPath": "assets/images/iconfont-list-active.png",
+        "iconPath": "assets/images/classify-off.png",
+        "selectedIconPath": "assets/images/classify.png",
         "text": "分类"
       },
       {
         "pagePath": "pages/cart/index",
-        "iconPath": "assets/images/iconfont-cart.png",
-        "selectedIconPath": "assets/images/iconfont-cart-active.png",
+        "iconPath": "assets/images/cart-off.png",
+        "selectedIconPath": "assets/images/cart.png",
         "text": "购物车"
       },
       {
         "pagePath": "pages/user/index",
-        "iconPath": "assets/images/iconfont-user.png",
-        "selectedIconPath": "assets/images/iconfont-user-active.png",
+        "iconPath": "assets/images/user-off.png",
+        "selectedIconPath": "assets/images/user.png",
         "text": "我的"
       }
     ]

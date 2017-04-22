@@ -21,7 +21,7 @@
 }
 
 page {
-  background-color: #f2f2f2;
+  background-color: #f4f4f4;
 }
 
 .weui-media-box {
@@ -29,8 +29,15 @@ page {
   position: relative;
 }
 
+.color-darkorange{
+  color: darkorange;
+}
+
+.color-orange{
+  color: orange;
+}
 .color-red {
-  color: #d00;
+  color: red;
 }
 
 .color-gray {
@@ -42,11 +49,15 @@ page {
 }
 
 .color-primary {
-  color: #479de6;
+  color: #FF4500;
 }
 
 .color-yellow {
   color: #ffc;
+}
+
+.color-blue {
+  color: rgba(71, 157, 230, 1);
 }
 
 .bg-white {
@@ -54,19 +65,23 @@ page {
 }
 
 .bg-red {
-  background: #d00;
+  background: red;
 }
 
 .bg-gray {
   background: darkgray;
 }
 
+.bg-blue {
+  background: rgba(71, 157, 230, 1);
+}
+
 .bg-green {
-  background: limegreen;
+  background: green;
 }
 
 .bg-primary {
-  background: #479de6;
+  background: #FF4500;
 }
 
 .bg-yellow {

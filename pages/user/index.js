@@ -4,52 +4,52 @@ Page({
 	data: {
 		host: App.globalData.host,
 		img_host: App.globalData.img_host,
-		userInfo: {},
+		userInfo: null,
 		hidden: true,
 		orderCount: {},
 		is_admin: 0,
 		items: [
 			{
-				icon: '/assets/images/iconfont-order.png',
+				icon: '/assets/images/order.png',
 				text: '我的订单',
 				path: '/pages/order/tabview/index'
 			},
 			{
-				icon: '/assets/images/iconfont-addr.png',
+				icon: '/assets/images/address.png',
 				text: '收货地址',
 				path: '/pages/address/list/index'
 			},
 			{
-				icon: '/assets/images/iconfont-bonus.png',
+				icon: '/assets/images/bonus.png',
 				text: '优惠券',
 				path: '/pages/bonus/tabview/index'
 			},
 			{
-				icon: '/assets/images/iconfont-kefu.png',
+				icon: '/assets/images/service.png',
 				text: '联系客服',
 				path: '15121030453',
 			},
 			{
-				icon: '/assets/images/iconfont-help.png',
+				icon: '/assets/images/qa.png',
 				text: '常见问题',
 				path: '/pages/help/index',
 			},
 		],
 		settings: [
 			{
-				icon: '/assets/images/iconfont-clear.png',
+				icon: '/assets/images/clear.png',
 				text: '清除缓存',
 				path: '0.0KB'
 			},
 			{
-				icon: '/assets/images/iconfont-about.png',
+				icon: '/assets/images/about.png',
 				text: '关于我们',
 				path: '/pages/about/index'
 			},
 		],
 		admin: [
 			{
-				icon: '/assets/images/iconfont_add.png',
+				icon: '/assets/images/admin.png',
 				text: '后台管理',
 				path: '/pages/admin/index'
 			}
@@ -62,7 +62,8 @@ Page({
 		}
 	},
 	onPullDownRefresh() {
-		var that = this;
+		let that = this;
+		this.getUserInfo();
 		wx.request({
 			url: App.globalData.host + 'order/orderCount',
 			method: 'GET',
@@ -84,14 +85,21 @@ Page({
 	},
 	onLoad() {
 		let that = this;
-		App.getUserInfo(function (globalData) {
-			that.setData({
-				userInfo: globalData.userInfo
-			});
-		});
+		this.getUserInfo();
 	},
 	onShow() {
 		this.onPullDownRefresh();
+		this.getUserInfo();
+	},
+	getUserInfo() {
+		let that = this;
+		if (null == this.data.userInfo) {
+			App.getUserInfo(function (globalData) {
+				that.setData({
+					userInfo: globalData.userInfo
+				});
+			});
+		}
 	},
 	navigateTo(e) {
 		const index = e.currentTarget.dataset.index
@@ -162,23 +170,5 @@ Page({
 			default:
 				wx.navigateTo({ 'url': path })
 		}
-	},
-	logout() {
-		this.setData({
-			'hidden': false
-		})
-	},
-	confirm() {
-		this.setData({
-			'hidden': true
-		})
-	},
-	cancel() {
-		this.setData({
-			'hidden': true
-		})
-	},
-	signOut() {
-
-	},
+	}
 })

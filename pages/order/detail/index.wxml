@@ -13,7 +13,7 @@
 </view>
 <view class="order-container">
   <view class="order-top">
-    <view class="order-top-left">{{ order.created_at }}</view>
+    <view class="order-top-left">¥ {{ order.order_money }}</view>
     <view class="order-top-right">{{ order.statusName }}</view>
   </view>
   <view class="order-content">
@@ -33,11 +33,12 @@
   <view class="weui-panel__hd">订单信息</view>
   <view class="weui-panel__bd">
     <view class="weui-media-box weui-media-box_text">
+      
       <view class="weui-media-box__desc">订单号：{{ order.no }}</view>
+      <view class="weui-media-box__desc">下单时间：{{ order.created_at }}</view>
       <view class="weui-media-box__desc">支付方式：{{ order.payment }}</view>
       <view class="weui-media-box__desc">红包优惠：{{ order.bonus||0.0 }}</view>
       <view class="weui-media-box__desc">积分优惠：{{ order.point_used/100||0 }}</view>
-      <view class="weui-media-box__desc">下单时间：{{ order.created_at }}</view>
     </view>
   </view>
 </view>

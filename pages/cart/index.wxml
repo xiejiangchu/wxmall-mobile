@@ -1,5 +1,4 @@
 <import src="../common/prompt.wxml" />
-<template is="prompt" data="{{ prompt }}" />
 <view class="container" wx:if="{{ carts.items.length>0 }}">
   <view class="weui-panel weui-panel_access" wx:for="{{ carts.items }}" wx:key="id" wx:for-index="index">
     <view class="weui-panel__hd">
@@ -19,8 +18,8 @@
             </text>
           </view>
           <view class="weui-media-box__info">
-            <view class="weui-media-box__info__meta">数量 x {{ item.amount }}</view>
-            <view class="weui-media-box__info__meta">总价 {{ item.total }}</view>
+            <view class="weui-media-box__info__meta color-blue">数量 x {{ item.amount }}</view>
+            <view class="weui-media-box__info__meta color-primary">总价 {{ item.total }}</view>
           </view>
           <view class="quantity-wrapper" wx:if="{{ canEdit }}">
             <view class="customize-qua">
@@ -36,9 +35,10 @@
 </view>
 <view class="check-btn-area" wx:if="{{ !!carts.items.length }}">
   <view class="check-total">
-    <text class='total-value'>总价：¥ {{carts.total}}</text>
-    <text class='total-msg color-red'>最终价格以实际提交为准</text>
+    <text class='total-value color-primary'>总价：¥ {{carts.total}}</text>
+    <text class='total-msg color-blue'>最终价格以实际提交为准</text>
   </view>
+  <view class="btn bg-blue" bindtap="clear">清空</view>
   <view class="btn bg-primary" bindtap="confirmOrder">去结算</view>
-  <view class="btn bg-orange" bindtap="clear">清空</view>
 </view>
+<template is="prompt" data="{{ prompt }}" />

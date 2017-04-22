@@ -21,6 +21,14 @@
     </block>
   </swiper>
 </view>
+<view class="notice wa-row">
+ <view class="notice_head wa-col-20">
+ 公告
+ </view>
+  <view class="notice_content" style="margin-left:{{left}}px;">
+    自定义请求 id，最长 16 个字符且只能由英文字母和数字组成。5 分钟内带有相同 req_id 的不同推送请求我们认为是重复请求，只会发一次推送。用户可以在请求中带着唯一的 req_id 从而在接口出现超时等异常时将请求重发一次，以避免漏掉失败的推送请求。并且由于前后两次请求中 req_id 相同，
+  </view>
+</view>
 <view class="container">
   <view class="filter-flex">
     <view class="filter-tab">
@@ -48,10 +56,15 @@
           </view>
           <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
             <view class="weui-media-box__title">{{ item.name }}</view>
+            <view class="tags">
+              <text class="place">{{ item.place }}</text>
+              <text class="name">{{ item.cid2_name }}</text>
+            </view>
             <view class="weui-media-box__desc">
               <text class="text-orangered">{{ item.summary }}</text>
             </view>
           </view>
+          <view class="notice-{{item.notice_color}}">{{item.notice}}</view>
         </navigator>
       </view>
       <view class="unit-container">
@@ -59,7 +72,7 @@
           <view class="text-unit-container" wx:for="{{ item.itemSpecList }}" wx:for-item="itemSpec" wx:key="id" wx:if="{{itemSpec.remain>0}}" wx:for-index="specindex">
             <text class='text-unit-shop'>
               <text class='color-red'>{{ itemSpec.shop_price >0? "¥ "+ itemSpec.shop_price:itemSpec.promote_price+"积分" }}/{{itemSpec.unit}} </text>
-              <text class='color-primary' style='margin-left:8px;'>销量:{{itemSpec.sale_num}}</text>
+              <text class='' style='margin-left:8px;'>销量:{{itemSpec.sale_num}}</text>
             </text>
             <view class="cart-btn">
               <view class='cart-btn-item cart-btn-item-border' bindtap="subCart" data-gid="{{ item.id }}" data-spec="{{ itemSpec.id }}" data-index="{{ index }}" data-specindex="{{ specindex }}" data-step="{{ itemSpec.unit_sell }}" wx:if="{{cartMap[item.id+'_'+itemSpec.id]>0}}">

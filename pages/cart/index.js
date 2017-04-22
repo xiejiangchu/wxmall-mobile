@@ -10,15 +10,9 @@ Page({
         },
         prompt: {
             hidden: !0,
-            icon: '../../assets/images/iconfont-cart-empty.png',
-            title: '购物车空空如也',
+            icon: '../../assets/images/cart-empty.png',
+            title: '购物车无商品',
             text: '来挑几件好货吧',
-            buttons: [
-                {
-                    text: '随便逛',
-                    bindtap: 'bindtap',
-                },
-            ],
         },
     },
     onShareAppMessage: function () {

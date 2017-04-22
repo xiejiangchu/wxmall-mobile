@@ -1,4 +1,11 @@
 const App = getApp()
+var QQMapWX = require('../../../assets/plugins/qqmap-wx-jssdk.min.js');
+
+// 实例划API核心类
+var demo = new QQMapWX({
+	key: 'MZRBZ-5OCHU-C62VC-2RQXY-PANJJ-BRBWU' // 必填
+});
+
 
 Page({
 	data: {
@@ -7,10 +14,10 @@ Page({
 			receiver: '',
 			gender: 0,
 			mobile: '',
-			province: '江西省',
-			city: '宜春市',
-			district: '袁州区',
-			road: '凤凰路',
+			province: '',
+			city: '',
+			district: '',
+			road: '',
 			address: '',
 			is_def: !1,
 		},
@@ -77,7 +84,7 @@ Page({
 				mobile: {
 					required: '请输入收货人电话',
 				},
-				
+
 				province: {
 					required: "请选择省份"
 				},
@@ -97,9 +104,39 @@ Page({
 					required: '请输入收货人地址',
 				},
 			});
+
+
 	},
 	onShow() {
 		this.init();
+	},
+	chooseLocation() {
+		let that = this;
+		wx.chooseLocation({
+			success: function (res) {
+				demo.geocoder({
+					address: res.address,
+					success: function (data) {
+						that.setData({
+							'form.province': data.result.address_components.province,
+							'form.city': data.result.address_components.city,
+							'form.district': data.result.address_components.district,
+							'form.road': data.result.address_components.street,
+							'form.address': data.result.address_components.street_number
+						});
+					},
+					fail: function (res) {
+						console.log(res);
+					}
+				});
+			},
+			fail: function () {
+
+			},
+			complete: function () {
+
+			},
+		})
 	},
 	onPullDownRefresh() {
 		this.init();
@@ -288,6 +325,7 @@ Page({
 			'form.road': this.data.roads[e.detail.value],
 		});
 	},
+
 	submitForm(e) {
 		let that = this;
 		wx.showToast({
@@ -307,9 +345,6 @@ Page({
 			});
 			return;
 		}
-
-
-
 		wx.request({
 			url: App.globalData.host + 'address/',
 			method: 'POST',

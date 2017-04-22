@@ -1,4 +1,10 @@
-const App = getApp()
+const App = getApp();
+var QQMapWX = require('../../../assets/plugins/qqmap-wx-jssdk.min.js');
+
+// 实例划API核心类
+var demo = new QQMapWX({
+	key: 'MZRBZ-5OCHU-C62VC-2RQXY-PANJJ-BRBWU' // 必填
+});
 
 Page({
 	data: {
@@ -106,6 +112,34 @@ Page({
 	},
 	onPullDownRefresh() {
 		wx.stopPullDownRefresh();
+	},
+	chooseLocation() {
+		let that = this;
+		wx.chooseLocation({
+			success: function (res) {
+				demo.geocoder({
+					address: res.address,
+					success: function (data) {
+						that.setData({
+							'form.province': data.result.address_components.province,
+							'form.city': data.result.address_components.city,
+							'form.district': data.result.address_components.district,
+							'form.road': data.result.address_components.street,
+							'form.address': data.result.address_components.street_number
+						});
+					},
+					fail: function (res) {
+						console.log(res);
+					}
+				});
+			},
+			fail: function () {
+
+			},
+			complete: function () {
+
+			},
+		})
 	},
 	init() {
 		if (this.data.provinces.length > 0) {

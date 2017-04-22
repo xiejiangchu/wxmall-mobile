@@ -99,8 +99,6 @@ Page({
             carts: carts
         })
     },
-    onShow() {
-    },
     calc() {
         let carts = {
             totalAmount: App.OrderMap.get('orderData.orderCheckDto').totalAmount
@@ -117,7 +115,7 @@ Page({
     },
     selectAddress(e) {
         wx.redirectTo({
-            url: '/pages/address/confirm/index?ret=' + this.data.address_id
+            url: '/pages/address/confirm/index'
         })
     },
     bindPointInput(e) {

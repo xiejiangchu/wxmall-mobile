@@ -6,7 +6,7 @@
           <view class="weui-media-box__title weui-media-box__title_in-text">{{ address.receiver }} {{ address.gender == 0 ? '女士' : '先生' }} {{ address.mobile }}</view>
           <view class="weui-media-box__desc">{{ address.address }}</view>
           <view class="addr">
-            <image class="icon" src="/assets/images/iconfont-addr-default.png" />
+            <image class="icon" src="/assets/images/address.png" />
           </view>
           <view class="weui-cell__ft weui-cell__ft_in-access"></view>
         </view>
@@ -87,21 +87,21 @@
           <view class='name'>{{ item.item.name }}</view>
           <view class='unit color-red'>{{ item.itemSpec.shop_price >0? "¥"+item.itemSpec.shop_price:item.itemSpec.promote_price+"积分" }}/{{item.itemSpec.unit}} </view>
         </view>
-        <view class="check-item-col amount">x{{ item.amount }}</view>
-        <view class="check-item-col amount">{{ item.subTotal }}</view>
+        <view class="check-item-col  color-gray">x{{ item.amount }}</view>
+        <view class="check-item-col  color-primary text-right">{{ item.subTotal }}</view>
       </view>
     </view>
     <view class="weui-form-preview__bd">
       <view class="check-money-row">
         <view class="check-money-col">
           <view class='label'>商品总价</view>
-          <view class='number color-green'>
+          <view class='number color-blue'>
             ¥ {{ carts.totalAmount }}
           </view>
         </view>
         <view class="check-money-col">
           <view class='label'>红包抵扣</view>
-          <view class='number color-red'>
+          <view class='number color-green'>
             ¥ {{ carts.bonus }}
           </view>
         </view>

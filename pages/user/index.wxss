@@ -1,13 +1,14 @@
-.container{
+.container {
   padding-bottom: 40px;
 }
+
 .userinfo {
   display: flex;
   flex-direction: column;
   padding: 50rpx 0;
   padding-bottom: 0;
   align-items: center;
-  background: #479de6;
+  background: #ff4500;
 }
 
 .userinfo-avatar {
@@ -22,7 +23,7 @@
 }
 
 .point-info {
-  background: #479de6;
+  background: #ff4500;
   display: flex;
   flex-direction: row;
   padding: 10px 20px;
@@ -118,6 +119,7 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  border-bottom: 1rpx solid #d9d9d9;
 }
 
 .order view {
@@ -129,14 +131,14 @@
   justify-content: center;
   text-align: center;
   background: white;
-  padding: 8px;
+  padding: 4px;
 }
 
 .order view image {
-  margin-bottom: 2px;
+  margin-top: 4px;
   vertical-align: middle;
-  width: 50rpx;
-  height: 50rpx;
+  width: 60rpx;
+  height: 60rpx;
 }
 
 .order view text {
@@ -148,8 +150,8 @@
   position: absolute;
   right: 25%;
   top: 10rpx;
-  width: 10rpx;
-  height: 10rpx;
+  width: 30rpx;
+  height: 30rpx;
   font-size: 30rpx;
   text-align: center;
   transform: scale(0.7);

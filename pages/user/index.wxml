@@ -10,7 +10,7 @@
           {{orderCount.money||0}}
         </view>
         <view class='money-label'>
-          <image src="/assets/images/iconfont_money.png"></image>
+          <image src="/assets/images/money.png"></image>
           <text>我的零钱</text>
         </view>
       </view>
@@ -19,7 +19,7 @@
           {{orderCount.point||0}}
         </view>
         <view class='money-label'>
-          <image src="/assets/images/iconfont_point.png"></image>
+          <image src="/assets/images/point.png"></image>
           <text>我的积分</text>
         </view>
       </view>
@@ -27,22 +27,22 @@
   </view>
   <view class='order'>
     <view bindtap="navigateTo" data-index="10" data-tab="{{ 0 }}">
-      <image src="/assets/images/iconfont_pay.png"></image>
+      <image src="/assets/images/pay.png"></image>
       <text>待支付</text>
       <view class="dot" wx:if="{{orderCount.order_pay>0}}">{{orderCount.order_pay}}</view>
     </view>
     <view bindtap="navigateTo" data-index="10" data-tab="{{ 1 }}">
-      <image src="/assets/images/iconfont_sending.png"></image>
+      <image src="/assets/images/package.png"></image>
       <text>待发货</text>
       <view class="dot" wx:if="{{orderCount.order_sending>0}}">{{orderCount.order_sending}}</view>
     </view>
     <view bindtap="navigateTo" data-index="10" data-tab="{{ 2 }}">
-      <image src="/assets/images/iconfont_receive.png"></image>
+      <image src="/assets/images/send.png"></image>
       <text>待收货</text>
       <view class="dot" wx:if="{{orderCount.order_receive>0}}">{{orderCount.order_receive}}</view>
     </view>
     <view bindtap="navigateTo" data-index="10" data-tab="{{ 3 }}">
-      <image src="/assets/images/iconfont_finish.png"></image>
+      <image src="/assets/images/finish.png"></image>
       <text>已完成</text>
     </view>
   </view>

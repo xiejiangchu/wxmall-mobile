@@ -33,7 +33,7 @@
       </view>
       <view class="weui-cell__bd">
         <picker bindchange="bindProvinceChange" value="{{ form.province }}" range="{{provinces}}">
-          <view class="weui-select">{{provinces[provinceIndex]}}</view>
+          <view class="weui-select">{{ form.province }}</view>
         </picker>
       </view>
     </view>
@@ -43,7 +43,7 @@
       </view>
       <view class="weui-cell__bd">
         <picker bindchange="bindCityChange" value="{{ form.city }}" range="{{cities}}">
-          <view class="weui-select">{{cities[cityIndex]}}</view>
+          <view class="weui-select">{{ form.city }}</view>
         </picker>
       </view>
     </view>
@@ -53,7 +53,7 @@
       </view>
       <view class="weui-cell__bd">
         <picker bindchange="bindDistrictChange" value="{{ form.district }}" range="{{districts}}">
-          <view class="weui-select">{{districts[districtIndex]}}</view>
+          <view class="weui-select">{{ form.district }}</view>
         </picker>
       </view>
     </view>
@@ -63,7 +63,7 @@
       </view>
       <view class="weui-cell__bd">
         <picker bindchange="bindRoadChange" value="{{ form.road }}" range="{{roads}}">
-          <view class="weui-select">{{roads[roadIndex]}}</view>
+          <view class="weui-select">{{ form.road }}</view>
         </picker>
       </view>
     </view>

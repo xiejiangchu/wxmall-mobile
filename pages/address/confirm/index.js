@@ -6,9 +6,7 @@ Page({
         address: {}
     },
     onLoad(option) {
-        this.setData({
-            ret: option.ret
-        })
+
     },
     onShow() {
         this.onPullDownRefresh()
@@ -28,7 +26,7 @@ Page({
     radioChange(e) {
         let idx = e.detail.value;
         let address = this.data.paginate.list[idx];
-        wx.setStorageSync('orderData.address', address)
+        App.OrderMap.set('orderData.address', address);
         wx.redirectTo({
             url: '/pages/order/confirm/index'
         })

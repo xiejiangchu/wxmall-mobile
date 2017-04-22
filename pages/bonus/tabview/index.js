@@ -22,9 +22,9 @@ Page({
     type: null,
     prompt: {
       hidden: !0,
-      icon: '/assets/images/iconfont-order-default.png',
-      title: '空空如也',
-      text: '暂时没有优惠券',
+      icon: '/assets/images/empty3.png',
+      title: '暂时没有优惠券',
+      text: '',
     },
   },
   onLoad: function (options) {
