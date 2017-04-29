@@ -27,7 +27,7 @@
   display: flex;
   font-size: 16px;
   background: white;
-  color: #666;
+  color: #999;
   z-index: 10;
 }
 

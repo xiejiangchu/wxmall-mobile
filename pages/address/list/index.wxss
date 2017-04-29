@@ -36,7 +36,7 @@ addr-icon {
   left: 0;
   right: 0;
   height: 48px;
-  background: #479de6;
+  background: #ff4200;
   color: white;
   line-height: 48px;
 }

@@ -8,7 +8,7 @@ Page({
         paginate: {},
         prompt: {
             hidden: !0,
-            icon: '../../../assets/images/iconfont-addr-empty.png',
+            icon: '../../../assets/images/addr-empty.png',
             title: '还没有收货地址呢',
             text: '暂时没有相关数据',
         },

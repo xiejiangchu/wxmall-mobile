@@ -5,7 +5,7 @@
         <view class="weui-media-box__title">{{ order.receiver }} {{ order.gender == 0 ? '女士' : '先生' }} {{ order.mobile }}</view>
         <view class="weui-media-box__desc">{{ order.city }}{{ order.district }}{{ order.road }}{{ order.address }}</view>
         <view class="addr">
-          <image class="icon" src="/assets/images/iconfont-addr-default.png" />
+          <image class="icon" src="/assets/images/address.png" />
         </view>
       </view>
     </view>

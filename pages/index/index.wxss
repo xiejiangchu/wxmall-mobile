@@ -68,28 +68,37 @@ swiper-item image {
 }
 
 .notice {
-  margin-top: 8px;
   padding: 0;
   background: white;
-  border-top: 1rpx solid #d9d9d9;
-  border-bottom: 1rpx solid #d9d9d9;
+  border-top: none;
+  margin-top: 10px;
+  border-bottom: 1px solid #479de6;
+  border-left: 1px dashed #479de6;
+  border-right: 1px dashed #479de6;
 }
+
+.notice_content::-webkit-scrollbar{
+  width:0px;
+  color: transparent;
+  }
 
 .notice_head {
   word-break: no-break;
   white-space: nowrap;
-  background: #ff4200;
+  background: #479de6;
   color: white;
-  padding: 0 8px;
+  padding: 4px;
   text-align: center;
   z-index: 10;
 }
 
+.notice-scroll .wemark_wrapper{
+  transform: scale(0.9);
+}
+
 .notice_content {
   word-break: no-break;
-  white-space: nowrap;
-  overflow: hidden;
-  color: #479de6;
+  color: gray;
 }
 
 .filter-flex {

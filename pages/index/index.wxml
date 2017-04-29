@@ -1,4 +1,5 @@
 <import src="../common/prompt.wxml" />
+<import src="../../assets/wemark/wemark.wxml" />
 <view class="weui-search-bar">
   <view class="weui-search-bar__form">
     <view class="weui-search-bar__box">
@@ -21,12 +22,14 @@
     </block>
   </swiper>
 </view>
-<view class="notice wa-row">
- <view class="notice_head wa-col-20">
- 公告
- </view>
-  <view class="notice_content" style="margin-left:{{left}}px;">
-    自定义请求 id，最长 16 个字符且只能由英文字母和数字组成。5 分钟内带有相同 req_id 的不同推送请求我们认为是重复请求，只会发一次推送。用户可以在请求中带着唯一的 req_id 从而在接口出现超时等异常时将请求重发一次，以避免漏掉失败的推送请求。并且由于前后两次请求中 req_id 相同，
+<view class="notice" wx:if="{{showWemark}}">
+  <view class="notice_head">
+    公告
+  </view>
+  <view class="notice_content">
+    <scroll-view style="height: 80px;" class="notice-scroll content" scroll-y scroll-top="{{top}}" bindscrolltolower="bindscrolltolower">
+      <template is="wemark" data="{{...wemark}}"></template>
+    </scroll-view>
   </view>
 </view>
 <view class="container">

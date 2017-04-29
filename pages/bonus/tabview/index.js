@@ -22,7 +22,7 @@ Page({
     type: null,
     prompt: {
       hidden: !0,
-      icon: '/assets/images/empty3.png',
+      icon: '/assets/images/order-empty.png',
       title: '暂时没有优惠券',
       text: '',
     },

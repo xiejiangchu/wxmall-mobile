@@ -1,5 +1,5 @@
 const App = getApp();
-
+var wemark = require('../../assets/wemark/wemark');
 Page({
     data: {
         host: App.globalData.host,
@@ -16,10 +16,9 @@ Page({
         prompt: {
             hidden: 0,
         },
-        left: 0,
         'cartMap': {},
         loading: false,
-
+        top: 0,
         filterdata: {},  //筛选条件数据
         showfilter: false, //是否显示下拉筛选
         showfilterindex: null, //显示哪个筛选类目
@@ -31,6 +30,8 @@ Page({
         sellid: null,  //一级城市id
         subsellindex: 0,  //二级城市索引
         subsellid: null, //二级城市id
+        showWemark: false,
+        wemark: {}
     },
     swiperchange(e) {
         // console.log(e.detail.current)
@@ -41,12 +42,17 @@ Page({
         this.getBanner();
         this.getList();
 
-        // setInterval(function () {
-        //     let left = this.data.left - 2;
-        //     this.setData({
-        //         'left': left
-        //     })
-        // }.bind(this), 50);
+        setInterval(function () {
+            let top = this.data.top + 75;
+            this.setData({
+                'top': top
+            })
+        }.bind(this), 3000);
+    },
+    bindscrolltolower() {
+        this.setData({
+            'top': 0
+        })
     },
     getBanner() {
         let that = this;
@@ -66,17 +72,58 @@ Page({
             }
         });
     },
+    onReady() {
+        var windowWidth = 320;
+        try {
+            var res = wx.getSystemInfoSync();
+            windowWidth = res.windowWidth;
+            this.setData({
+                'windowWidth': windowWidth
+            });
+        } catch (e) {
+            console.error('getSystemInfoSync failed!');
+        }
+    },
     onShow() {
         this.setData({
             'carts.items': App.OrderMap.get('orderData.items')
         });
         this.getCart();
+        this.getNotice();
     },
     slideClick(e) {
         let id = e.currentTarget.dataset.url;
         wx.navigateTo({
             url: '/pages/goods/detail/index?id=' + id
         })
+    },
+    getNotice() {
+        let that = this;
+        wx.request({
+            url: App.globalData.host + 'notice/list',
+            method: 'GET',
+            data: {
+                sessionId: App.globalData.sessionId
+            },
+            header: {
+                SESSIONID: App.globalData.sessionId,
+                'Accept': 'application/json'
+            },
+            success: function (res) {
+                if (res.data.code == 0) {
+                    that.setData({
+                        showWemark: true
+                    })
+                    wemark.parse(res.data.data.content, that, {
+                        name: 'wemark'
+                    })
+                } else {
+                    that.setData({
+                        showWemark: false
+                    })
+                }
+            }
+        });
     },
     getCart() {
         let that = this;

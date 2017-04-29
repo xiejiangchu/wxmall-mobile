@@ -27,11 +27,11 @@
   display: flex;
   font-size: 30rpx;
   background: white;
-  color: #666;
+  color: #999;
 }
 
 .stv-container .tab-bar .tab-active {
-  color: #2d80ff;
+  color: #ff4200;
 }
 
 .stv-container .tab-bar .tab {
@@ -46,7 +46,7 @@
   position: absolute;
   bottom: 0;
   height: 6rpx;
-  background-color: #2d80ff;
+  background-color: #ff4200;
 }
 
 .stv-container .scroll-view {
@@ -73,7 +73,7 @@
   list-style: none;
   position: relative;
   overflow: hidden;
-  background: radial-gradient(rgba(0, 0, 0, 0) 0, rgba(0, 0, 0, 0) 5px, #479de6 5px);
+  background: radial-gradient(rgba(0, 0, 0, 0) 0, rgba(0, 0, 0, 0) 5px, #ff4200 5px);
   background-size: 15px 12px;
   background-position: -6px 8px;
 }
@@ -86,7 +86,7 @@
   flex-direction: row;
   position: relative;
   overflow: hidden;
-  background: #479de6;
+  background: #ff4200;
 }
 
 .stamp .i {
@@ -254,5 +254,5 @@
   padding: 0 16px;
 }
 .weui-vcode-btn{
-  color:#479de6;
+  color:#ff4200;
 }
