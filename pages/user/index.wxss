@@ -159,3 +159,19 @@
   color: white;
   border-radius: 50%;
 }
+
+.customer {
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  text-align: left;
+  box-sizing: border-box;
+  text-decoration: none;
+  line-height: 1;
+  background: transparent;
+}
+
+.customer:after {
+  display: none;
+}

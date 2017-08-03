@@ -32,6 +32,7 @@ addr-icon {
 
 .btn-plus {
   position: fixed;
+  border-radius: 0px;
   bottom: 0;
   left: 0;
   right: 0;

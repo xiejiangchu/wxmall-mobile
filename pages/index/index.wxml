@@ -2,14 +2,10 @@
 <import src="../../assets/wemark/wemark.wxml" />
 <view class="weui-search-bar">
   <view class="weui-search-bar__form">
-    <view class="weui-search-bar__box">
+    <view class="weui-search-bar__box" bindtap="search">
       <icon class="weui-icon-search_in-box" type="search" size="14"></icon>
       <input type="text" class="weui-search-bar__input" placeholder="搜索" />
     </view>
-    <label class="weui-search-bar__label" bindtap="search">
-      <icon class="weui-icon-search" type="search" size="14"></icon>
-      <view class="weui-search-bar__text">搜索</view>
-    </label>
   </view>
 </view>
 <view class="container">
@@ -58,7 +54,7 @@
             <image class="weui-media-box__thumb" src="http://wxmall.image.alimmdn.com/{{ item.thumb }}@100w_100h" />
           </view>
           <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
-            <view class="weui-media-box__title">{{ item.name }}</view>
+            <view class="weui-media-box__title">{{ item.name }}<text class="notice-{{item.notice_color}}">{{item.notice}}</text></view>
             <view class="tags">
               <text class="place">{{ item.place }}</text>
               <text class="name">{{ item.cid2_name }}</text>

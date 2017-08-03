@@ -314,7 +314,7 @@ Page({
     });
     let that = this;
     wx.request({
-      url: App.globalData.host + 'order/pay',
+      url: App.globalData.host + 'pay/unifiedOrder',
       method: 'POST',
       header: {
         'content-type': 'application/x-www-form-urlencoded'
@@ -325,7 +325,7 @@ Page({
       },
       success: function (res) {
         if (res.data.code == 0) {
-          that.requestPayment(res.data);
+          that.sign(res.data.data.prepayId);
         } else {
           wx.showToast({
             title: res.data.msg,
@@ -343,6 +343,26 @@ Page({
         wx.hideToast();
       }
     });
+  },
+  //签名
+  sign: function (prepay_id) {
+    var that = this;
+    wx.request({
+      url: App.globalData.host + 'pay/getPayInfo',
+      method: 'GET',
+      header: {
+        SESSIONID: App.globalData.sessionId,
+        'Accept': 'application/json',
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      data: {
+        'prepayId': prepay_id,
+        sessionId: App.globalData.sessionId,
+      },
+      success: function (res) {
+        that.requestPayment(res.data.data);
+      }
+    })
   },
   //申请支付
   requestPayment: function (obj) {

@@ -4,9 +4,9 @@ import WxValidate from 'assets/plugins/WxValidate'
 
 App({
   globalData: {
-    // host: 'http://127.0.0.1:8090/',
+    host: 'http://127.0.0.1:8090/',
     // host: 'http://192.168.10.3:8090/',
-    host: 'https://shop.vrspring.com/',
+    // host: 'https://shop.vrspring.com/',
     img_host: 'http://wxmall.image.alimmdn.com/',
     userInfo: null,
     wxcode: null,
@@ -44,6 +44,53 @@ App({
         that.get3rdSession();
       });
     }
+  },
+  onShow: function () {
+    let that = this;
+    let sessionId = wx.getStorageSync('sessionId');
+    if (sessionId) {
+      that.globalData.sessionId = sessionId;
+      wx.request({
+        url: that.globalData.host + 'user/login',
+        method: 'GET',
+        data: {
+          sessionId: sessionId
+        },
+        header: {
+          'Accept': 'application/json'
+        },
+        success: function (res) {
+          if (res.data.code == 0) {
+            that.globalData.sessionId = res.data.data.sessionId;
+            that.globalData.uid = res.data.data.uid;
+          } else {
+            that.getUserInfo(function (userInfo) {
+              that.get3rdSession();
+            });
+          }
+        }
+      })
+    } else {
+      wx.removeStorageSync('sessionId');
+      that.getUserInfo(function (userInfo) {
+        that.get3rdSession();
+      });
+    }
+  },
+  onErrorfunction(msg) {
+    wx.request({
+      url: that.globalData.host + 'sysConfig/error',
+      method: 'POST',
+      data: {
+        description: msg
+      },
+      header: {
+        'Accept': 'application/json'
+      },
+      success: function (res) {
+
+      }
+    })
   },
   get3rdSession: function () {
     let that = this

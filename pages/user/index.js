@@ -7,6 +7,7 @@ Page({
 		userInfo: null,
 		hidden: true,
 		orderCount: {},
+		canIUse: wx.canIUse('button.open-type.contact'),
 		is_admin: 0,
 		items: [
 			{
@@ -24,28 +25,25 @@ Page({
 				text: '优惠券',
 				path: '/pages/bonus/tabview/index'
 			},
-			{
-				icon: '/assets/images/service.png',
-				text: '联系客服',
-				path: '15121030453',
-			},
+		],
+		settings: [
 			{
 				icon: '/assets/images/qa.png',
 				text: '常见问题',
 				path: '/pages/help/index',
 			},
-		],
-		settings: [
 			{
 				icon: '/assets/images/clear.png',
 				text: '清除缓存',
 				path: '0.0KB'
 			},
+
 			{
 				icon: '/assets/images/about.png',
 				text: '关于我们',
 				path: '/pages/about/index'
 			},
+			
 		],
 		admin: [
 			{
@@ -86,6 +84,15 @@ Page({
 	onLoad() {
 		let that = this;
 		this.getUserInfo();
+		try {
+			var res = wx.getStorageInfoSync()
+			that.setData({
+				currentSize: res.currentSize,
+				limitSize: res.limitSize
+			})
+		} catch (e) {
+			// Do something when catch error
+		}
 	},
 	onShow() {
 		this.onPullDownRefresh();
@@ -111,38 +118,13 @@ Page({
 			});
 			return;
 		}
-		switch (index) {
-			case 3:
-				wx.showModal({
-					title: '友情提示',
-					showCancel: true,
-					cancelText: '取消',
-					content: '确定要联系客服吗？',
-					success: function (res) {
-						if (res.confirm) {
-							wx.makePhoneCall({
-								phoneNumber: path
-							});
-						}
-					},
-					fail: function () {
-
-					},
-					complete: function () {
-
-					}
-				});
-
-				break
-			default:
-				wx.navigateTo({ 'url': path })
-		}
+		wx.navigateTo({ 'url': path })
 	},
 	bindtap(e) {
 		const index = e.currentTarget.dataset.index;
 		const path = e.currentTarget.dataset.path;
 		switch (index) {
-			case 0:
+			case 1:
 				wx.showModal({
 					title: '友情提示',
 					showCancel: true,

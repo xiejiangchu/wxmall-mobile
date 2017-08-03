@@ -74,7 +74,7 @@
       <view class="weui-cell__bd">
         <textarea name="address" value="{{ form.address }}" class="weui-textarea" placeholder="请输入收货人地址" style="height: 3.3em" />
         <view class="weui-textarea-icon" bindtap="chooseLocation">
-          <image src="../../../assets/images/iconfont-addr-default.png"></image>
+          <image src="../../../assets/images/address.png"></image>
         </view>
       </view>
     </view>
